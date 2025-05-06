@@ -10,36 +10,12 @@ import Footer from "@/components/ChessSections/Footer";
 import { useEffect } from "react";
 
 export default function Home() {
-  // Initialize scroll animation
+  // Add all fade-in-visible classes immediately to prevent blank spaces
   useEffect(() => {
     const scrollFadeElements = document.querySelectorAll('.scrolled-fade-in');
-    
-    const checkScroll = () => {
-      scrollFadeElements.forEach(element => {
-        const elementTop = element.getBoundingClientRect().top;
-        const elementVisible = 150;
-        
-        if (elementTop < window.innerHeight - elementVisible) {
-          element.classList.add('fade-in-visible');
-        }
-      });
-    };
-    
-    window.addEventListener('scroll', checkScroll);
-    
-    // Check on initial load and after a short delay
-    checkScroll();
-    
-    // Force a check after a small delay (helps with elements initially visible)
-    setTimeout(checkScroll, 100);
-    
-    // And another check after all content is loaded
-    window.addEventListener('load', checkScroll);
-    
-    return () => {
-      window.removeEventListener('scroll', checkScroll);
-      window.removeEventListener('load', checkScroll);
-    };
+    scrollFadeElements.forEach(element => {
+      element.classList.add('fade-in-visible');
+    });
   }, []);
 
   return (

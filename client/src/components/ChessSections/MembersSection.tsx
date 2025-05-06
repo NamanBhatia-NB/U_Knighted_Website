@@ -38,7 +38,7 @@ export default function MembersSection() {
       </div>
       
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="text-center mb-16 scrolled-fade-in">
+        <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold font-display mb-4">Meet Our Champions</h2>
           <p className="max-w-2xl mx-auto text-lg text-primary/70">Recognizing the talented players who represent our chess society in tournaments.</p>
         </div>
@@ -62,7 +62,7 @@ export default function MembersSection() {
             ))
           ) : (
             members.slice(0, 4).map((member) => (
-              <div key={member.id} className="glass rounded-xl p-6 text-center transition-transform duration-300 hover:scale-105 scrolled-fade-in">
+              <div key={member.id} className="glass rounded-xl p-6 text-center transition-transform duration-300 hover:scale-105">
                 <img 
                   src={member.photoUrl} 
                   alt={`${member.name}, ${member.role}`} 

@@ -88,16 +88,16 @@
     background-size: cover;
   }
 
+  /* Remove fade animation completely to fix blank spaces */
   .scrolled-fade-in {
-    opacity: 0.01; /* Not fully invisible to prevent layout shifts */
-    transform: translateY(10px);
-    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-    min-height: 50px; /* Ensure minimum height to prevent collapse */
-    display: block; /* Ensure the element takes up space */
+    opacity: 1;
+    transform: none;
+    transition: none;
+    display: block;
   }
 
   .fade-in-visible {
     opacity: 1;
-    transform: translateY(0);
+    transform: none;
   }
 }

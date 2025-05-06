@@ -1,7 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
 
+interface SocietyStats {
+  members: number;
+  tournaments: number;
+  championships: number;
+}
+
 export default function AboutSection() {
-  const { data: stats } = useQuery({
+  const { data: stats = { members: 120, tournaments: 15, championships: 8 } } = useQuery<SocietyStats>({
     queryKey: ['/api/society/stats'],
   });
   
@@ -9,7 +15,7 @@ export default function AboutSection() {
     <section id="about" className="py-20 md:py-32 relative overflow-hidden">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-          <div className="order-2 md:order-1 scrolled-fade-in">
+          <div className="order-2 md:order-1">
             <h2 className="text-3xl md:text-4xl font-bold font-display mb-6">About Our Chess Society</h2>
             <p className="mb-4 text-lg">Founded in 2005, the University Chess Society has grown into a vibrant community where chess enthusiasts of all skill levels can learn, practice, and compete.</p>
             <p className="mb-6 text-lg">Our mission is to promote chess culture on campus, provide training resources, and organize tournaments that challenge and inspire our members.</p>
@@ -46,7 +52,7 @@ export default function AboutSection() {
             </div>
           </div>
           
-          <div className="order-1 md:order-2 scrolled-fade-in">
+          <div className="order-1 md:order-2">
             <div className="relative">
               <img 
                 src="https://images.unsplash.com/photo-1567175220912-c8791c83ba1a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600" 
