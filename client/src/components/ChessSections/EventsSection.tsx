@@ -1,0 +1,89 @@
+import { useQuery } from "@tanstack/react-query";
+import { Link } from "wouter";
+
+interface Event {
+  id: number;
+  title: string;
+  type: string;
+  date: string;
+  timeStart: string;
+  timeEnd: string;
+  description: string;
+  location: string;
+}
+
+export default function EventsSection() {
+  const { data: events = [], isLoading } = useQuery<Event[]>({
+    queryKey: ['/api/events'],
+  });
+
+  return (
+    <section id="events" className="py-20 md:py-32 bg-primary/5 relative">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-16 scrolled-fade-in">
+          <h2 className="text-3xl md:text-4xl font-bold font-display mb-4">Upcoming Events</h2>
+          <p className="max-w-2xl mx-auto text-lg text-primary/70">Join us for tournaments, workshops, and social gatherings throughout the academic year.</p>
+        </div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {isLoading ? (
+            // Loading skeletons
+            Array(3).fill(0).map((_, i) => (
+              <div key={i} className="glass rounded-xl overflow-hidden shadow-lg h-64 animate-pulse">
+                <div className="p-6">
+                  <div className="h-4 bg-gray-300 rounded w-1/4 mb-4"></div>
+                  <div className="h-6 bg-gray-300 rounded w-3/4 mb-4"></div>
+                  <div className="h-4 bg-gray-300 rounded w-1/2 mb-8"></div>
+                  <div className="h-4 bg-gray-300 rounded w-full mb-4"></div>
+                  <div className="h-4 bg-gray-300 rounded w-full mb-4"></div>
+                  <div className="flex justify-between items-center">
+                    <div className="h-4 bg-gray-300 rounded w-1/3"></div>
+                    <div className="h-4 bg-gray-300 rounded w-1/4"></div>
+                  </div>
+                </div>
+              </div>
+            ))
+          ) : (
+            events.slice(0, 3).map((event) => (
+              <div key={event.id} className="glass rounded-xl overflow-hidden shadow-lg transition-transform duration-300 hover:scale-105 scrolled-fade-in">
+                <div className="p-6">
+                  <div className="flex justify-between items-start mb-4">
+                    <div>
+                      <span className={`inline-block px-3 py-1 ${
+                        event.type === 'Tournament' ? 'bg-accent text-primary' : 
+                        event.type === 'Workshop' ? 'bg-primary text-white' : 
+                        'bg-secondary text-white'
+                      } text-sm font-medium rounded-full`}>
+                        {event.type}
+                      </span>
+                      <h3 className="mt-3 text-xl font-bold">{event.title}</h3>
+                    </div>
+                    <div className="text-right">
+                      <div className="text-sm text-primary/70">{event.date}</div>
+                      <div className="text-sm font-medium">{event.timeStart} - {event.timeEnd}</div>
+                    </div>
+                  </div>
+                  <p className="mb-4">{event.description}</p>
+                  <div className="flex justify-between items-center">
+                    <div className="flex items-center space-x-1">
+                      <i className="ri-map-pin-line text-accent"></i>
+                      <span className="text-sm">{event.location}</span>
+                    </div>
+                    <Link href={`/events/${event.id}`} className="text-accent hover:text-secondary transition-colors font-medium">Details →</Link>
+                  </div>
+                </div>
+              </div>
+            ))
+          )}
+        </div>
+        
+        <div className="text-center mt-12">
+          <Link href="/events" className="inline-flex items-center space-x-2 px-6 py-3 border border-primary text-primary hover:bg-primary hover:text-white transition-colors rounded-lg font-medium">
+            <span>View All Events</span>
+            <i className="ri-calendar-line"></i>
+          </Link>
+        </div>
+      </div>
+    </section>
+  );
+}
