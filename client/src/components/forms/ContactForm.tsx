@@ -63,19 +63,8 @@ export default function ContactForm() {
   function onSubmit(data: ContactFormValues) {
     setIsSubmitting(true);
     
-    // Instead of actually sending the message to the server,
-    // we'll just simulate a successful submission
-    setTimeout(() => {
-      toast({
-        title: "Message Sent",
-        description: "Thank you for your message. We'll get back to you soon!",
-      });
-      form.reset();
-      setIsSubmitting(false);
-    }, 1500);
-    
-    // Commented out the actual API call
-    // contactMutation.mutate(data);
+    // Send the actual data to the server
+    contactMutation.mutate(data);
   }
 
   return (
