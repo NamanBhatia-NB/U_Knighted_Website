@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { Member, Event, News, Contact, Newsletter, SocietyStats } = require('../models');
+const { Member, Event, News, Contact, Newsletter, SocietyStats, Tutorial, Lesson } = require('../models');
 
 // Get society stats
 router.get('/society/stats', async (req, res) => {
@@ -122,6 +122,104 @@ router.post('/newsletter/subscribe', async (req, res) => {
   } catch (error) {
     console.error('Error subscribing to newsletter:', error);
     res.status(500).json({ error: 'Failed to subscribe to newsletter' });
+  }
+});
+
+// ============= TUTORIAL ROUTES =============
+
+// Get all tutorials
+router.get('/tutorials', async (req, res) => {
+  try {
+    const tutorials = await Tutorial.find().sort({ position: 1 });
+    res.json(tutorials);
+  } catch (error) {
+    console.error('Error fetching tutorials:', error);
+    res.status(500).json({ error: 'Failed to fetch tutorials' });
+  }
+});
+
+// Get a specific tutorial by ID with its lessons
+router.get('/tutorials/:id', async (req, res) => {
+  try {
+    const tutorial = await Tutorial.findById(req.params.id);
+    if (!tutorial) {
+      return res.status(404).json({ error: 'Tutorial not found' });
+    }
+    
+    const lessons = await Lesson.find({ tutorialId: tutorial._id }).sort({ position: 1 });
+    
+    res.json({
+      tutorial,
+      lessons
+    });
+  } catch (error) {
+    console.error('Error fetching tutorial details:', error);
+    res.status(500).json({ error: 'Failed to fetch tutorial details' });
+  }
+});
+
+// Get a specific lesson by ID
+router.get('/lessons/:id', async (req, res) => {
+  try {
+    const lesson = await Lesson.findById(req.params.id);
+    if (!lesson) {
+      return res.status(404).json({ error: 'Lesson not found' });
+    }
+    
+    res.json(lesson);
+  } catch (error) {
+    console.error('Error fetching lesson:', error);
+    res.status(500).json({ error: 'Failed to fetch lesson' });
+  }
+});
+
+// Add a new tutorial
+router.post('/tutorials', async (req, res) => {
+  try {
+    const { title, description, level, coverImage, position } = req.body;
+    
+    const tutorial = new Tutorial({
+      title,
+      description,
+      level,
+      coverImage,
+      position: position || 1
+    });
+    
+    await tutorial.save();
+    res.status(201).json(tutorial);
+  } catch (error) {
+    console.error('Error creating tutorial:', error);
+    res.status(500).json({ error: 'Failed to create tutorial' });
+  }
+});
+
+// Add a new lesson to a tutorial
+router.post('/tutorials/:tutorialId/lessons', async (req, res) => {
+  try {
+    const tutorial = await Tutorial.findById(req.params.tutorialId);
+    if (!tutorial) {
+      return res.status(404).json({ error: 'Tutorial not found' });
+    }
+    
+    const { title, description, content, position, initialPosition, movesSequence, expectedOutcome } = req.body;
+    
+    const lesson = new Lesson({
+      tutorialId: tutorial._id,
+      title,
+      description,
+      content,
+      position: position || 1,
+      initialPosition,
+      movesSequence,
+      expectedOutcome
+    });
+    
+    await lesson.save();
+    res.status(201).json(lesson);
+  } catch (error) {
+    console.error('Error creating lesson:', error);
+    res.status(500).json({ error: 'Failed to create lesson' });
   }
 });
 
