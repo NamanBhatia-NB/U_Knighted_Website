@@ -10,6 +10,7 @@ import Events from "@/pages/events";
 import EventDetail from "@/pages/event-detail";
 import Members from "@/pages/members";
 import News from "@/pages/news";
+import NewsDetail from "@/pages/news-detail";
 import Contact from "@/pages/contact";
 import Join from "@/pages/join";
 import NotFound from "@/pages/not-found";
@@ -20,9 +21,10 @@ function Router() {
       <Route path="/" component={Home} />
       <Route path="/about" component={About} />
       <Route path="/events" component={Events} />
-      <Route path="/events/:id" component={EventDetail} />
+      <Route path="/event/:id" component={EventDetail} />
       <Route path="/members" component={Members} />
       <Route path="/news" component={News} />
+      <Route path="/news/:id" component={NewsDetail} />
       <Route path="/contact" component={Contact} />
       <Route path="/join" component={Join} />
       <Route component={NotFound} />

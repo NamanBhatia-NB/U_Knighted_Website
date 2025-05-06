@@ -144,7 +144,7 @@ export default function Events() {
                         <i className="ri-map-pin-line text-accent"></i>
                         <span className="text-sm">{event.location}</span>
                       </div>
-                      <Link href={`/events/${event.id}`} className="text-accent hover:text-secondary transition-colors font-medium">Details →</Link>
+                      <Link href={`/event/${event.id}`} className="text-accent hover:text-secondary transition-colors font-medium">Details →</Link>
                     </div>
                   </div>
                 </div>

@@ -29,7 +29,7 @@ if (process.env.NODE_ENV === 'production') {
   setupVite(app, server);
   
   // Start server with WebSocket support
-  const PORT = process.env.PORT || 12345;
+  const PORT = process.env.PORT || 49152; // Using a high-numbered port to avoid conflicts
   server.listen(PORT, '0.0.0.0', () => {
     console.log(`[express] serving on port ${PORT}`);
   });
@@ -43,7 +43,7 @@ app.use((err, req, res, next) => {
 
 // Export for direct execution
 if (!module.parent) {
-  const PORT = process.env.PORT || 12345;
+  const PORT = process.env.PORT || 49152; // Using a high-numbered port to avoid conflicts
   app.listen(PORT, '0.0.0.0', () => {
     console.log(`[express] serving on port ${PORT}`);
   });

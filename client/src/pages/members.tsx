@@ -152,7 +152,7 @@ export default function Members() {
                     )}
                     {member.socialLinks.chess && (
                       <a href={member.socialLinks.chess} target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-colors">
-                        <i className="ri-chess-fill"></i>
+                        <i className="ri-chess-board-fill"></i>
                       </a>
                     )}
                   </div>

@@ -104,7 +104,7 @@ export default function MembersSection() {
                   )}
                   {member.socialLinks.chess && (
                     <a href={member.socialLinks.chess} target="_blank" rel="noopener noreferrer" className="text-primary hover:text-accent transition-colors">
-                      <i className="ri-chess-fill text-xl"></i>
+                      <i className="ri-chess-board-fill text-xl"></i>
                     </a>
                   )}
                 </div>

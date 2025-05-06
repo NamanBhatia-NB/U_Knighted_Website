@@ -17,19 +17,33 @@ interface Event {
 }
 
 export default function EventDetail() {
-  const [_, params] = useRoute("/events/:id");
+  // Ensure the route matches exactly what's in App.tsx
+  const [match, params] = useRoute('/event/:id');
+  console.log("Route match:", match, "params:", params);
   const [event, setEvent] = useState<Event | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
   
   useEffect(() => {
+    console.log("Event detail page mounted, params:", params);
+    
     if (params?.id) {
-      const eventId = parseInt(params.id);
-      const foundEvent = eventsData.find(e => e.id === eventId);
-      
-      if (foundEvent) {
-        setEvent(foundEvent);
-      } else {
+      try {
+        const eventId = parseInt(params.id);
+        console.log("Looking for event with ID:", eventId);
+        console.log("Available events:", eventsData);
+        
+        const foundEvent = eventsData.find(e => e.id === eventId);
+        
+        if (foundEvent) {
+          console.log("Found event:", foundEvent);
+          setEvent(foundEvent);
+        } else {
+          console.log("No event found with ID:", eventId);
+          setNotFound(true);
+        }
+      } catch (error) {
+        console.error("Error parsing event ID:", error);
         setNotFound(true);
       }
       
