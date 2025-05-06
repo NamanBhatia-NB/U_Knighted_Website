@@ -89,9 +89,11 @@
   }
 
   .scrolled-fade-in {
-    opacity: 0;
-    transform: translateY(30px);
+    opacity: 0.01; /* Not fully invisible to prevent layout shifts */
+    transform: translateY(10px);
     transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    min-height: 50px; /* Ensure minimum height to prevent collapse */
+    display: block; /* Ensure the element takes up space */
   }
 
   .fade-in-visible {

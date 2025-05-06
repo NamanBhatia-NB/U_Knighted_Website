@@ -26,10 +26,20 @@ export default function Home() {
     };
     
     window.addEventListener('scroll', checkScroll);
-    // Check on initial load
+    
+    // Check on initial load and after a short delay
     checkScroll();
     
-    return () => window.removeEventListener('scroll', checkScroll);
+    // Force a check after a small delay (helps with elements initially visible)
+    setTimeout(checkScroll, 100);
+    
+    // And another check after all content is loaded
+    window.addEventListener('load', checkScroll);
+    
+    return () => {
+      window.removeEventListener('scroll', checkScroll);
+      window.removeEventListener('load', checkScroll);
+    };
   }, []);
 
   return (

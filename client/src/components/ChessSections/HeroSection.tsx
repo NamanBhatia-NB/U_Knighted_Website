@@ -3,7 +3,7 @@ import ChessBoard3D from "@/components/ChessBoard3D";
 
 export default function HeroSection() {
   return (
-    <section className="relative h-screen flex items-center overflow-hidden">
+    <section className="relative h-screen flex items-center overflow-hidden" style={{ minHeight: '600px' }}>
       {/* 3D Chess Visualization */}
       <ChessBoard3D />
       
