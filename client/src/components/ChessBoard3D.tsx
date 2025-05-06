@@ -1,9 +1,11 @@
 import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+import { useMobile } from '@/hooks/use-mobile';
 
 export default function ChessBoard3D() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const { isMobile } = useMobile();
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -12,13 +14,17 @@ export default function ChessBoard3D() {
     const scene = new THREE.Scene();
     
     // Create camera
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const container = containerRef.current;
+    const containerWidth = container.clientWidth;
+    const containerHeight = container.clientHeight;
+    
+    const camera = new THREE.PerspectiveCamera(75, containerWidth / containerHeight, 0.1, 1000);
     camera.position.z = 7;
     camera.position.y = 4;
     
     // Create renderer
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setSize(containerWidth, containerHeight);
     renderer.setClearColor(0x000000, 0);
     containerRef.current.appendChild(renderer.domElement);
     
@@ -144,15 +150,23 @@ export default function ChessBoard3D() {
       renderer.render(scene, camera);
     };
     
-    // Handle window resize
+    // Handle container resize
     const handleResize = () => {
       if (!containerRef.current) return;
       
-      camera.aspect = window.innerWidth / window.innerHeight;
+      const newWidth = containerRef.current.clientWidth;
+      const newHeight = containerRef.current.clientHeight;
+      
+      camera.aspect = newWidth / newHeight;
       camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setSize(newWidth, newHeight);
     };
     
+    // Set up ResizeObserver to watch for container size changes
+    const resizeObserver = new ResizeObserver(handleResize);
+    resizeObserver.observe(containerRef.current);
+    
+    // Also handle window resize events
     window.addEventListener('resize', handleResize);
     
     animate();
@@ -162,6 +176,7 @@ export default function ChessBoard3D() {
       if (containerRef.current && containerRef.current.contains(renderer.domElement)) {
         containerRef.current.removeChild(renderer.domElement);
       }
+      resizeObserver.disconnect();
       window.removeEventListener('resize', handleResize);
       // Dispose of all geometries and materials to prevent memory leaks
       scene.traverse((object) => {
@@ -177,5 +192,5 @@ export default function ChessBoard3D() {
     };
   }, []);
 
-  return <div ref={containerRef} className="absolute inset-0 z-0" />;
+  return <div ref={containerRef} className="w-full h-full relative" />;
 }

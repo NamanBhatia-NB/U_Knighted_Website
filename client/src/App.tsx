@@ -7,6 +7,7 @@ import { Toaster } from "@/components/ui/toaster";
 import Home from "@/pages/home";
 import About from "@/pages/about";
 import Events from "@/pages/events";
+import EventDetail from "@/pages/event-detail";
 import Members from "@/pages/members";
 import News from "@/pages/news";
 import Contact from "@/pages/contact";
@@ -19,6 +20,7 @@ function Router() {
       <Route path="/" component={Home} />
       <Route path="/about" component={About} />
       <Route path="/events" component={Events} />
+      <Route path="/events/:id" component={EventDetail} />
       <Route path="/members" component={Members} />
       <Route path="/news" component={News} />
       <Route path="/contact" component={Contact} />

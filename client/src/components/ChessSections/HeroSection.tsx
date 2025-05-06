@@ -3,10 +3,7 @@ import ChessBoard3D from "@/components/ChessBoard3D";
 
 export default function HeroSection() {
   return (
-    <section className="relative h-screen flex items-center overflow-hidden" style={{ minHeight: '600px' }}>
-      {/* 3D Chess Visualization */}
-      <ChessBoard3D />
-      
+    <section className="relative h-screen flex justify-between w-full items-center overflow-hidden" style={{ minHeight: '600px' }}>
       {/* Hero Content */}
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="max-w-2xl">
@@ -15,7 +12,7 @@ export default function HeroSection() {
             <span className="text-accent">Elevate Your Mind</span>
           </h1>
           <p className="text-lg md:text-xl mb-8 text-primary/80">
-            Join our university's premier chess community where strategy meets passion, and champions are made move by move.
+            Join our institute's premier chess community where strategy meets passion, and champions are made move by move.
           </p>
           <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
             <Link href="/join" className="bg-primary text-white px-6 py-3 rounded-lg hover:bg-accent hover:text-primary transition-colors text-center font-medium">
@@ -26,6 +23,11 @@ export default function HeroSection() {
             </Link>
           </div>
         </div>
+      </div>
+
+      {/* 3D Chess Visualization */}
+      <div className="hidden md:block absolute right-0 top-0 w-1/2 h-full lg:static lg:w-1/2">
+        <ChessBoard3D />
       </div>
       
       {/* Decorative elements */}

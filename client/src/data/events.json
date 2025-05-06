@@ -1,0 +1,82 @@
+[
+  {
+    "id": 1,
+    "title": "Weekly Club Meeting",
+    "type": "Regular",
+    "date": "2025-05-10",
+    "timeStart": "18:00",
+    "timeEnd": "21:00",
+    "description": "Our regular weekly club meeting with casual games, analysis, and chess puzzles.",
+    "location": "Student Union Building, Room 305"
+  },
+  {
+    "id": 2,
+    "title": "Spring Championship",
+    "type": "Tournament",
+    "date": "2025-05-25",
+    "timeStart": "09:00",
+    "timeEnd": "17:00",
+    "description": "The semester's main tournament with cash prizes for the top three winners.",
+    "location": "Student Union Grand Hall"
+  },
+  {
+    "id": 3,
+    "title": "Chess & Chill",
+    "type": "Social",
+    "date": "2025-05-15",
+    "timeStart": "19:00",
+    "timeEnd": "22:00",
+    "description": "A relaxed social event for chess players of all levels. Refreshments provided.",
+    "location": "Campus Coffee House"
+  },
+  {
+    "id": 4,
+    "title": "Beginner's Workshop",
+    "type": "Workshop",
+    "date": "2025-05-18",
+    "timeStart": "14:00",
+    "timeEnd": "16:00",
+    "description": "Learn the fundamentals of chess strategy and tactics. Perfect for newcomers and those looking to improve their game.",
+    "location": "Library Conference Room B"
+  },
+  {
+    "id": 5,
+    "title": "Simultaneous Exhibition",
+    "type": "Special",
+    "date": "2025-06-01",
+    "timeStart": "13:00",
+    "timeEnd": "16:00",
+    "description": "Our club president Michael Chen will play against multiple opponents simultaneously. Sign up to test your skills!",
+    "location": "Student Center Plaza"
+  },
+  {
+    "id": 6,
+    "title": "Chess Movie Night",
+    "type": "Social",
+    "date": "2025-06-05",
+    "timeStart": "19:00",
+    "timeEnd": "22:00",
+    "description": "Join us for a screening of 'The Queen's Gambit' followed by a discussion on chess in popular culture.",
+    "location": "Student Union Theater"
+  },
+  {
+    "id": 7,
+    "title": "Blitz Tournament",
+    "type": "Tournament",
+    "date": "2025-06-10",
+    "timeStart": "17:00",
+    "timeEnd": "20:00",
+    "description": "Fast-paced chess with 5-minute time controls. Prizes for top performers.",
+    "location": "Student Union Building, Room.305"
+  },
+  {
+    "id": 8,
+    "title": "End of Semester Party",
+    "type": "Social",
+    "date": "2025-06-20",
+    "timeStart": "18:00",
+    "timeEnd": "22:00",
+    "description": "Celebrate the end of the semester with fellow chess enthusiasts. Food and drinks provided.",
+    "location": "The University Club"
+  }
+]

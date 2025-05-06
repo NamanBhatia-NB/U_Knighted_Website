@@ -64,11 +64,115 @@ router.post('/members/register', async (req, res) => {
 // Get all events
 router.get('/events', async (req, res) => {
   try {
-    const events = await Event.find();
+    const events = await Event.find().sort({ date: 1 });
     res.json(events);
   } catch (error) {
     console.error('Error fetching events:', error);
     res.status(500).json({ error: 'Failed to fetch events' });
+  }
+});
+
+// Get event by ID
+router.get('/events/:id', async (req, res) => {
+  try {
+    const event = await Event.findById(req.params.id);
+    if (!event) {
+      return res.status(404).json({ error: 'Event not found' });
+    }
+    res.json(event);
+  } catch (error) {
+    console.error('Error fetching event:', error);
+    res.status(500).json({ error: 'Failed to fetch event' });
+  }
+});
+
+// Create new event
+router.post('/events', async (req, res) => {
+  try {
+    const { title, type, date, timeStart, timeEnd, description, location } = req.body;
+    
+    // Validate required fields
+    if (!title || !type || !date || !timeStart || !timeEnd || !description || !location) {
+      return res.status(400).json({ error: 'All fields are required' });
+    }
+    
+    const event = new Event({
+      title,
+      type,
+      date,
+      timeStart,
+      timeEnd,
+      description,
+      location
+    });
+    
+    await event.save();
+    
+    // Update society stats - increment tournaments if it's a tournament
+    if (type.toLowerCase() === 'tournament') {
+      await SocietyStats.updateOne({}, { $inc: { tournaments: 1 } }, { upsert: true });
+    }
+    
+    res.status(201).json(event);
+  } catch (error) {
+    console.error('Error creating event:', error);
+    res.status(500).json({ error: 'Failed to create event' });
+  }
+});
+
+// Update event
+router.put('/events/:id', async (req, res) => {
+  try {
+    const { title, type, date, timeStart, timeEnd, description, location } = req.body;
+    
+    // Validate required fields
+    if (!title || !type || !date || !timeStart || !timeEnd || !description || !location) {
+      return res.status(400).json({ error: 'All fields are required' });
+    }
+    
+    const updatedEvent = await Event.findByIdAndUpdate(
+      req.params.id,
+      {
+        title,
+        type,
+        date,
+        timeStart,
+        timeEnd,
+        description,
+        location
+      },
+      { new: true }
+    );
+    
+    if (!updatedEvent) {
+      return res.status(404).json({ error: 'Event not found' });
+    }
+    
+    res.json(updatedEvent);
+  } catch (error) {
+    console.error('Error updating event:', error);
+    res.status(500).json({ error: 'Failed to update event' });
+  }
+});
+
+// Delete event
+router.delete('/events/:id', async (req, res) => {
+  try {
+    const event = await Event.findByIdAndDelete(req.params.id);
+    
+    if (!event) {
+      return res.status(404).json({ error: 'Event not found' });
+    }
+    
+    // Update society stats - decrement tournaments if it was a tournament
+    if (event.type.toLowerCase() === 'tournament') {
+      await SocietyStats.updateOne({}, { $inc: { tournaments: -1 } });
+    }
+    
+    res.json({ message: 'Event deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting event:', error);
+    res.status(500).json({ error: 'Failed to delete event' });
   }
 });
 

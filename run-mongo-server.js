@@ -5,7 +5,7 @@ const connectDB = require('./db/mongoose');
 const routes = require('./server/routes-mongo');
 
 // Set a custom port for this script
-const PORT = 54321;
+const PORT = 43210;
 
 // Connect to MongoDB
 console.log('Connecting to MongoDB...');

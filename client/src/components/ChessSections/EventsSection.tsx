@@ -1,5 +1,6 @@
-import { useQuery } from "@tanstack/react-query";
+import { useState, useEffect } from "react";
 import { Link } from "wouter";
+import eventsData from "@/data/events.json";
 
 interface Event {
   id: number;
@@ -13,9 +14,18 @@ interface Event {
 }
 
 export default function EventsSection() {
-  const { data: events = [], isLoading } = useQuery<Event[]>({
-    queryKey: ['/api/events'],
-  });
+  const [events, setEvents] = useState<Event[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  
+  useEffect(() => {
+    // Sort events by date - upcoming events first
+    const sortedEvents = [...eventsData].sort((a, b) => {
+      return new Date(a.date).getTime() - new Date(b.date).getTime();
+    });
+    
+    setEvents(sortedEvents);
+    setIsLoading(false);
+  }, []);
 
   return (
     <section id="events" className="py-20 md:py-32 bg-primary/5 relative">
