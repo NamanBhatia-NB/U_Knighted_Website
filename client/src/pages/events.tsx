@@ -53,7 +53,9 @@ export default function Events() {
   }, []);
   
   // Get all unique event types for filtering
-  const eventTypes = ["all", ...new Set(eventsData.map(event => event.type))];
+  const allEventTypes = eventsData.map(event => event.type);
+  const uniqueEventTypes = Array.from(new Set(allEventTypes));
+  const eventTypes = ["all", ...uniqueEventTypes];
   
   // Filter events based on selection
   const filteredEvents = filter === "all" 

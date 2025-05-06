@@ -1,5 +1,6 @@
-import { useQuery } from "@tanstack/react-query";
+import { useState, useEffect } from "react";
 import { Link } from "wouter";
+import membersData from "@/data/members.json";
 
 interface Member {
   id: number;
@@ -16,9 +17,25 @@ interface Member {
 }
 
 export default function MembersSection() {
-  const { data: members = [], isLoading } = useQuery<Member[]>({
-    queryKey: ['/api/members'],
-  });
+  const [members, setMembers] = useState<Member[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  
+  useEffect(() => {
+    // Sort members by role importance (President first, etc.)
+    const sortedMembers = [...membersData].sort((a, b) => {
+      // Custom sorting by role importance
+      const roleImportance = (role: string) => {
+        const order = ["President", "Vice President", "Treasurer", "Secretary", "Tournament Director"];
+        const index = order.indexOf(role);
+        return index >= 0 ? index : 999; // If not in the list, put at the end
+      };
+      
+      return roleImportance(a.role) - roleImportance(b.role);
+    });
+    
+    setMembers(sortedMembers);
+    setIsLoading(false);
+  }, []);
 
   return (
     <section id="members" className="py-20 md:py-32 relative">

@@ -1,5 +1,7 @@
-import { useQuery } from "@tanstack/react-query";
+import { useState, useEffect } from "react";
 import { Link } from "wouter";
+import newsData from "@/data/news.json";
+import { format } from "date-fns";
 
 interface News {
   id: number;
@@ -11,9 +13,18 @@ interface News {
 }
 
 export default function NewsSection() {
-  const { data: news = [], isLoading } = useQuery<News[]>({
-    queryKey: ['/api/news'],
-  });
+  const [news, setNews] = useState<News[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  
+  useEffect(() => {
+    // Sort news by date - newest first
+    const sortedNews = [...newsData].sort((a, b) => {
+      return new Date(b.date).getTime() - new Date(a.date).getTime();
+    });
+    
+    setNews(sortedNews);
+    setIsLoading(false);
+  }, []);
 
   // Get featured news (first item) and remaining news (next two items)
   const featuredNews = news.length > 0 ? news[0] : null;
