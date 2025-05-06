@@ -63,38 +63,7 @@ const societyStatsSchema = new mongoose.Schema({
   championships: { type: Number, default: 8 }
 });
 
-// Tutorial Schema
-const tutorialSchema = new mongoose.Schema({
-  title: { type: String, required: true },
-  description: { type: String, required: true },
-  level: { type: String, required: true }, // Beginner, Intermediate, Advanced
-  coverImage: String,
-  position: { type: Number, required: true }, // For ordering tutorials
-  createdAt: { type: Date, default: Date.now }
-});
 
-// Lesson Schema
-const lessonSchema = new mongoose.Schema({
-  tutorialId: { 
-    type: mongoose.Schema.Types.ObjectId, 
-    ref: 'Tutorial',
-    required: true 
-  },
-  title: { type: String, required: true },
-  description: { type: String, required: true },
-  content: { type: String, required: true },
-  position: { type: Number, required: true }, // For ordering lessons within a tutorial
-  initialPosition: { type: String, required: true }, // FEN string of initial board position
-  movesSequence: {
-    moves: [{
-      from: String, // e.g., "e2"
-      to: String, // e.g., "e4"
-      promotion: String // For pawn promotion
-    }]
-  },
-  expectedOutcome: String,
-  createdAt: { type: Date, default: Date.now }
-});
 
 // Create models
 const Member = mongoose.model('Member', memberSchema);
@@ -103,8 +72,6 @@ const News = mongoose.model('News', newsSchema);
 const Contact = mongoose.model('Contact', contactSchema);
 const Newsletter = mongoose.model('Newsletter', newsletterSchema);
 const SocietyStats = mongoose.model('SocietyStats', societyStatsSchema);
-const Tutorial = mongoose.model('Tutorial', tutorialSchema);
-const Lesson = mongoose.model('Lesson', lessonSchema);
 
 module.exports = {
   Member,
@@ -112,7 +79,5 @@ module.exports = {
   News,
   Contact,
   Newsletter,
-  SocietyStats,
-  Tutorial,
-  Lesson
+  SocietyStats
 };
