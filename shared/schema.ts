@@ -115,6 +115,45 @@ export const newsletterInsertSchema = createInsertSchema(newsletterSubscribers);
 export type NewsletterInsert = z.infer<typeof newsletterInsertSchema>;
 export type NewsletterSubscriber = typeof newsletterSubscribers.$inferSelect;
 
+// Chess tutorials
+export const tutorials = pgTable("tutorials", {
+  id: serial("id").primaryKey(),
+  title: text("title").notNull(),
+  description: text("description").notNull(),
+  level: text("level").notNull(), // Beginner, Intermediate, Advanced
+  coverImage: text("cover_image"),
+  position: integer("position").notNull(), // For ordering tutorials
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+export const tutorialInsertSchema = createInsertSchema(tutorials);
+export type TutorialInsert = z.infer<typeof tutorialInsertSchema>;
+export type Tutorial = typeof tutorials.$inferSelect;
+
+// Chess tutorial lessons
+export const lessons = pgTable("lessons", {
+  id: serial("id").primaryKey(),
+  tutorialId: integer("tutorial_id").notNull().references(() => tutorials.id),
+  title: text("title").notNull(),
+  description: text("description").notNull(),
+  content: text("content").notNull(),
+  position: integer("position").notNull(), // For ordering lessons within a tutorial
+  initialPosition: text("initial_position").notNull(), // FEN string of initial board position
+  movesSequence: json("moves_sequence").$type<{
+    moves: Array<{
+      from: string; // e.g., "e2"
+      to: string; // e.g., "e4"
+      promotion?: string; // For pawn promotion
+    }>;
+  }>(),
+  expectedOutcome: text("expected_outcome"),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+export const lessonInsertSchema = createInsertSchema(lessons);
+export type LessonInsert = z.infer<typeof lessonInsertSchema>;
+export type Lesson = typeof lessons.$inferSelect;
+
 // Define relations
 export const eventsRelations = relations(events, ({ many }) => ({
   // Additional relations can be added here
@@ -126,4 +165,15 @@ export const membersRelations = relations(members, ({ many }) => ({
 
 export const newsRelations = relations(news, ({ many }) => ({
   // Additional relations can be added here
+}));
+
+export const tutorialsRelations = relations(tutorials, ({ many }) => ({
+  lessons: many(lessons)
+}));
+
+export const lessonsRelations = relations(lessons, ({ one }) => ({
+  tutorial: one(tutorials, {
+    fields: [lessons.tutorialId],
+    references: [tutorials.id]
+  })
 }));
