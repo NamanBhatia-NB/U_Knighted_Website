@@ -56,9 +56,53 @@ export default function Footer() {
             <p className="text-white/70 mb-4">Subscribe to receive updates about tournaments, events, and chess tips.</p>
             <form className="space-y-2" onSubmit={(e) => {
               e.preventDefault();
-              // Add newsletter subscription logic here
+              const email = (e.target as HTMLFormElement).email.value;
+              const name = "";
+
+              if (!email) return;
+
+              // Set button state
+              const button = (e.target as HTMLFormElement).querySelector('button');
+              if (button) {
+                button.disabled = true;
+                button.innerText = 'Subscribing...';
+              }
+
+              // Submit newsletter subscription
+              fetch('/api/newsletter/subscribe', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, name }),
+              })
+                .then((res) => {
+                  if (!res.ok) {
+                    if (res.status === 409) {
+                      throw new Error('You are already subscribed to our newsletter');
+                    }
+                    throw new Error('Failed to subscribe. Please try again.');
+                  }
+                  return res.json();
+                })
+                .then(() => {
+                  // Reset form
+                  (e.target as HTMLFormElement).reset();
+                  // Show success message
+                  alert('Thank you for subscribing to our newsletter!');
+                })
+                .catch((error) => {
+                  // Show error message
+                  alert(error.message);
+                })
+                .finally(() => {
+                  // Reset button state
+                  if (button) {
+                    button.disabled = false;
+                    button.innerText = 'Subscribe';
+                  }
+                });
             }}>
               <input 
+                name="email" 
                 type="email" 
                 placeholder="Your email address" 
                 className="w-full px-4 py-2 rounded-lg bg-white/5 border border-white/20 focus:ring-2 focus:ring-accent focus:border-accent" 

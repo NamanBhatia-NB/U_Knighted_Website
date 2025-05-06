@@ -50,13 +50,30 @@ export default function JoinForm() {
         description: "Thank you for joining our chess society! We'll be in touch soon.",
       });
       form.reset();
+      setIsSubmitting(false);
     },
     onError: (error) => {
-      toast({
-        title: "Registration Failed",
-        description: error.message || "An error occurred. Please try again.",
-        variant: "destructive",
-      });
+      // Check if the error message contains information about duplicate email
+      const errorMessage = error.message || "";
+      if (errorMessage.includes("409") || errorMessage.includes("already exists") || errorMessage.includes("Email already")) {
+        toast({
+          title: "Email Already Registered",
+          description: "This email address is already registered. Please use a different email or contact us if you need to update your information.",
+          variant: "destructive",
+        });
+        // Focus the email field so user can easily change it
+        const emailField = document.querySelector('input[name="email"]');
+        if (emailField) {
+          (emailField as HTMLInputElement).focus();
+        }
+      } else {
+        toast({
+          title: "Registration Failed",
+          description: "An error occurred. Please try again.",
+          variant: "destructive",
+        });
+      }
+      setIsSubmitting(false);
     },
   });
 

@@ -45,6 +45,7 @@ export default function ContactForm() {
         description: "Thank you for your message. We'll get back to you soon!",
       });
       form.reset();
+      setIsSubmitting(false);
     },
     onError: (error) => {
       toast({
@@ -52,6 +53,7 @@ export default function ContactForm() {
         description: error.message || "An error occurred. Please try again.",
         variant: "destructive",
       });
+      setIsSubmitting(false);
     },
   });
 

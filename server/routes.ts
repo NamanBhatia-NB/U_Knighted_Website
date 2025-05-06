@@ -100,6 +100,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (error instanceof z.ZodError) {
         return res.status(400).json({ errors: error.errors });
       }
+      
+      // Check if it's a duplicate email error
+      const errorMessage = String(error);
+      if (errorMessage.includes('duplicate key') && errorMessage.includes('email')) {
+        return res.status(409).json({ 
+          error: "Email already exists", 
+          message: "This email address is already registered. Please use a different email address."
+        });
+      }
+      
       console.error("Error registering member:", error);
       return res.status(500).json({ error: "Failed to register member" });
     }
@@ -157,6 +167,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (error instanceof z.ZodError) {
         return res.status(400).json({ errors: error.errors });
       }
+      
+      // Check if it's a duplicate email error
+      const errorMessage = String(error);
+      if (errorMessage.includes('duplicate key') && errorMessage.includes('email')) {
+        return res.status(409).json({ 
+          error: "Email already subscribed", 
+          message: "This email address is already subscribed to our newsletter."
+        });
+      }
+      
       console.error("Error subscribing to newsletter:", error);
       return res.status(500).json({ error: "Failed to subscribe to newsletter" });
     }
