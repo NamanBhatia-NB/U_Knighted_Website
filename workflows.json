@@ -1,1 +1,6 @@
-null
+{
+  "Start application": {
+    "language": "nodejs",
+    "command": "node server/run-server.js"
+  }
+}
