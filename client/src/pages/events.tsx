@@ -1,11 +1,37 @@
+import { useState, useEffect } from "react";
+import { Link } from "wouter";
 import Navbar from "@/components/Navbar";
-import EventsSection from "@/components/ChessSections/EventsSection";
 import Footer from "@/components/ChessSections/Footer";
-import { useEffect } from "react";
+import eventsData from "@/data/events.json";
+import { format } from "date-fns";
+
+interface Event {
+  id: number;
+  title: string;
+  type: string;
+  date: string;
+  timeStart: string;
+  timeEnd: string;
+  description: string;
+  location: string;
+}
 
 export default function Events() {
-  // Initialize scroll animation
+  const [events, setEvents] = useState<Event[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [filter, setFilter] = useState<string>("all");
+  
+  // Initialize animations and load data
   useEffect(() => {
+    // Sort events by date - upcoming events first
+    const sortedEvents = [...eventsData].sort((a, b) => {
+      return new Date(a.date).getTime() - new Date(b.date).getTime();
+    });
+    
+    setEvents(sortedEvents);
+    setIsLoading(false);
+    
+    // Initialize scroll animations
     const scrollFadeElements = document.querySelectorAll('.scrolled-fade-in');
     
     const checkScroll = () => {
@@ -25,13 +51,128 @@ export default function Events() {
     
     return () => window.removeEventListener('scroll', checkScroll);
   }, []);
+  
+  // Get all unique event types for filtering
+  const eventTypes = ["all", ...new Set(eventsData.map(event => event.type))];
+  
+  // Filter events based on selection
+  const filteredEvents = filter === "all" 
+    ? events
+    : events.filter(event => event.type === filter);
+  
+  // Format date for display
+  const formatEventDate = (dateString: string) => {
+    return format(new Date(dateString), "MMMM d, yyyy");
+  };
 
   return (
     <>
       <Navbar />
-      <div className="pt-24">
-        <EventsSection />
-      </div>
+      <main className="pt-24 pb-20">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16 scrolled-fade-in">
+            <h1 className="text-3xl md:text-5xl font-bold font-display mb-4">Chess Society Events</h1>
+            <p className="max-w-2xl mx-auto text-lg text-primary/70">
+              Join us for tournaments, workshops, and social gatherings throughout the academic year.
+            </p>
+          </div>
+          
+          {/* Filter tabs */}
+          <div className="flex flex-wrap justify-center gap-2 mb-10 scrolled-fade-in">
+            {eventTypes.map((type) => (
+              <button
+                key={type}
+                onClick={() => setFilter(type)}
+                className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                  filter === type 
+                    ? 'bg-primary text-white' 
+                    : 'bg-primary/10 text-primary hover:bg-primary/20'
+                }`}
+              >
+                {type === "all" ? "All Events" : type}
+              </button>
+            ))}
+          </div>
+          
+          {/* Event grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+            {isLoading ? (
+              // Loading skeletons
+              Array(6).fill(0).map((_, i) => (
+                <div key={i} className="glass rounded-xl overflow-hidden shadow-lg h-64 animate-pulse">
+                  <div className="p-6">
+                    <div className="h-4 bg-gray-300 rounded w-1/4 mb-4"></div>
+                    <div className="h-6 bg-gray-300 rounded w-3/4 mb-4"></div>
+                    <div className="h-4 bg-gray-300 rounded w-1/2 mb-8"></div>
+                    <div className="h-4 bg-gray-300 rounded w-full mb-4"></div>
+                    <div className="h-4 bg-gray-300 rounded w-full mb-4"></div>
+                    <div className="flex justify-between items-center">
+                      <div className="h-4 bg-gray-300 rounded w-1/3"></div>
+                      <div className="h-4 bg-gray-300 rounded w-1/4"></div>
+                    </div>
+                  </div>
+                </div>
+              ))
+            ) : filteredEvents.length > 0 ? (
+              filteredEvents.map((event) => (
+                <div key={event.id} className="glass rounded-xl overflow-hidden shadow-lg transition-transform duration-300 hover:scale-105 scrolled-fade-in">
+                  <div className="p-6">
+                    <div className="flex justify-between items-start mb-4">
+                      <div>
+                        <span className={`inline-block px-3 py-1 ${
+                          event.type === 'Tournament' ? 'bg-accent text-primary' : 
+                          event.type === 'Workshop' ? 'bg-primary text-white' : 
+                          event.type === 'Regular' ? 'bg-blue-500 text-white' :
+                          event.type === 'Social' ? 'bg-green-500 text-white' :
+                          event.type === 'Special' ? 'bg-purple-500 text-white' :
+                          'bg-secondary text-white'
+                        } text-sm font-medium rounded-full`}>
+                          {event.type}
+                        </span>
+                        <h3 className="mt-3 text-xl font-bold">{event.title}</h3>
+                      </div>
+                      <div className="text-right">
+                        <div className="text-sm text-primary/70">{formatEventDate(event.date)}</div>
+                        <div className="text-sm font-medium">{event.timeStart} - {event.timeEnd}</div>
+                      </div>
+                    </div>
+                    <p className="mb-4 line-clamp-3">{event.description}</p>
+                    <div className="flex justify-between items-center">
+                      <div className="flex items-center space-x-1">
+                        <i className="ri-map-pin-line text-accent"></i>
+                        <span className="text-sm">{event.location}</span>
+                      </div>
+                      <Link href={`/events/${event.id}`} className="text-accent hover:text-secondary transition-colors font-medium">Details →</Link>
+                    </div>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <div className="col-span-full text-center py-12">
+                <p className="text-xl">No events found for this filter.</p>
+                <button 
+                  onClick={() => setFilter("all")} 
+                  className="mt-4 px-4 py-2 bg-primary text-white rounded-md hover:bg-primary/90 transition-colors"
+                >
+                  View All Events
+                </button>
+              </div>
+            )}
+          </div>
+          
+          {/* Calendar integration */}
+          <div className="text-center mt-16 mb-12 scrolled-fade-in">
+            <h2 className="text-2xl md:text-3xl font-bold font-display mb-4">Get Notified About Upcoming Events</h2>
+            <p className="max-w-2xl mx-auto mb-8">
+              Subscribe to our newsletter or follow our social media channels to stay updated about all our upcoming events.
+            </p>
+            <Link href="/contact" className="inline-flex items-center space-x-2 px-6 py-3 bg-primary text-white hover:bg-primary/90 transition-colors rounded-lg font-medium">
+              <span>Join Our Newsletter</span>
+              <i className="ri-mail-line"></i>
+            </Link>
+          </div>
+        </div>
+      </main>
       <Footer />
     </>
   );
