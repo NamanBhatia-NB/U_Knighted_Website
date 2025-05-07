@@ -86,14 +86,34 @@ function setupServer() {
   // Serve static files directly from the public directory
   app.use(express.static(path.join(__dirname, '../client/public')));
   
-  // Catch-all route to handle all frontend requests
+  // Define routes for specific pages
+  app.get('/contact', (req, res) => {
+    res.sendFile(path.join(__dirname, '../client/public/contact.html'));
+  });
+  
+  // Routes for other pages we'll create later
+  const pages = ['about', 'events', 'members', 'news', 'join'];
+  pages.forEach(page => {
+    app.get(`/${page}`, (req, res) => {
+      // Try to serve the specific page if it exists
+      const pagePath = path.join(__dirname, `../client/public/${page}.html`);
+      // Check if file exists first
+      if (require('fs').existsSync(pagePath)) {
+        return res.sendFile(pagePath);
+      }
+      // Fall back to index.html
+      res.sendFile(path.join(__dirname, '../client/public/index.html'));
+    });
+  });
+  
+  // Catch-all route to handle all other frontend requests
   app.get('*', (req, res) => {
     // Check if this is an API request
     if (req.url.startsWith('/api')) {
       return res.status(404).json({ error: 'API endpoint not found' });
     }
     
-    // Serve the main HTML file
+    // Serve the main HTML file for all other routes
     res.sendFile(path.join(__dirname, '../client/public/index.html'));
   });
 
