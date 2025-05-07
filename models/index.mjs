@@ -71,4 +71,4 @@ const Contact = mongoose.model('Contact', contactSchema);
 const Newsletter = mongoose.model('Newsletter', newsletterSchema);
 const SocietyStats = mongoose.model('SocietyStats', societyStatsSchema);
 
-export { Member, Event, News, Contact, Newsletter, SocietyStats};
+export { Member, Event, News, Contact, Newsletter, SocietyStats };

@@ -26,7 +26,7 @@ const main = async () => {
       res.sendFile(path.join(__dirname, '../client/dist/index.html'));
     });
 
-    const PORT = 5000; // Fixed port for Replit
+    const PORT = 5000; // Force port 5000 for Replit
     app.listen(PORT, '0.0.0.0', () => {
       console.log(`[express] serving on port ${PORT}`);
     });
@@ -35,7 +35,7 @@ const main = async () => {
     const server = http.createServer(app);
     setupVite(app, server);
 
-    const PORT = 5000; // Fixed port for Replit
+    const PORT = 5000; // Force port 5000 for Replit
     server.listen(PORT, '0.0.0.0', () => {
       console.log(`[express] serving on port ${PORT}`);
     });

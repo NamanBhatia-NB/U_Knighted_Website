@@ -66,7 +66,7 @@
   }
 
   body {
-    @apply font-sans antialiased bg-background text-foreground;
+    @apply font-sans antialiased text-foreground;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -74,7 +74,100 @@
   }
 
   .glass {
-    @apply bg-white/25 backdrop-blur-md border border-white/20;
+    @apply bg-white/25 backdrop-blur-md border border-white/20 dark:bg-black/20 dark:border-gray-800/30;
+  }
+  
+  /* Smooth theme transition */
+  .dark, html, body, * {
+    transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out, border-color 0.5s ease-in-out, 
+                box-shadow 0.5s ease-in-out, opacity 0.3s ease-in-out;
+  }
+  
+  /* Variables for scroll-based theme transition */
+  :root {
+    --scroll-position: 0%;
+    --theme-transition-factor: 100%;
+  }
+  
+  /* Theme transition elements */
+  .theme-transition-bg {
+    background-image: linear-gradient(to bottom, 
+      hsl(var(--background)) calc(100% - var(--scroll-position)),
+      hsl(222.2 84% 4.9%) var(--scroll-position)
+    );
+    transition: background-position 0.3s ease;
+  }
+  
+  .theme-transition-text {
+    color: hsl(var(--foreground));
+    opacity: calc(1 - (var(--scroll-position) / 100));
+    transition: opacity 0.3s ease;
+  }
+  
+  /* Theme transition containers */
+  .theme-transition-container {
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+  }
+  
+  .theme-transition-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: linear-gradient(
+      to bottom,
+      hsl(var(--background)) 0%,
+      hsl(var(--background)) calc(50% - var(--scroll-position) / 2),
+      hsl(222.2 84% 4.9%) calc(50% + var(--scroll-position) / 2),
+      hsl(222.2 84% 4.9%) 100%
+    );
+    z-index: -1;
+    pointer-events: none;
+    opacity: var(--theme-transition-opacity, 0.5);
+    transition: opacity 0.5s ease;
+  }
+  
+  /* Enhanced theme transition card with 3D effect */
+  .theme-card {
+    background-color: hsl(var(--card));
+    border: 1px solid hsl(var(--border));
+    border-radius: var(--radius);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+              0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, 
+                background-color 0.5s ease-in-out;
+  }
+  
+  .theme-card:hover {
+    transform: translateY(-2px) scale(1.01);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+              0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  }
+  
+  .dark .theme-card {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3),
+              0 2px 4px -1px rgba(0, 0, 0, 0.16);
+  }
+  
+  .dark .theme-card:hover {
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3),
+              0 4px 6px -2px rgba(0, 0, 0, 0.16);
+  }
+
+  .theme-aware-glass {
+    background-color: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid;
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+  
+  .dark .theme-aware-glass {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-color: rgba(255, 255, 255, 0.05);
   }
 
   .parallax {
@@ -84,17 +177,61 @@
     background-size: cover;
   }
 
-  /* Remove fade animation completely to fix blank spaces */
+  /* Enhanced scroll animations */
   .scrolled-fade-in {
-    opacity: 1;
-    transform: none;
-    transition: none;
-    display: block;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    will-change: opacity, transform;
   }
 
   .fade-in-visible {
     opacity: 1;
-    transform: none;
+    transform: translateY(0);
+  }
+  
+  /* Staggered animations for children */
+  .stagger-children > * {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+  }
+  
+  .stagger-children.fade-in-visible > * {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  /* Animation variations */
+  .fade-from-left {
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  }
+  
+  .fade-from-right {
+    opacity: 0;
+    transform: translateX(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  }
+  
+  .fade-in {
+    opacity: 0;
+    transition: opacity 0.6s ease-out;
+  }
+  
+  .scale-in {
+    opacity: 0;
+    transform: scale(0.95);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  }
+  
+  .fade-from-left.fade-in-visible,
+  .fade-from-right.fade-in-visible,
+  .fade-in.fade-in-visible,
+  .scale-in.fade-in-visible {
+    opacity: 1;
+    transform: translate(0) scale(1);
   }
 }
 

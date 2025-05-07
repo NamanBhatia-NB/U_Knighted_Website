@@ -1,7 +1,12 @@
-import { Switch, Route } from "wouter";
+import { Switch, Route, useLocation } from "wouter";
 import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
+import { ThemeProvider } from "@/components/ThemeProvider";
+import { useScrollAnimation } from "@/hooks/use-scroll-animation";
+import { useScrollTheme } from "@/hooks/use-scroll-theme";
+import { useEffect } from "react";
+import Navbar from "@/components/Navbar";
 
 // Pages
 import Home from "@/pages/home";
@@ -13,31 +18,75 @@ import News from "@/pages/news";
 import NewsDetail from "@/pages/news-detail";
 import Contact from "@/pages/contact";
 import Join from "@/pages/join";
+import ThemeDemo from "@/pages/theme-demo";
 import NotFound from "@/pages/not-found";
 
 function Router() {
+  const [location] = useLocation();
+  
+  // Reset scroll position when route changes
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location]);
+  
   return (
-    <Switch>
-      <Route path="/" component={Home} />
-      <Route path="/about" component={About} />
-      <Route path="/events" component={Events} />
-      <Route path="/event/:id" component={EventDetail} />
-      <Route path="/members" component={Members} />
-      <Route path="/news" component={News} />
-      <Route path="/news/:id" component={NewsDetail} />
-      <Route path="/contact" component={Contact} />
-      <Route path="/join" component={Join} />
-      <Route component={NotFound} />
-    </Switch>
+    <>
+      <Navbar />
+      <main className="min-h-screen pt-16">
+        <Switch>
+          <Route path="/" component={Home} />
+          <Route path="/about" component={About} />
+          <Route path="/events" component={Events} />
+          <Route path="/event/:id" component={EventDetail} />
+          <Route path="/members" component={Members} />
+          <Route path="/news" component={News} />
+          <Route path="/news/:id" component={NewsDetail} />
+          <Route path="/contact" component={Contact} />
+          <Route path="/join" component={Join} />
+          <Route path="/theme-demo" component={ThemeDemo} />
+          <Route component={NotFound} />
+        </Switch>
+      </main>
+    </>
   );
+}
+
+function ScrollAnimationWrapper() {
+  // Initialize scroll-based animations
+  const { checkAnimations } = useScrollAnimation({
+    stagger: true,
+    staggerDelay: 100
+  });
+  
+  // Initialize scroll-based theme changes
+  const { scrollPercentage } = useScrollTheme({
+    threshold: 50,
+    useSections: false
+  });
+  
+  // Re-check animations when route changes
+  const [location] = useLocation();
+  useEffect(() => {
+    // Give time for the new page to render before checking animations
+    const timeout = setTimeout(() => {
+      checkAnimations();
+    }, 300);
+    
+    return () => clearTimeout(timeout);
+  }, [location, checkAnimations]);
+  
+  return null;
 }
 
 function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <Router />
-      <Toaster />
-    </QueryClientProvider>
+    <ThemeProvider defaultTheme="light">
+      <QueryClientProvider client={queryClient}>
+        <ScrollAnimationWrapper />
+        <Router />
+        <Toaster />
+      </QueryClientProvider>
+    </ThemeProvider>
   );
 }
 

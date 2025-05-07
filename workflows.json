@@ -1,8 +1,0 @@
-{
-  "workflows": [
-    {
-      "name": "Start application",
-      "command": "node simple-server.js"
-    }
-  ]
-}
