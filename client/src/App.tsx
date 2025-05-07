@@ -43,7 +43,6 @@ function Router() {
           <Route path="/news/:id" component={NewsDetail} />
           <Route path="/contact" component={Contact} />
           <Route path="/join" component={Join} />
-          <Route path="/theme-demo" component={ThemeDemo} />
           <Route component={NotFound} />
         </Switch>
       </main>
@@ -80,7 +79,7 @@ function ScrollAnimationWrapper() {
 
 function App() {
   return (
-    <ThemeProvider defaultTheme="light">
+    <ThemeProvider defaultTheme="system">
       <QueryClientProvider client={queryClient}>
         <ScrollAnimationWrapper />
         <Router />
