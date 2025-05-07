@@ -40,20 +40,44 @@ export function ThemeProvider({
 
   useEffect(() => {
     const root = window.document.documentElement;
+    const htmlEl = window.document.querySelector('html');
+    const bodyEl = window.document.body;
     
+    // Remove classes from all important elements
     root.classList.remove("light", "dark");
+    htmlEl?.classList.remove("light", "dark");
+    bodyEl?.classList.remove("light", "dark");
+    
+    let appliedTheme: Theme = theme;
     
     if (theme === "system") {
-      const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
+      appliedTheme = window.matchMedia("(prefers-color-scheme: dark)")
         .matches
         ? "dark"
         : "light";
-      
-      root.classList.add(systemTheme);
-      return;
     }
     
-    root.classList.add(theme);
+    // Apply the theme to all important elements
+    root.classList.add(appliedTheme);
+    htmlEl?.classList.add(appliedTheme);
+    bodyEl?.classList.add(appliedTheme);
+    
+    // Force background colors via direct style for immediate effect
+    if (appliedTheme === "dark") {
+      root.style.backgroundColor = 'hsl(224 71% 4%)';
+      htmlEl?.setAttribute('style', 'background-color: hsl(224 71% 4%) !important');
+      bodyEl?.setAttribute('style', 'background-color: hsl(224 71% 4%) !important');
+      document.querySelectorAll('main').forEach(el => {
+        (el as HTMLElement).style.backgroundColor = 'hsl(224 71% 4%)';
+      });
+    } else {
+      root.style.backgroundColor = 'hsl(0 0% 100%)';
+      htmlEl?.setAttribute('style', 'background-color: hsl(0 0% 100%) !important');
+      bodyEl?.setAttribute('style', 'background-color: hsl(0 0% 100%) !important');
+      document.querySelectorAll('main').forEach(el => {
+        (el as HTMLElement).style.backgroundColor = 'hsl(0 0% 100%)';
+      });
+    }
   }, [theme]);
   
   useEffect(() => {
