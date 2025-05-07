@@ -41,23 +41,34 @@ export default function Navbar() {
             <div className="w-10 h-10 rounded-full flex items-center justify-center bg-primary/10 dark:bg-primary/5">
               <img src="/generated-icon.png" alt="" className="w-8 h-8" />
             </div>
-            <span className="text-xl font-bold font-display text-primary dark:text-primary-foreground transition-colors">U-Knighted Chess Society</span>
+            <span className="text-xl font-bold font-display text-gray-800 dark:text-white transition-colors">U-Knighted Chess Society</span>
           </Link>
 
           {/* Desktop navigation */}
           {!isMobile && (
             <nav className="flex items-center space-x-8">
-              <Link href="/about" className="text-primary dark:text-primary-foreground hover:text-accent transition-colors">About</Link>
-              <Link href="/events" className="text-primary dark:text-primary-foreground hover:text-accent transition-colors">Events</Link>
-              <Link href="/members" className="text-primary dark:text-primary-foreground hover:text-accent transition-colors">Members</Link>
-              <Link href="/news" className="text-primary dark:text-primary-foreground hover:text-accent transition-colors">News</Link>
-              <Link href="/contact" className="text-primary dark:text-primary-foreground hover:text-accent transition-colors">Contact</Link>
+              <Link href="/about">
+                <span className="text-gray-800 dark:text-white hover:text-accent dark:hover:text-accent transition-colors">About</span>
+              </Link>
+              <Link href="/events">
+                <span className="text-gray-800 dark:text-white hover:text-accent dark:hover:text-accent transition-colors">Events</span>
+              </Link>
+              <Link href="/members">
+                <span className="text-gray-800 dark:text-white hover:text-accent dark:hover:text-accent transition-colors">Members</span>
+              </Link>
+              <Link href="/news">
+                <span className="text-gray-800 dark:text-white hover:text-accent dark:hover:text-accent transition-colors">News</span>
+              </Link>
+              <Link href="/contact">
+                <span className="text-gray-800 dark:text-white hover:text-accent dark:hover:text-accent transition-colors">Contact</span>
+              </Link>
               <ThemeToggle />
-              <Link 
-                href="/join" 
-                className="bg-accent hover:bg-accent/80 text-accent-foreground px-4 py-2 rounded-md transition-colors shadow-sm"
-              >
-                Join Us
+              <Link href="/join">
+                <button 
+                  className="bg-accent hover:bg-accent/80 text-white hover:text-white px-4 py-2 rounded-md transition-colors shadow-sm"
+                >
+                  Join Us
+                </button>
               </Link>
             </nav>
           )}
@@ -68,7 +79,7 @@ export default function Navbar() {
               <ThemeToggle />
               <button
                 type="button"
-                className="text-primary dark:text-primary-foreground hover:text-accent focus:outline-none p-1 rounded-md"
+                className="text-gray-800 dark:text-white hover:text-accent dark:hover:text-accent focus:outline-none p-1 rounded-md"
                 onClick={toggleMobileMenu}
                 aria-label="Toggle mobile menu"
               >
@@ -84,16 +95,27 @@ export default function Navbar() {
         {isMobile && (
           <div className={`${mobileMenuOpen ? 'block' : 'hidden'} theme-aware-glass rounded-lg mt-2 p-4 absolute w-full left-0 right-0 shadow-lg`}>
             <nav className="flex flex-col space-y-4">
-              <Link href="/about" className="text-primary dark:text-primary-foreground hover:text-accent transition-colors">About</Link>
-              <Link href="/events" className="text-primary dark:text-primary-foreground hover:text-accent transition-colors">Events</Link>
-              <Link href="/members" className="text-primary dark:text-primary-foreground hover:text-accent transition-colors">Members</Link>
-              <Link href="/news" className="text-primary dark:text-primary-foreground hover:text-accent transition-colors">News</Link>
-              <Link href="/contact" className="text-primary dark:text-primary-foreground hover:text-accent transition-colors">Contact</Link>
-              <Link 
-                href="/join" 
-                className="bg-accent hover:bg-accent/80 text-accent-foreground px-4 py-2 rounded-md transition-colors shadow-sm text-center"
-              >
-                Join Us
+              <Link href="/about">
+                <span className="text-gray-800 dark:text-white hover:text-accent dark:hover:text-accent transition-colors block">About</span>
+              </Link>
+              <Link href="/events">
+                <span className="text-gray-800 dark:text-white hover:text-accent dark:hover:text-accent transition-colors block">Events</span>
+              </Link>
+              <Link href="/members">
+                <span className="text-gray-800 dark:text-white hover:text-accent dark:hover:text-accent transition-colors block">Members</span>
+              </Link>
+              <Link href="/news">
+                <span className="text-gray-800 dark:text-white hover:text-accent dark:hover:text-accent transition-colors block">News</span>
+              </Link>
+              <Link href="/contact">
+                <span className="text-gray-800 dark:text-white hover:text-accent dark:hover:text-accent transition-colors block">Contact</span>
+              </Link>
+              <Link href="/join">
+                <button
+                  className="bg-accent hover:bg-accent/80 text-white hover:text-white px-4 py-2 rounded-md transition-colors shadow-sm w-full text-center"
+                >
+                  Join Us
+                </button>
               </Link>
             </nav>
           </div>

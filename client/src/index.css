@@ -130,6 +130,49 @@
     color: white !important;
   }
   
+  /* Button styling fixes for dark mode */
+  .dark button,
+  .dark .btn,
+  .dark [role="button"],
+  .dark .button {
+    color: hsl(var(--foreground));
+  }
+  
+  .dark button:hover,
+  .dark .btn:hover,
+  .dark [role="button"]:hover,
+  .dark .button:hover {
+    color: white;
+  }
+  
+  .dark button.bg-accent,
+  .dark .btn.bg-accent,
+  .dark [role="button"].bg-accent,
+  .dark .button.bg-accent,
+  .dark .bg-accent {
+    color: white !important;
+  }
+  
+  /* Fix for shadcn UI components */
+  .dark [data-theme="dark"] button,
+  .dark [data-radix-popper-content-wrapper] button {
+    color: white !important;
+  }
+  
+  /* Fix for navigation menu */
+  .dark nav a,
+  .dark nav a span,
+  .dark .navigation-link {
+    color: white !important;
+  }
+  
+  /* Hover states for navigation */
+  .dark nav a:hover,
+  .dark nav a:hover span,
+  .dark .navigation-link:hover {
+    color: hsl(var(--accent)) !important;
+  }
+  
   /* Custom background classes to ensure consistent dark mode */
   .bg-main-light {
     background-color: hsl(var(--background));
