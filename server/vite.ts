@@ -1,24 +1,14 @@
-import express from 'express';
-import fs from 'fs';
-import path from 'path';
-import { createServer as createViteServer } from 'vite';
-import { fileURLToPath } from 'url';
+import express, { type Express } from "express";
+import fs from "fs";
+import path from "path";
+import { createServer as createViteServer, createLogger } from "vite";
+import { type Server } from "http";
+import viteConfig from "../vite.config";
+import { nanoid } from "nanoid";
 
-// Get __dirname equivalent in ES modules
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const viteLogger = createLogger();
 
-// Function to generate a random ID (replacing nanoid)
-function generateId(length = 8) {
-  const characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-  let result = '';
-  for (let i = 0; i < length; i++) {
-    result += characters.charAt(Math.floor(Math.random() * characters.length));
-  }
-  return result;
-}
-
-function log(message, source = "express") {
+export function log(message: string, source = "express") {
   const formattedTime = new Date().toLocaleTimeString("en-US", {
     hour: "numeric",
     minute: "2-digit",
@@ -29,7 +19,7 @@ function log(message, source = "express") {
   console.log(`${formattedTime} [${source}] ${message}`);
 }
 
-async function setupVite(app, server) {
+export async function setupVite(app: Express, server: Server) {
   const serverOptions = {
     middlewareMode: true,
     hmr: { server },
@@ -37,7 +27,15 @@ async function setupVite(app, server) {
   };
 
   const vite = await createViteServer({
+    ...viteConfig,
     configFile: false,
+    customLogger: {
+      ...viteLogger,
+      error: (msg, options) => {
+        viteLogger.error(msg, options);
+        process.exit(1);
+      },
+    },
     server: serverOptions,
     appType: "custom",
   });
@@ -48,7 +46,7 @@ async function setupVite(app, server) {
 
     try {
       const clientTemplate = path.resolve(
-        __dirname,
+        import.meta.dirname,
         "..",
         "client",
         "index.html",
@@ -58,19 +56,19 @@ async function setupVite(app, server) {
       let template = await fs.promises.readFile(clientTemplate, "utf-8");
       template = template.replace(
         `src="/src/main.tsx"`,
-        `src="/src/main.tsx?v=${generateId()}"`,
+        `src="/src/main.tsx?v=${nanoid()}"`,
       );
       const page = await vite.transformIndexHtml(url, template);
       res.status(200).set({ "Content-Type": "text/html" }).end(page);
     } catch (e) {
-      vite.ssrFixStacktrace(e);
+      vite.ssrFixStacktrace(e as Error);
       next(e);
     }
   });
 }
 
-function serveStatic(app) {
-  const distPath = path.resolve(__dirname, "public");
+export function serveStatic(app: Express) {
+  const distPath = path.resolve(import.meta.dirname, "public");
 
   if (!fs.existsSync(distPath)) {
     throw new Error(
@@ -85,5 +83,3 @@ function serveStatic(app) {
     res.sendFile(path.resolve(distPath, "index.html"));
   });
 }
-
-export { log, setupVite, serveStatic };

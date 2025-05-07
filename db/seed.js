@@ -1,6 +1,8 @@
-require('dotenv').config();
-const connectDB = require('./mongoose');
-const { Member, Event, News, SocietyStats } = require('../models');
+import dotenv from 'dotenv';
+dotenv.config();
+
+import connectDB from './mongoose.js';
+import { Member, Event, News, SocietyStats } from '../models/index.js';
 
 const seedData = async () => {
   try {
@@ -107,13 +109,8 @@ const seedData = async () => {
     await Event.insertMany(events);
     await News.insertMany(news);
     await SocietyStats.create(stats);
-
-
-
-    console.log('Database seeded successfully!');
-    process.exit(0);
   } catch (error) {
-    console.error('Error seeding database:', error);
+    console.error("Error during seeding:", error);
     process.exit(1);
   }
 };

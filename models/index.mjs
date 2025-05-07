@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 // Member Schema
 const memberSchema = new mongoose.Schema({
@@ -64,9 +64,11 @@ const societyStatsSchema = new mongoose.Schema({
 });
 
 // Create models
-export const Member = mongoose.model('Member', memberSchema);
-export const Event = mongoose.model('Event', eventSchema);
-export const News = mongoose.model('News', newsSchema);
-export const Contact = mongoose.model('Contact', contactSchema);
-export const Newsletter = mongoose.model('Newsletter', newsletterSchema);
-export const SocietyStats = mongoose.model('SocietyStats', societyStatsSchema);
+const Member = mongoose.model('Member', memberSchema);
+const Event = mongoose.model('Event', eventSchema);
+const News = mongoose.model('News', newsSchema);
+const Contact = mongoose.model('Contact', contactSchema);
+const Newsletter = mongoose.model('Newsletter', newsletterSchema);
+const SocietyStats = mongoose.model('SocietyStats', societyStatsSchema);
+
+export { Member, Event, News, Contact, Newsletter, SocietyStats};

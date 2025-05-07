@@ -55,12 +55,12 @@ export default function AboutSection() {
           <div className="order-1 md:order-2">
             <div className="relative">
               <img 
-                src="/generated-icon.png"
+                src="/"
                 alt="Students playing chess in a modern club setting" 
                 className="rounded-lg shadow-xl w-full" 
               />
               <div className="absolute -bottom-6 -right-6 w-24 h-24 bg-accent rounded-lg flex items-center justify-center shadow-lg">
-                <span className="font-display font-bold text-primary text-xl">Since<br/>2025</span>
+                <span className="font-display font-bold text-primary text-xl">Since<br/>2005</span>
               </div>
             </div>
           </div>

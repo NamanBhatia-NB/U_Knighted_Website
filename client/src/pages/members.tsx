@@ -21,7 +21,7 @@ export default function Members() {
   const [members, setMembers] = useState<Member[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [filter, setFilter] = useState<string>("all");
-  
+
   useEffect(() => {
     // Sort members by role importance first, then by ELO rating
     const sortedMembers = [...membersData].sort((a, b) => {
@@ -31,46 +31,46 @@ export default function Members() {
         const index = order.indexOf(role);
         return index >= 0 ? index : 999; // If not in the list, sort by ELO
       };
-      
+
       const roleCompare = roleImportance(a.role) - roleImportance(b.role);
-      
+
       // If roles have the same importance, sort by ELO rating (descending)
       if (roleCompare === 0) {
         return b.eloRating - a.eloRating;
       }
-      
+
       return roleCompare;
     });
-    
+
     setMembers(sortedMembers);
     setIsLoading(false);
-    
+
     // Initialize scroll animations
     const scrollFadeElements = document.querySelectorAll('.scrolled-fade-in');
-    
+
     const checkScroll = () => {
       scrollFadeElements.forEach(element => {
         const elementTop = element.getBoundingClientRect().top;
         const elementVisible = 150;
-        
+
         if (elementTop < window.innerHeight - elementVisible) {
           element.classList.add('fade-in-visible');
         }
       });
     };
-    
+
     window.addEventListener('scroll', checkScroll);
     // Check on initial load
     checkScroll();
-    
+
     return () => window.removeEventListener('scroll', checkScroll);
   }, []);
 
   // Get all unique roles for filtering
   const allRoles = ["all", ...Array.from(new Set(membersData.map(member => member.role)))];
-  
+
   // Filter members based on selection
-  const filteredMembers = filter === "all" 
+  const filteredMembers = filter === "all"
     ? members
     : members.filter(member => member.role === filter);
 
@@ -85,24 +85,23 @@ export default function Members() {
               Meet the talented players who represent our chess society and help make our community thrive.
             </p>
           </div>
-          
+
           {/* Filter tabs */}
           <div className="flex flex-wrap justify-center gap-2 mb-10 scrolled-fade-in">
             {allRoles.map((role) => (
               <button
                 key={role}
                 onClick={() => setFilter(role)}
-                className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                  filter === role 
-                    ? 'bg-primary text-white' 
-                    : 'bg-primary/10 text-primary hover:bg-primary/20'
-                }`}
+                className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${filter === role
+                  ? 'bg-primary text-white'
+                  : 'bg-primary/10 text-primary hover:bg-primary/20'
+                  }`}
               >
                 {role === "all" ? "All Members" : role}
               </button>
             ))}
           </div>
-          
+
           {/* Members grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
             {isLoading ? (
@@ -124,17 +123,16 @@ export default function Members() {
             ) : filteredMembers.length > 0 ? (
               filteredMembers.map((member) => (
                 <div key={member.id} className="glass rounded-xl p-6 text-center transition-all duration-300 hover:scale-105 hover:shadow-xl scrolled-fade-in">
-                  <img 
-                    src={member.photoUrl} 
-                    alt={`${member.name}, ${member.role}`} 
-                    className="w-32 h-32 rounded-full mx-auto mb-4 object-cover object-center border-4 border-accent shadow-lg" 
+                  <img
+                    src={member.photoUrl}
+                    alt={`${member.name}, ${member.role}`}
+                    className="w-32 h-32 rounded-full mx-auto mb-4 object-cover object-center border-4 border-accent shadow-lg"
                   />
                   <h3 className="text-xl font-bold mb-1">{member.name}</h3>
-                  <p className={`mb-3 font-medium ${
-                    member.role === 'President' ? 'text-accent' : 
-                    member.role === 'Vice President' ? 'text-accent/80' : 
-                    'text-primary/70'
-                  }`}>{member.role}</p>
+                  <p className={`mb-3 font-medium ${member.role === 'President' ? 'text-accent' :
+                    member.role === 'Vice President' ? 'text-accent/80' :
+                      'text-primary/70'
+                    }`}>{member.role}</p>
                   <div className="flex justify-center mb-4">
                     <span className="px-3 py-1 bg-primary/10 rounded-full text-sm font-medium">ELO {member.eloRating}</span>
                   </div>
@@ -151,18 +149,28 @@ export default function Members() {
                       </a>
                     )}
                     {member.socialLinks.chess && (
-                      <a href={member.socialLinks.chess} target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-colors">
-                        <i className="ri-chess-board-fill"></i>
+                      <a
+                        href={member.socialLinks.chess}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-colors"
+                      >
+                        <img
+                          src="/chess.png"
+                          alt="Chess Logo"
+                          className="h-4 transition duration-300 group-hover:invert"
+                        />
                       </a>
                     )}
+
                   </div>
                 </div>
               ))
             ) : (
               <div className="col-span-full text-center py-12">
                 <p className="text-xl">No members found for this filter.</p>
-                <button 
-                  onClick={() => setFilter("all")} 
+                <button
+                  onClick={() => setFilter("all")}
                   className="mt-4 px-4 py-2 bg-primary text-white rounded-md hover:bg-primary/90 transition-colors"
                 >
                   View All Members
@@ -170,7 +178,7 @@ export default function Members() {
               </div>
             )}
           </div>
-          
+
           {/* ELO Rating explanation */}
           <div className="glass rounded-xl p-8 md:p-12 mt-16 mb-12 scrolled-fade-in">
             <h2 className="text-2xl md:text-3xl font-bold font-display mb-4">Understanding ELO Ratings</h2>

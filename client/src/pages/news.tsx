@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link } from "wouter";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/ChessSections/Footer";
-import { getAllNews } from "../data/newsItems";
+import newsData from "@/data/news.json";
 import { format } from "date-fns";
 
 interface News {
@@ -20,9 +20,6 @@ export default function News() {
   const [filter, setFilter] = useState<string>("all");
 
   useEffect(() => {
-    // Get all news data
-    const newsData = getAllNews();
-    
     // Sort news by date - newest first
     const sortedNews = [...newsData].sort((a, b) => {
       return new Date(b.date).getTime() - new Date(a.date).getTime();
@@ -53,8 +50,7 @@ export default function News() {
   }, []);
 
   // Get unique tags for filtering
-  const allNewsData = getAllNews();
-  const allNewsTags = allNewsData.map(item => item.tag);
+  const allNewsTags = newsData.map(item => item.tag);
   const uniqueTags = Array.from(new Set(allNewsTags));
   const allTags = ["all", ...uniqueTags];
   

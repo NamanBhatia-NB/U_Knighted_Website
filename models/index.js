@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from "mongoose";
 
 // Member Schema
 const memberSchema = new mongoose.Schema({
@@ -63,8 +63,6 @@ const societyStatsSchema = new mongoose.Schema({
   championships: { type: Number, default: 8 }
 });
 
-
-
 // Create models
 const Member = mongoose.model('Member', memberSchema);
 const Event = mongoose.model('Event', eventSchema);
@@ -73,11 +71,4 @@ const Contact = mongoose.model('Contact', contactSchema);
 const Newsletter = mongoose.model('Newsletter', newsletterSchema);
 const SocietyStats = mongoose.model('SocietyStats', societyStatsSchema);
 
-module.exports = {
-  Member,
-  Event,
-  News,
-  Contact,
-  Newsletter,
-  SocietyStats
-};
+export { Member, Event, News, Contact, Newsletter, SocietyStats};

@@ -1,102 +1,102 @@
 [
-  {
-    "id": 1,
-    "name": "Michael Chen",
-    "role": "President",
-    "eloRating": 2150,
-    "bio": "Michael is a fourth-year Computer Science student who has been playing chess since the age of six. A FIDE Candidate Master, he has represented the university in multiple national tournaments and led our team to a regional championship victory last year.",
-    "photoUrl": "https://images.unsplash.com/photo-1564564321837-a57b7070ac4f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2076&q=80",
-    "socialLinks": {
-      "linkedin": "https://linkedin.com/",
-      "twitter": "https://twitter.com/",
-      "chess": "https://chess.com/member/"
+    {
+      "id": 1,
+      "name": "Michael Chen",
+      "role": "President",
+      "eloRating": 2150,
+      "bio": "Michael is a fourth-year Computer Science student who has been playing chess since the age of six. A FIDE Candidate Master, he has represented the university in multiple national tournaments and led our team to a regional championship victory last year.",
+      "photoUrl": "https://images.unsplash.com/photo-1564564321837-a57b7070ac4f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2076&q=80",
+      "socialLinks": {
+        "linkedin": "https://linkedin.com/",
+        "twitter": "https://twitter.com/",
+        "chess": "https://chess.com/member/"
+      }
+    },
+    {
+      "id": 2,
+      "name": "Sarah Wong",
+      "role": "Vice President",
+      "eloRating": 1950,
+      "bio": "Sarah is a third-year Mathematics major with a passion for chess tactics and endgame studies. She organizes our weekly strategy sessions and coordinates our outreach programs with local schools. Sarah recently won the Women's section of the City Open Championship.",
+      "photoUrl": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1888&q=80",
+      "socialLinks": {
+        "linkedin": "https://linkedin.com/",
+        "twitter": "https://twitter.com/",
+        "chess": "https://chess.com/member/"
+      }
+    },
+    {
+      "id": 3,
+      "name": "David Patel",
+      "role": "Treasurer",
+      "eloRating": 1850,
+      "bio": "David is a second-year Economics student who manages our club finances and sponsorship relations. His logical approach to chess and sharp tactical vision have made him one of our key team players. He specializes in the Sicilian Defense and French structures.",
+      "photoUrl": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1887&q=80",
+      "socialLinks": {
+        "linkedin": "https://linkedin.com/",
+        "chess": "https://chess.com/member/"
+      }
+    },
+    {
+      "id": 4,
+      "name": "Emily Johnson",
+      "role": "Secretary",
+      "eloRating": 1750,
+      "bio": "Emily is a third-year English Literature student who handles our communications and social media presence. A creative player known for unexpected sacrifices, she has improved rapidly since joining the club two years ago and recently achieved her first tournament victory.",
+      "photoUrl": "https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1961&q=80",
+      "socialLinks": {
+        "twitter": "https://twitter.com/",
+        "chess": "https://chess.com/member/"
+      }
+    },
+    {
+      "id": 5,
+      "name": "Jason Kim",
+      "role": "Tournament Director",
+      "eloRating": 2050,
+      "bio": "Jason is a fourth-year Physics major responsible for organizing our internal tournaments and league matches. His methodical style and deep opening preparation have earned him several tournament wins. He is also a certified national arbiter who often officiates at regional events.",
+      "photoUrl": "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2048&q=80",
+      "socialLinks": {
+        "linkedin": "https://linkedin.com/",
+        "twitter": "https://twitter.com/",
+        "chess": "https://chess.com/member/"
+      }
+    },
+    {
+      "id": 6,
+      "name": "Aisha Rahman",
+      "role": "Educational Coordinator",
+      "eloRating": 1900,
+      "bio": "Aisha is a graduate student in Education who leads our chess teaching initiatives and tutorial series. Her clear explanations of complex concepts have helped many beginners improve rapidly. She is particularly strong in positional play and has authored several instructional articles on pawn structures.",
+      "photoUrl": "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2071&q=80",
+      "socialLinks": {
+        "linkedin": "https://linkedin.com/",
+        "chess": "https://chess.com/member/"
+      }
+    },
+    {
+      "id": 7,
+      "name": "Carlos Rodriguez",
+      "role": "Events Coordinator",
+      "eloRating": 1800,
+      "bio": "Carlos is a third-year Business Administration student who organizes our special events and social gatherings. His energetic personality and entrepreneurial spirit have helped grow our club membership significantly. He excels in blitz chess and often leads our speed chess tournaments.",
+      "photoUrl": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1887&q=80",
+      "socialLinks": {
+        "linkedin": "https://linkedin.com/",
+        "twitter": "https://twitter.com/"
+      }
+    },
+    {
+      "id": 8,
+      "name": "Grace Wilson",
+      "role": "Community Outreach",
+      "eloRating": 1700,
+      "bio": "Grace is a second-year Sociology major who manages our community service projects and partnerships with local organizations. Her patient teaching style makes her a favorite among beginners. Though relatively new to competitive chess, she has shown remarkable progress and recently earned her first category rating.",
+      "photoUrl": "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1887&q=80",
+      "socialLinks": {
+        "linkedin": "https://linkedin.com/",
+        "twitter": "https://twitter.com/",
+        "chess": "https://chess.com/member/"
+      }
     }
-  },
-  {
-    "id": 2,
-    "name": "Sarah Wong",
-    "role": "Vice President",
-    "eloRating": 1950,
-    "bio": "Sarah is a third-year Mathematics major with a passion for chess tactics and endgame studies. She organizes our weekly strategy sessions and coordinates our outreach programs with local schools. Sarah recently won the Women's section of the City Open Championship.",
-    "photoUrl": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1888&q=80",
-    "socialLinks": {
-      "linkedin": "https://linkedin.com/",
-      "twitter": "https://twitter.com/",
-      "chess": "https://chess.com/member/"
-    }
-  },
-  {
-    "id": 3,
-    "name": "David Patel",
-    "role": "Treasurer",
-    "eloRating": 1850,
-    "bio": "David is a second-year Economics student who manages our club finances and sponsorship relations. His logical approach to chess and sharp tactical vision have made him one of our key team players. He specializes in the Sicilian Defense and French structures.",
-    "photoUrl": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1887&q=80",
-    "socialLinks": {
-      "linkedin": "https://linkedin.com/",
-      "chess": "https://chess.com/member/"
-    }
-  },
-  {
-    "id": 4,
-    "name": "Emily Johnson",
-    "role": "Secretary",
-    "eloRating": 1750,
-    "bio": "Emily is a third-year English Literature student who handles our communications and social media presence. A creative player known for unexpected sacrifices, she has improved rapidly since joining the club two years ago and recently achieved her first tournament victory.",
-    "photoUrl": "https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1961&q=80",
-    "socialLinks": {
-      "twitter": "https://twitter.com/",
-      "chess": "https://chess.com/member/"
-    }
-  },
-  {
-    "id": 5,
-    "name": "Jason Kim",
-    "role": "Tournament Director",
-    "eloRating": 2050,
-    "bio": "Jason is a fourth-year Physics major responsible for organizing our internal tournaments and league matches. His methodical style and deep opening preparation have earned him several tournament wins. He is also a certified national arbiter who often officiates at regional events.",
-    "photoUrl": "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2048&q=80",
-    "socialLinks": {
-      "linkedin": "https://linkedin.com/",
-      "twitter": "https://twitter.com/",
-      "chess": "https://chess.com/member/"
-    }
-  },
-  {
-    "id": 6,
-    "name": "Aisha Rahman",
-    "role": "Educational Coordinator",
-    "eloRating": 1900,
-    "bio": "Aisha is a graduate student in Education who leads our chess teaching initiatives and tutorial series. Her clear explanations of complex concepts have helped many beginners improve rapidly. She is particularly strong in positional play and has authored several instructional articles on pawn structures.",
-    "photoUrl": "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2071&q=80",
-    "socialLinks": {
-      "linkedin": "https://linkedin.com/",
-      "chess": "https://chess.com/member/"
-    }
-  },
-  {
-    "id": 7,
-    "name": "Carlos Rodriguez",
-    "role": "Events Coordinator",
-    "eloRating": 1800,
-    "bio": "Carlos is a third-year Business Administration student who organizes our special events and social gatherings. His energetic personality and entrepreneurial spirit have helped grow our club membership significantly. He excels in blitz chess and often leads our speed chess tournaments.",
-    "photoUrl": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1887&q=80",
-    "socialLinks": {
-      "linkedin": "https://linkedin.com/",
-      "twitter": "https://twitter.com/"
-    }
-  },
-  {
-    "id": 8,
-    "name": "Grace Wilson",
-    "role": "Community Outreach",
-    "eloRating": 1700,
-    "bio": "Grace is a second-year Sociology major who manages our community service projects and partnerships with local organizations. Her patient teaching style makes her a favorite among beginners. Though relatively new to competitive chess, she has shown remarkable progress and recently earned her first category rating.",
-    "photoUrl": "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1887&q=80",
-    "socialLinks": {
-      "linkedin": "https://linkedin.com/",
-      "twitter": "https://twitter.com/",
-      "chess": "https://chess.com/member/"
-    }
-  }
-]
+  ]

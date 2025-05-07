@@ -2,7 +2,7 @@
   "workflows": [
     {
       "name": "Start application",
-      "command": "node server.js"
+      "command": "node simple-server.js"
     }
   ]
 }

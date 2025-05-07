@@ -35,16 +35,16 @@ export default function Navbar() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-4">
           <Link href="/" className="flex items-center space-x-2">
-            <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center">
-              <i className="ri-chess-fill text-accent text-2xl"></i>
+            <div className="w-10 h-10 rounded-full flex items-center justify-center">
+              <img src="/generated-icon.png" alt="" />
             </div>
-            <span className="text-xl font-bold font-display">University Chess Society</span>
+            <span className="text-xl font-bold font-display">U-Knighted Chess Society</span>
           </Link>
-          
+
           {/* Mobile menu button */}
           {isMobile && (
-            <button 
-              type="button" 
+            <button
+              type="button"
               className="text-gray-500 hover:text-gray-700 focus:outline-none"
               onClick={toggleMobileMenu}
               aria-label="Toggle mobile menu"
@@ -52,7 +52,7 @@ export default function Navbar() {
               <i className="ri-menu-line text-2xl"></i>
             </button>
           )}
-          
+
           {/* Desktop navigation */}
           {!isMobile && (
             <nav className="flex items-center space-x-8">
@@ -65,7 +65,7 @@ export default function Navbar() {
             </nav>
           )}
         </div>
-        
+
         {/* Mobile navigation */}
         {isMobile && (
           <div className={`${mobileMenuOpen ? 'block' : 'hidden'} glass rounded-lg mt-2 p-4 absolute w-full left-0 right-0`}>

@@ -20,48 +20,48 @@ export default function Events() {
   const [events, setEvents] = useState<Event[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [filter, setFilter] = useState<string>("all");
-  
+
   // Initialize animations and load data
   useEffect(() => {
     // Sort events by date - upcoming events first
     const sortedEvents = [...eventsData].sort((a, b) => {
       return new Date(a.date).getTime() - new Date(b.date).getTime();
     });
-    
+
     setEvents(sortedEvents);
     setIsLoading(false);
-    
+
     // Initialize scroll animations
     const scrollFadeElements = document.querySelectorAll('.scrolled-fade-in');
-    
+
     const checkScroll = () => {
       scrollFadeElements.forEach(element => {
         const elementTop = element.getBoundingClientRect().top;
         const elementVisible = 150;
-        
+
         if (elementTop < window.innerHeight - elementVisible) {
           element.classList.add('fade-in-visible');
         }
       });
     };
-    
+
     window.addEventListener('scroll', checkScroll);
     // Check on initial load
     checkScroll();
-    
+
     return () => window.removeEventListener('scroll', checkScroll);
   }, []);
-  
+
   // Get all unique event types for filtering
   const allEventTypes = eventsData.map(event => event.type);
   const uniqueEventTypes = Array.from(new Set(allEventTypes));
   const eventTypes = ["all", ...uniqueEventTypes];
-  
+
   // Filter events based on selection
-  const filteredEvents = filter === "all" 
+  const filteredEvents = filter === "all"
     ? events
     : events.filter(event => event.type === filter);
-  
+
   // Format date for display
   const formatEventDate = (dateString: string) => {
     return format(new Date(dateString), "MMMM d, yyyy");
@@ -78,24 +78,23 @@ export default function Events() {
               Join us for tournaments, workshops, and social gatherings throughout the academic year.
             </p>
           </div>
-          
+
           {/* Filter tabs */}
           <div className="flex flex-wrap justify-center gap-2 mb-10 scrolled-fade-in">
             {eventTypes.map((type) => (
               <button
                 key={type}
                 onClick={() => setFilter(type)}
-                className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                  filter === type 
-                    ? 'bg-primary text-white' 
+                className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${filter === type
+                    ? 'bg-primary text-white'
                     : 'bg-primary/10 text-primary hover:bg-primary/20'
-                }`}
+                  }`}
               >
                 {type === "all" ? "All Events" : type}
               </button>
             ))}
           </div>
-          
+
           {/* Event grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
             {isLoading ? (
@@ -117,18 +116,20 @@ export default function Events() {
               ))
             ) : filteredEvents.length > 0 ? (
               filteredEvents.map((event) => (
-                <div key={event.id} className="glass rounded-xl overflow-hidden shadow-lg transition-transform duration-300 hover:scale-105 scrolled-fade-in">
-                  <div className="p-6">
+                <div
+                  key={event.id}
+                  className="glass rounded-xl overflow-hidden shadow-lg transition-transform duration-300 hover:scale-105 scrolled-fade-in flex flex-col"
+                >
+                  <div className="p-6 flex flex-col h-full">
                     <div className="flex justify-between items-start mb-4">
                       <div>
-                        <span className={`inline-block px-3 py-1 ${
-                          event.type === 'Tournament' ? 'bg-accent text-primary' : 
-                          event.type === 'Workshop' ? 'bg-primary text-white' : 
-                          event.type === 'Regular' ? 'bg-blue-500 text-white' :
-                          event.type === 'Social' ? 'bg-green-500 text-white' :
-                          event.type === 'Special' ? 'bg-purple-500 text-white' :
-                          'bg-secondary text-white'
-                        } text-sm font-medium rounded-full`}>
+                        <span className={`inline-block px-3 py-1 ${event.type === 'Tournament' ? 'bg-accent text-primary' :
+                            event.type === 'Workshop' ? 'bg-primary text-white' :
+                              event.type === 'Regular' ? 'bg-blue-500 text-white' :
+                                event.type === 'Social' ? 'bg-green-500 text-white' :
+                                  event.type === 'Special' ? 'bg-purple-500 text-white' :
+                                    'bg-secondary text-white'
+                          } text-sm font-medium rounded-full`}>
                           {event.type}
                         </span>
                         <h3 className="mt-3 text-xl font-bold">{event.title}</h3>
@@ -138,13 +139,20 @@ export default function Events() {
                         <div className="text-sm font-medium">{event.timeStart} - {event.timeEnd}</div>
                       </div>
                     </div>
+
                     <p className="mb-4 line-clamp-3">{event.description}</p>
-                    <div className="flex justify-between items-center">
+
+                    <div className="flex justify-between items-center mt-auto pt-4 border-t border-primary/10">
                       <div className="flex items-center space-x-1">
                         <i className="ri-map-pin-line text-accent"></i>
                         <span className="text-sm">{event.location}</span>
                       </div>
-                      <Link href={`/event/${event.id}`} className="text-accent hover:text-secondary transition-colors font-medium">Details →</Link>
+                      <Link
+                        href={`/event/${event.id}`}
+                        className="text-accent hover:text-secondary transition-colors font-medium"
+                      >
+                        Details →
+                      </Link>
                     </div>
                   </div>
                 </div>
@@ -152,8 +160,8 @@ export default function Events() {
             ) : (
               <div className="col-span-full text-center py-12">
                 <p className="text-xl">No events found for this filter.</p>
-                <button 
-                  onClick={() => setFilter("all")} 
+                <button
+                  onClick={() => setFilter("all")}
                   className="mt-4 px-4 py-2 bg-primary text-white rounded-md hover:bg-primary/90 transition-colors"
                 >
                   View All Events
@@ -161,7 +169,7 @@ export default function Events() {
               </div>
             )}
           </div>
-          
+
           {/* Calendar integration */}
           <div className="text-center mt-16 mb-12 scrolled-fade-in">
             <h2 className="text-2xl md:text-3xl font-bold font-display mb-4">Get Notified About Upcoming Events</h2>

@@ -17,7 +17,6 @@ interface News {
 export default function NewsDetail() {
   // Ensure the route matches exactly what's in App.tsx
   const [match, params] = useRoute('/news/:id');
-  console.log("Route match:", match, "params:", params);
   const [newsItem, setNewsItem] = useState<News | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
@@ -26,21 +25,16 @@ export default function NewsDetail() {
   const [location] = useLocation();
   
   useEffect(() => {
-    console.log("News detail page mounted, params:", params);
-    console.log("Current location:", location);
     
     if (params?.id) {
       try {
         const newsId = parseInt(params.id);
-        console.log("Looking for news with ID:", newsId);
         
         const foundNews = getNewsById(newsId);
         
         if (foundNews) {
-          console.log("Found news:", foundNews);
           setNewsItem(foundNews);
         } else {
-          console.log("No news found with ID:", newsId);
           setNotFound(true);
         }
       } catch (error) {

@@ -1,165 +1,194 @@
-import React, { useState, useEffect } from 'react';
-import { useMobile } from '@/hooks/use-mobile';
+import { useEffect, useRef } from 'react';
+import * as THREE from 'three';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
-// CSS Chess Board (fallback for Three.js version)
 export default function ChessBoard3D() {
-  const isMobile = useMobile();
-  const [isHovered, setIsHovered] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
 
-  // Define pieces and their positions
-  const pieces = [
-    { type: 'king', color: 'black', position: 'e8' },
-    { type: 'queen', color: 'black', position: 'd8' },
-    { type: 'rook', color: 'black', position: 'a8' },
-    { type: 'rook', color: 'black', position: 'h8' },
-    { type: 'knight', color: 'black', position: 'b8' },
-    { type: 'knight', color: 'black', position: 'g8' },
-    { type: 'bishop', color: 'black', position: 'c8' },
-    { type: 'bishop', color: 'black', position: 'f8' },
-    { type: 'pawn', color: 'black', position: 'a7' },
-    { type: 'pawn', color: 'black', position: 'b7' },
-    { type: 'pawn', color: 'black', position: 'c7' },
-    { type: 'pawn', color: 'black', position: 'd7' },
-    { type: 'pawn', color: 'black', position: 'e7' },
-    { type: 'pawn', color: 'black', position: 'f7' },
-    { type: 'pawn', color: 'black', position: 'g7' },
-    { type: 'pawn', color: 'black', position: 'h7' },
-    
-    { type: 'king', color: 'white', position: 'e1' },
-    { type: 'queen', color: 'white', position: 'd1' },
-    { type: 'rook', color: 'white', position: 'a1' },
-    { type: 'rook', color: 'white', position: 'h1' },
-    { type: 'knight', color: 'white', position: 'b1' },
-    { type: 'knight', color: 'white', position: 'g1' },
-    { type: 'bishop', color: 'white', position: 'c1' },
-    { type: 'bishop', color: 'white', position: 'f1' },
-    { type: 'pawn', color: 'white', position: 'a2' },
-    { type: 'pawn', color: 'white', position: 'b2' },
-    { type: 'pawn', color: 'white', position: 'c2' },
-    { type: 'pawn', color: 'white', position: 'd2' },
-    { type: 'pawn', color: 'white', position: 'e2' },
-    { type: 'pawn', color: 'white', position: 'f2' },
-    { type: 'pawn', color: 'white', position: 'g2' },
-    { type: 'pawn', color: 'white', position: 'h2' },
-  ];
+  useEffect(() => {
+    if (!containerRef.current) return;
 
-  // Create the board cells (8x8 grid)
-  const renderBoard = () => {
-    const cells = [];
-    const files = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
+    // Create scene
+    const scene = new THREE.Scene();
     
-    for (let rank = 8; rank >= 1; rank--) {
-      for (let fileIndex = 0; fileIndex < 8; fileIndex++) {
-        const file = files[fileIndex];
-        const position = `${file}${rank}`;
-        const isLightSquare = (rank + fileIndex) % 2 === 0;
-        
-        // Find piece at this position
-        const piece = pieces.find(p => p.position === position);
-        
-        cells.push(
-          <div 
-            key={position} 
-            className={`flex items-center justify-center aspect-square ${isLightSquare ? 'bg-white' : 'bg-secondary'}`}
-          >
-            {piece && (
-              <div 
-                className={`text-3xl md:text-xl lg:text-2xl xl:text-3xl cursor-pointer transition-transform duration-300 hover:scale-110`}
-                style={{ 
-                  color: piece.color === 'white' ? '#fff' : '#000',
-                  textShadow: '0 2px 4px rgba(0,0,0,0.2)'
-                }}
-              >
-                {getPieceSymbol(piece.type, piece.color)}
-              </div>
-            )}
-          </div>
-        );
+    // Create camera
+    const container = containerRef.current;
+    const containerWidth = container.clientWidth;
+    const containerHeight = container.clientHeight;
+    
+    const camera = new THREE.PerspectiveCamera(75, containerWidth / containerHeight, 0.1, 1000);
+    camera.position.z = 7;
+    camera.position.y = 4;
+    
+    // Create renderer
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.setSize(containerWidth, containerHeight);
+    renderer.setClearColor(0x000000, 0);
+    containerRef.current.appendChild(renderer.domElement);
+    
+    // Add orbit controls
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableZoom = false;
+    controls.enablePan = false;
+    controls.autoRotate = true;
+    controls.autoRotateSpeed = 0.5;
+    
+    // Create chessboard
+    const boardGeometry = new THREE.BoxGeometry(8, 0.2, 8);
+    const boardMaterial = new THREE.MeshStandardMaterial({ color: 0x8B4513 });
+    const board = new THREE.Mesh(boardGeometry, boardMaterial);
+    scene.add(board);
+    
+    // Create chess squares
+    for (let x = -3.5; x <= 3.5; x += 1) {
+      for (let z = -3.5; z <= 3.5; z += 1) {
+        if ((x + z) % 2 === 0) {
+          const squareGeometry = new THREE.BoxGeometry(0.9, 0.21, 0.9);
+          const squareMaterial = new THREE.MeshStandardMaterial({ color: 0xFFFFFF });
+          const square = new THREE.Mesh(squareGeometry, squareMaterial);
+          square.position.set(x, 0.1, z);
+          scene.add(square);
+        }
       }
     }
     
-    return cells;
-  };
-  
-  // Get Unicode chess symbol
-  const getPieceSymbol = (type: string, color: string) => {
-    const symbols: Record<string, Record<string, string>> = {
-      white: {
-        king: '♔',
-        queen: '♕',
-        rook: '♖',
-        bishop: '♗',
-        knight: '♘',
-        pawn: '♙'
-      },
-      black: {
-        king: '♚',
-        queen: '♛',
-        rook: '♜',
-        bishop: '♝',
-        knight: '♞',
-        pawn: '♟︎'
-      }
+    // Create pieces group
+    const piecesGroup = new THREE.Group();
+    
+    // Create kings
+    const createKing = (color: number, posX: number, posZ: number) => {
+      const baseGeometry = new THREE.CylinderGeometry(0.3, 0.3, 0.2, 16);
+      const baseMaterial = new THREE.MeshStandardMaterial({ color: color });
+      const base = new THREE.Mesh(baseGeometry, baseMaterial);
+      
+      const bodyGeometry = new THREE.CylinderGeometry(0.25, 0.25, 0.6, 16);
+      const bodyMaterial = new THREE.MeshStandardMaterial({ color: color });
+      const body = new THREE.Mesh(bodyGeometry, bodyMaterial);
+      body.position.y = 0.4;
+      
+      const topGeometry = new THREE.SphereGeometry(0.2, 16, 16);
+      const topMaterial = new THREE.MeshStandardMaterial({ color: color });
+      const top = new THREE.Mesh(topGeometry, topMaterial);
+      top.position.y = 0.8;
+      
+      const crossGeometry = new THREE.BoxGeometry(0.1, 0.3, 0.1);
+      const crossMaterial = new THREE.MeshStandardMaterial({ color: color });
+      const cross = new THREE.Mesh(crossGeometry, crossMaterial);
+      cross.position.y = 1.05;
+      
+      const crossHGeometry = new THREE.BoxGeometry(0.25, 0.1, 0.1);
+      const crossHMaterial = new THREE.MeshStandardMaterial({ color: color });
+      const crossH = new THREE.Mesh(crossHGeometry, crossHMaterial);
+      crossH.position.y = 1.0;
+      
+      const kingPiece = new THREE.Group();
+      kingPiece.add(base);
+      kingPiece.add(body);
+      kingPiece.add(top);
+      kingPiece.add(cross);
+      kingPiece.add(crossH);
+      
+      kingPiece.position.set(posX, 0.3, posZ);
+      return kingPiece;
     };
     
-    return symbols[color][type];
-  };
-  
-  // CSS styles
-  const boardStyle: React.CSSProperties = {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(8, 1fr)',
-    gridTemplateRows: 'repeat(8, 1fr)',
-    width: '100%',
-    height: '100%',
-    border: '10px solid #8B4513',
-    boxShadow: '0 10px 40px rgba(0, 0, 0, 0.4)',
-    borderRadius: '8px',
-    background: '#8B4513',
-    transition: 'all 0.7s ease',
-    transform: isHovered 
-      ? 'perspective(1000px) rotateX(15deg) rotateY(5deg)' 
-      : 'perspective(1000px) rotateX(30deg)',
-  };
-  
-  useEffect(() => {
-    // Animation frame handler
-    let animationFrameId: number;
+    // Create queens
+    const createQueen = (color: number, posX: number, posZ: number) => {
+      const baseGeometry = new THREE.CylinderGeometry(0.3, 0.3, 0.2, 16);
+      const baseMaterial = new THREE.MeshStandardMaterial({ color: color });
+      const base = new THREE.Mesh(baseGeometry, baseMaterial);
+      
+      const bodyGeometry = new THREE.CylinderGeometry(0.25, 0.25, 0.6, 16);
+      const bodyMaterial = new THREE.MeshStandardMaterial({ color: color });
+      const body = new THREE.Mesh(bodyGeometry, bodyMaterial);
+      body.position.y = 0.4;
+      
+      const topGeometry = new THREE.SphereGeometry(0.25, 16, 16);
+      const topMaterial = new THREE.MeshStandardMaterial({ color: color });
+      const top = new THREE.Mesh(topGeometry, topMaterial);
+      top.position.y = 0.8;
+      
+      const queenPiece = new THREE.Group();
+      queenPiece.add(base);
+      queenPiece.add(body);
+      queenPiece.add(top);
+      
+      queenPiece.position.set(posX, 0.3, posZ);
+      return queenPiece;
+    };
     
-    // Function to animate pieces
-    const animatePieces = () => {
-      const pieceElements = document.querySelectorAll('.cursor-pointer');
-      pieceElements.forEach((piece, index) => {
-        if (piece instanceof HTMLElement) {
-          piece.style.transform = `translateY(${Math.sin(Date.now() * 0.002 + index) * 5}px)`;
-        }
+    // Add a few pieces for visual effect
+    piecesGroup.add(createKing(0x2B2B2B, -2.5, -2.5));
+    piecesGroup.add(createQueen(0x2B2B2B, -1.5, -2.5));
+    piecesGroup.add(createKing(0xFFFFFF, 2.5, 2.5));
+    piecesGroup.add(createQueen(0xFFFFFF, 1.5, 2.5));
+    
+    scene.add(piecesGroup);
+    
+    // Create ambient light
+    const ambientLight = new THREE.AmbientLight(0xFFFFFF, 0.5);
+    scene.add(ambientLight);
+    
+    // Create directional light
+    const directionalLight = new THREE.DirectionalLight(0xFFFFFF, 0.8);
+    directionalLight.position.set(5, 10, 5);
+    scene.add(directionalLight);
+    
+    // Animation loop
+    const animate = () => {
+      requestAnimationFrame(animate);
+      
+      // Animate pieces
+      piecesGroup.children.forEach((piece, index) => {
+        piece.position.y = 0.3 + Math.sin(Date.now() * 0.001 + index) * 0.1;
+        piece.rotation.y = Date.now() * 0.0005 + index;
       });
       
-      animationFrameId = requestAnimationFrame(animatePieces);
+      controls.update();
+      renderer.render(scene, camera);
     };
     
-    // Start animation
-    animationFrameId = requestAnimationFrame(animatePieces);
+    // Handle container resize
+    const handleResize = () => {
+      if (!containerRef.current) return;
+      
+      const newWidth = containerRef.current.clientWidth;
+      const newHeight = containerRef.current.clientHeight;
+      
+      camera.aspect = newWidth / newHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(newWidth, newHeight);
+    };
     
-    // Cleanup animation frame on unmount
+    // Set up ResizeObserver to watch for container size changes
+    const resizeObserver = new ResizeObserver(handleResize);
+    resizeObserver.observe(containerRef.current);
+    
+    // Also handle window resize events
+    window.addEventListener('resize', handleResize);
+    
+    animate();
+    
+    // Cleanup function
     return () => {
-      if (animationFrameId) {
-        cancelAnimationFrame(animationFrameId);
+      if (containerRef.current && containerRef.current.contains(renderer.domElement)) {
+        containerRef.current.removeChild(renderer.domElement);
       }
+      resizeObserver.disconnect();
+      window.removeEventListener('resize', handleResize);
+      // Dispose of all geometries and materials to prevent memory leaks
+      scene.traverse((object) => {
+        if (object instanceof THREE.Mesh) {
+          object.geometry.dispose();
+          if (object.material instanceof THREE.Material) {
+            object.material.dispose();
+          } else if (Array.isArray(object.material)) {
+            object.material.forEach((material) => material.dispose());
+          }
+        }
+      });
     };
   }, []);
-  
-  return (
-    <div 
-      className="w-full h-full flex items-center justify-center p-4"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
-      <div className="w-full max-w-lg aspect-square">
-        <div style={boardStyle} className="chess-board">
-          {renderBoard()}
-        </div>
-      </div>
-    </div>
-  );
+
+  return <div ref={containerRef} className="w-full h-full relative" />;
 }
