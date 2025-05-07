@@ -83,9 +83,51 @@
   .dark body, 
   .dark main,
   .dark div,
-  .dark section {
+  .dark section,
+  .dark p,
+  .dark span,
+  .dark h1,
+  .dark h2,
+  .dark h3,
+  .dark h4,
+  .dark h5,
+  .dark h6,
+  .dark a,
+  .dark button,
+  .dark input,
+  .dark select,
+  .dark textarea {
     background-color: hsl(var(--background));
     color: hsl(var(--foreground));
+  }
+  
+  /* Explicit color overrides for all text elements */
+  .dark p, 
+  .dark h1, 
+  .dark h2, 
+  .dark h3, 
+  .dark h4, 
+  .dark h5, 
+  .dark h6, 
+  .dark span, 
+  .dark a:not(.btn), 
+  .dark label, 
+  .dark li {
+    color: hsl(var(--foreground));
+  }
+  
+  /* Text elements that may need special handling */
+  .dark .text-primary {
+    color: hsl(var(--primary));
+  }
+  
+  .dark .text-muted {
+    color: hsl(var(--muted-foreground));
+  }
+  
+  /* Force white text on dark backgrounds */
+  .dark .text-white {
+    color: white !important;
   }
   
   /* Custom background classes to ensure consistent dark mode */

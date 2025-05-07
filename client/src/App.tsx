@@ -3,8 +3,6 @@ import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { ThemeProvider } from "@/components/ThemeProvider";
-import { useScrollAnimation } from "@/hooks/use-scroll-animation";
-import { useScrollTheme } from "@/hooks/use-scroll-theme";
 import { useEffect } from "react";
 import Navbar from "@/components/Navbar";
 
@@ -18,7 +16,7 @@ import News from "@/pages/news";
 import NewsDetail from "@/pages/news-detail";
 import Contact from "@/pages/contact";
 import Join from "@/pages/join";
-import ThemeDemo from "@/pages/theme-demo";
+
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -51,69 +49,74 @@ function Router() {
 }
 
 function ScrollAnimationWrapper() {
-  // Initialize scroll-based animations
-  const { checkAnimations } = useScrollAnimation({
-    stagger: true,
-    staggerDelay: 75,
-    offset: 200 // Larger offset triggers animations sooner
-  });
-  
-  // Initialize scroll-based theme changes
-  const { scrollPercentage } = useScrollTheme({
-    threshold: 40, // Switch theme earlier while scrolling
-    useSections: false
-  });
-  
   // Re-check animations when route changes
   const [location] = useLocation();
+  
+  // Apply animations immediately and then on scroll
   useEffect(() => {
-    // Force all animations to be visible immediately after route change
-    const applyAnimationsToAll = () => {
-      // Apply fade in effect to all scroll animation elements
-      const fadeElements = document.querySelectorAll('.scrolled-fade-in');
-      for (let i = 0; i < fadeElements.length; i++) {
-        fadeElements[i].classList.add('fade-in-visible');
-      }
+    const applyAllAnimations = () => {
+      // Force all animations visible
+      document.querySelectorAll('.scrolled-fade-in, .fade-from-left, .fade-from-right, .fade-in, .scale-in')
+        .forEach(element => element.classList.add('fade-in-visible'));
       
       // Handle staggered children
-      const staggerContainers = document.querySelectorAll('.stagger-children');
-      for (let i = 0; i < staggerContainers.length; i++) {
-        const container = staggerContainers[i];
+      document.querySelectorAll('.stagger-children').forEach((container, index) => {
         container.classList.add('fade-in-visible');
         
-        const children = container.querySelectorAll('*');
-        for (let j = 0; j < children.length; j++) {
-          const child = children[j];
+        Array.from(container.children).forEach((child, childIndex) => {
           if (child instanceof HTMLElement) {
-            const delay = j * 50;
             setTimeout(() => {
               child.style.opacity = '1';
               child.style.transform = 'translateY(0)';
-            }, delay);
+            }, childIndex * 50);
           }
-        }
-      }
+        });
+      });
+    };
+    
+    // Run immediately and then on scroll events
+    applyAllAnimations();
+    
+    // Ensure animation elements are always visible after any scroll
+    const scrollHandler = () => {
+      applyAllAnimations();
+    };
+    
+    window.addEventListener('scroll', scrollHandler);
+    return () => window.removeEventListener('scroll', scrollHandler);
+  }, [location]);
+  
+  // Handle theme changes based on scroll position
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+      const docHeight = document.body.scrollHeight - window.innerHeight;
+      const scrollPercentage = docHeight > 0 ? (scrollY / docHeight) * 100 : 0;
       
-      // Handle other animation types
-      const otherAnimElements = document.querySelectorAll(
-        '.fade-from-left, .fade-from-right, .fade-in, .scale-in'
-      );
-      for (let i = 0; i < otherAnimElements.length; i++) {
-        otherAnimElements[i].classList.add('fade-in-visible');
+      // Set CSS variable for scroll position
+      document.documentElement.style.setProperty('--scroll-position', `${scrollPercentage}%`);
+      
+      // Apply theme based on scroll percentage
+      if (scrollPercentage > 40) {
+        document.documentElement.classList.remove('light');
+        document.documentElement.classList.add('dark');
+        document.body.classList.remove('light');
+        document.body.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+        document.documentElement.classList.add('light');
+        document.body.classList.remove('dark');
+        document.body.classList.add('light');
       }
     };
     
-    // Apply animations after a short delay
-    const timeout1 = setTimeout(applyAnimationsToAll, 300);
-    const timeout2 = setTimeout(checkAnimations, 100); 
-    const timeout3 = setTimeout(checkAnimations, 500);
+    // Run once to initialize
+    setTimeout(handleScroll, 50);
     
-    return () => {
-      clearTimeout(timeout1);
-      clearTimeout(timeout2);
-      clearTimeout(timeout3);
-    };
-  }, [location, checkAnimations]);
+    // Set up scroll listener
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
   
   return null;
 }
