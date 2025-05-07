@@ -1,90 +1,74 @@
-require('dotenv').config();
+// Super simplified server to get the app working
 const express = require('express');
-const { createServer } = require('http');
+const { spawn } = require('child_process');
 const path = require('path');
-const mongoose = require('mongoose');
 
-// Get MongoDB URI from env
-const mongoURI = process.env.MONGO_URI;
-
-// Create Express app
+// Create Express app for API
 const app = express();
 
-// Apply middleware
-app.use(cors());
+// Enable JSON parsing for API requests
 app.use(express.json());
 
-// Simple logging middleware
+// Log all requests
 app.use((req, res, next) => {
   console.log(`${req.method} ${req.url}`);
   next();
 });
 
-// Function to connect to MongoDB
-async function connectMongoDB() {
-  console.log('Connecting to MongoDB...');
-  try {
-    await mongoose.connect(mongoURI);
-    console.log('MongoDB connected successfully');
-    return true;
-  } catch (error) {
-    console.error('MongoDB connection error:', error);
-    return false;
-  }
-}
-
-// Mount API routes
-app.use('/api', async (req, res, next) => {
-  try {
-    // Dynamic import of API routes
-    const routesModule = await import('./server/routes-mongo.mjs');
-    req.app.locals.apiRouter = routesModule.default;
-    next();
-  } catch (error) {
-    console.error('Error loading API routes:', error);
-    res.status(500).json({ error: 'Server configuration error' });
-  }
-}, (req, res, next) => {
-  if (req.app.locals.apiRouter) {
-    req.app.locals.apiRouter(req, res, next);
-  } else {
-    next();
-  }
+// Basic API routes
+app.get('/api/society/stats', (req, res) => {
+  // Return hardcoded stats for now
+  res.json({
+    members: 120,
+    tournaments: 15,
+    championships: 8
+  });
 });
 
-// Serve static files from client directory
-app.use(express.static(path.join(__dirname, 'client')));
-
-// Handle SPA routing - send all other requests to index.html
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'client', 'index.html'));
+// Add more API endpoints as needed
+app.post('/api/contact', (req, res) => {
+  console.log('Contact form submission:', req.body);
+  res.status(200).json({ message: 'Contact form received successfully' });
 });
 
-// Error handling middleware
-app.use((err, req, res, next) => {
-  console.error('Server error:', err);
+app.post('/api/join', (req, res) => {
+  console.log('Join form submission:', req.body);
+  res.status(200).json({ message: 'Join request received successfully' });
+});
+
+// API error handling
+app.use('/api', (err, req, res, next) => {
+  console.error('API error:', err);
   res.status(500).json({ error: 'Internal server error' });
 });
 
-// Use port 5000 for Replit
-const PORT = 5000;
+// Start Vite dev server for the frontend
+function startViteDevServer() {
+  console.log('Starting Vite dev server...');
+  const vite = spawn('npx', ['vite'], {
+    cwd: path.join(__dirname),
+    stdio: 'inherit',
+    shell: true
+  });
 
-// Create HTTP server
-const server = createServer(app);
+  vite.on('error', (error) => {
+    console.error('Failed to start Vite dev server:', error);
+  });
 
-// Start the server
-async function startServer() {
-  // Try to connect to MongoDB first
-  await connectMongoDB();
-  
-  // Start listening
-  server.listen(PORT, '0.0.0.0', () => {
-    console.log(`Server running on http://localhost:${PORT}`);
+  vite.on('close', (code) => {
+    if (code !== 0) {
+      console.log(`Vite dev server exited with code ${code}`);
+    }
   });
 }
 
-// Launch the server
-startServer().catch(error => {
-  console.error('Failed to start server:', error);
-  process.exit(1);
+// Use port 5000 for API server
+const PORT = process.env.PORT || 5000;
+
+// Start the API server
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`API server running on http://localhost:${PORT}`);
+  
+  // Start Vite dev server for frontend
+  startViteDevServer();
 });

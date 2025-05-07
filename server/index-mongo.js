@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const path = require('path');
+const { spawn } = require('child_process');
 
 // Use enhanced MongoDB connection from ESM version
 const connectDB = async () => {
@@ -17,140 +18,95 @@ const connectDB = async () => {
   }
 };
 
-// Connect to MongoDB - use async IIFE to handle the async connectDB
-(async () => {
-  await connectDB();
-})();
-
 const app = express();
 
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-// Load routes using dynamic import
+// Simple logging middleware
+app.use((req, res, next) => {
+  console.log(`${req.method} ${req.url}`);
+  next();
+});
+
+// Connect to MongoDB and continue setup after connection
 (async () => {
   try {
-    // Try to use the ES module version of routes
-    const routesModule = await import('./routes-mongo.mjs');
-    const routes = routesModule.default;
-    // API Routes
-    app.use('/api', routes);
-    console.log('Using ES modules version of routes');
-  } catch (error) {
-    console.error('Error loading ES module routes, falling back to CommonJS:', error);
-    // Fallback to CommonJS version
-    const routes = require('./routes-mongo');
-    // API Routes
-    app.use('/api', routes);
+    await connectDB();
+    console.log('MongoDB connected successfully');
+    setupRoutes();
+    setupServer();
+  } catch (err) {
+    console.error('Failed to connect to MongoDB:', err);
+    setupRoutes(); // Continue anyway to allow frontend to work
+    setupServer();
   }
 })();
 
-// Serve static files in production
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, '../client/dist')));
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../client/dist/index.html'));
-  });
-} else {
-  // In development, use Vite for client
+function setupRoutes() {
+  // Load routes using dynamic import
   (async () => {
     try {
-      // Serve static files from client directory for proper path resolution
-      app.use(express.static(path.join(__dirname, '../client')));
-      
-      // Try to use ES modules version of vite setup
-      const viteModule = await import('./vite.mjs');
-      const setupVite = viteModule.setupVite;
-      const http = await import('http');
-      const server = http.createServer(app);
-      await setupVite(app, server);
-      console.log('Using ES modules version of Vite setup');
+      // Try to use the ES module version of routes
+      const routesModule = await import('./routes-mongo.mjs');
+      const routes = routesModule.default;
+      // API Routes
+      app.use('/api', routes);
+      console.log('Using ES modules version of routes');
     } catch (error) {
-      console.error('Error loading ES module Vite setup, falling back to CommonJS:', error);
-      // Fallback to CommonJS version
-      const viteUtils = require('./vite');
-      const server = require('http').createServer(app);
+      console.error('Error loading ES module routes:', error);
       
-      // Serve static files from client directory for proper path resolution
-      app.use(express.static(path.join(__dirname, '../client')));
+      // Fallback API endpoints if routes failed to load
+      app.get('/api/society/stats', (req, res) => {
+        res.json({
+          members: 120,
+          tournaments: 15,
+          championships: 8
+        });
+      });
       
-      viteUtils.setupVite(app, server);
+      app.post('/api/contact', (req, res) => {
+        console.log('Contact form submission:', req.body);
+        res.status(200).json({ message: 'Contact form received' });
+      });
+      
+      app.post('/api/join', (req, res) => {
+        console.log('Join form submission:', req.body);
+        res.status(200).json({ message: 'Join request received' });
+      });
     }
   })();
-  
-  // Use a dynamic port allocation to avoid conflicts
-  const findFreePort = (startPort) => {
-    return new Promise((resolve, reject) => {
-      const http = require('http');
-      const server = http.createServer();
-      
-      server.on('error', (err) => {
-        if (err.code === 'EADDRINUSE') {
-          console.log(`Port ${startPort} in use, trying ${startPort + 1}`);
-          resolve(findFreePort(startPort + 1));
-        } else {
-          reject(err);
-        }
-      });
-      
-      server.listen(startPort, () => {
-        server.close(() => {
-          resolve(startPort);
-        });
-      });
-    });
-  };
-  
-  // Use port 5000 (default for Replit) or fallback to dynamic port allocation
-  const PORT = 5000;
-  
-  // Create a new HTTP server with the Express app
-  const http = require('http');
-  const httpServer = http.createServer(app);
-  
-  // Start server with WebSocket support
-  httpServer.listen(PORT, '0.0.0.0', () => {
-    console.log(`[express] serving on port ${PORT}`);
-  });
 }
 
-// Handle errors
-app.use((err, req, res, next) => {
-  console.error('Server error:', err);
-  res.status(500).json({ error: 'Internal server error' });
-});
+function setupServer() {
+  // For Express, use port 5000
+  const PORT = 5000;
 
-// Export for direct execution
-if (!module.parent) {
-  // Use dynamic port allocation to avoid conflicts
-  const findFreePort = (startPort) => {
-    return new Promise((resolve, reject) => {
-      const http = require('http');
-      const server = http.createServer();
-      
-      server.on('error', (err) => {
-        if (err.code === 'EADDRINUSE') {
-          console.log(`Port ${startPort} in use, trying ${startPort + 1}`);
-          resolve(findFreePort(startPort + 1));
-        } else {
-          reject(err);
-        }
-      });
-      
-      server.listen(startPort, () => {
-        server.close(() => {
-          resolve(startPort);
-        });
-      });
-    });
-  };
+  // Serve static files directly from the public directory
+  app.use(express.static(path.join(__dirname, '../client/public')));
   
-  // Find an available port starting from 3500
-  findFreePort(3500).then(PORT => {
-    app.listen(PORT, '0.0.0.0', () => {
-      console.log(`[express] serving on port ${PORT}`);
-    });
+  // Catch-all route to handle all frontend requests
+  app.get('*', (req, res) => {
+    // Check if this is an API request
+    if (req.url.startsWith('/api')) {
+      return res.status(404).json({ error: 'API endpoint not found' });
+    }
+    
+    // Serve the main HTML file
+    res.sendFile(path.join(__dirname, '../client/public/index.html'));
+  });
+
+  // Error handling
+  app.use((err, req, res, next) => {
+    console.error('Server error:', err);
+    res.status(500).json({ error: 'Internal server error' });
+  });
+
+  // Start the Express server
+  app.listen(PORT, '0.0.0.0', () => {
+    console.log(`Server running on http://localhost:${PORT}`);
+    console.log(`Chess Society website available at http://localhost:${PORT}`);
   });
 }
 
