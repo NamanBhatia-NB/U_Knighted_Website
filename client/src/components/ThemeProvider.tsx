@@ -62,22 +62,22 @@ export function ThemeProvider({
       const handleScroll = () => {
         const scrollPosition = window.scrollY;
         const documentHeight = document.body.scrollHeight - window.innerHeight;
-        const scrollPercentage = (scrollPosition / documentHeight) * 100;
+        const scrollPercentage = Math.min(100, Math.max(0, (scrollPosition / documentHeight) * 100));
         
         const root = window.document.documentElement;
         
         // Apply transition classes for smoother change
-        if (scrollPercentage > 50) {
+        if (scrollPercentage > 40) {
           if (!root.classList.contains("dark")) {
             root.classList.remove("light");
             root.classList.add("dark");
-            root.style.setProperty('--theme-transition-factor', `${(scrollPercentage - 50) * 2}%`);
+            root.style.setProperty('--theme-transition-factor', `${(scrollPercentage - 40) * 1.67}%`);
           }
         } else {
           if (!root.classList.contains("light")) {
             root.classList.remove("dark");
             root.classList.add("light");
-            root.style.setProperty('--theme-transition-factor', `${100 - (scrollPercentage * 2)}%`);
+            root.style.setProperty('--theme-transition-factor', `${100 - (scrollPercentage * 2.5)}%`);
           }
         }
         
@@ -86,7 +86,9 @@ export function ThemeProvider({
       };
       
       // Run once to initialize
-      handleScroll();
+      setTimeout(() => {
+        handleScroll();
+      }, 50);
       
       window.addEventListener("scroll", handleScroll);
       return () => window.removeEventListener("scroll", handleScroll);

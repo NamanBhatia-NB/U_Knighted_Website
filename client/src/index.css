@@ -36,33 +36,33 @@
   }
 
   .dark {
-    --background: 0 0% 10%; /* Near black #1a1a1a */
-    --foreground: 0 0% 95%; /* Off-white for better contrast */
+    --background: 224 71% 4%; /* Very dark navy (#050A14) */
+    --foreground: 0 0% 98%; /* Nearly white text for contrast */
 
-    --card: 0 0% 12%; /* Slightly lighter than background */
-    --card-foreground: 0 0% 95%;
+    --card: 225 50% 7%; /* Slightly lighter than background */
+    --card-foreground: 0 0% 98%;
 
-    --popover: 0 0% 12%;
-    --popover-foreground: 0 0% 95%;
+    --popover: 224 71% 6%;
+    --popover-foreground: 0 0% 98%;
 
-    --primary: 0 0% 95%; /* Lighter in dark mode for contrast */
-    --primary-foreground: 0 0% 10%;
+    --primary: 0 0% 98%; /* Almost white for primary */
+    --primary-foreground: 224 71% 4%;
 
-    --secondary: 21 71% 31%; /* Keep the chess brown */
+    --secondary: 30 84% 40%; /* Brighter chess brown (#A85C10) */
     --secondary-foreground: 0 0% 100%;
 
-    --accent: 50.3 100% 50%; /* Gold stays the same */
-    --accent-foreground: 0 0% 10%;
+    --accent: 45 100% 60%; /* Brighter gold (#FFCC00) for dark mode */
+    --accent-foreground: 224 71% 4%;
 
-    --muted: 0 0% 15%; /* Slightly lighter than background for distinction */
-    --muted-foreground: 0 0% 70%; /* More visible muted text */
+    --muted: 225 30% 12%; /* Clearly visible muted background */
+    --muted-foreground: 0 0% 80%; /* Very visible muted text */
 
-    --destructive: 0 70% 40%; /* Brighter destructive for dark mode */
-    --destructive-foreground: 0 0% 95%;
+    --destructive: 0 84% 50%; /* Bright red for errors */
+    --destructive-foreground: 0 0% 98%;
 
-    --border: 0 0% 20%; /* Subtle border color */
-    --input: 0 0% 20%;
-    --ring: 50.3 100% 50%; /* Gold ring for focus */
+    --border: 225 30% 20%; /* Visible border color */
+    --input: 225 30% 20%;
+    --ring: 45 100% 60%; /* Brighter gold ring for focus */
   }
 
   body {
@@ -122,12 +122,12 @@
       to bottom,
       hsl(var(--background)) 0%,
       hsl(var(--background)) calc(50% - var(--scroll-position) / 2),
-      hsl(0 0% 10%) calc(50% + var(--scroll-position) / 2),
-      hsl(0 0% 10%) 100%
+      hsl(224 71% 4%) calc(50% + var(--scroll-position) / 2),
+      hsl(224 71% 4%) 100%
     );
     z-index: -1;
     pointer-events: none;
-    opacity: var(--theme-transition-opacity, 0.5);
+    opacity: var(--theme-transition-opacity, 0.8);
     transition: opacity 0.5s ease;
   }
   
@@ -149,17 +149,17 @@
   }
   
   .dark .theme-card {
-    background-color: hsl(0 0% 13%);
-    border-color: hsl(0 0% 22%);
-    box-shadow: 0 4px 10px -1px rgba(0, 0, 0, 0.4),
-              0 2px 6px -1px rgba(0, 0, 0, 0.3);
+    background-color: hsl(225 50% 8%);
+    border-color: hsl(225 30% 25%);
+    box-shadow: 0 4px 10px -1px rgba(0, 0, 0, 0.5),
+              0 2px 6px -1px rgba(0, 0, 0, 0.4);
   }
   
   .dark .theme-card:hover {
-    background-color: hsl(0 0% 14%);
-    border-color: hsl(0 0% 25%);
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5),
-              0 4px 8px -2px rgba(0, 0, 0, 0.4);
+    background-color: hsl(225 50% 10%);
+    border-color: hsl(225 30% 30%);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.6),
+              0 4px 8px -2px rgba(0, 0, 0, 0.5);
   }
 
   .theme-aware-glass {
@@ -171,10 +171,10 @@
   }
   
   .dark .theme-aware-glass {
-    background-color: rgba(26, 26, 26, 0.75);
-    backdrop-filter: blur(12px);
-    border-color: rgba(255, 255, 255, 0.05);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+    background-color: rgba(5, 10, 30, 0.80);
+    backdrop-filter: blur(16px);
+    border-color: rgba(100, 130, 255, 0.15);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
   }
 
   .parallax {

@@ -37,12 +37,12 @@ export function useScrollAnimation(options: ScrollAnimationOptions = {}) {
     const rect = element.getBoundingClientRect();
     const windowHeight = window.innerHeight;
     
-    // Check if element is in viewport with offset
+    // More aggressive check - consider element visible sooner
     const isVisible = 
-      rect.top < windowHeight - offset && 
-      rect.bottom > 0 && 
-      rect.left < window.innerWidth && 
-      rect.right > 0;
+      rect.top < windowHeight - (offset * 0.5) && 
+      rect.bottom > -100 && 
+      rect.left < window.innerWidth + 50 && 
+      rect.right > -50;
       
     return isVisible;
   }, [offset]);
@@ -103,8 +103,11 @@ export function useScrollAnimation(options: ScrollAnimationOptions = {}) {
     // Check animations on scroll
     window.addEventListener('scroll', checkScroll);
     
-    // Initial check
-    checkScroll();
+    // Initial check with delay to ensure elements are properly positioned
+    setTimeout(checkScroll, 100);
+    // Perform multiple checks as the page settles
+    setTimeout(checkScroll, 500);
+    setTimeout(checkScroll, 1000);
     
     return () => window.removeEventListener('scroll', checkScroll);
   }, [elements, checkScroll]);
