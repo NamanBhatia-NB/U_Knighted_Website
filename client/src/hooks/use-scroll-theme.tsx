@@ -43,13 +43,26 @@ export function useScrollTheme(options: ScrollThemeOptions = {}) {
     
     // Handle theme changes based on threshold
     if (scrollThemeTransition) {
+      // Force the appropriate theme based on scroll position
       if (percentage > threshold) {
+        // Set dark theme directly on the root element for immediate effect
+        root.classList.remove('light');
+        root.classList.add('dark');
+        
+        // Update theme state in provider to maintain consistency
         if (theme !== 'dark') setTheme('dark');
+        
         // Calculate transition factor (0-100%)
         const transitionFactor = Math.min(100, ((percentage - threshold) / (100 - threshold)) * 100);
         root.style.setProperty('--theme-transition-factor', `${transitionFactor}%`);
       } else {
+        // Set light theme directly on the root element for immediate effect
+        root.classList.remove('dark');
+        root.classList.add('light');
+        
+        // Update theme state in provider to maintain consistency
         if (theme !== 'light') setTheme('light');
+        
         // Calculate transition factor (100-0%)
         const transitionFactor = Math.max(0, 100 - (percentage / threshold) * 100);
         root.style.setProperty('--theme-transition-factor', `${transitionFactor}%`);

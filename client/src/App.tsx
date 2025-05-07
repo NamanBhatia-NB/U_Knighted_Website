@@ -54,24 +54,65 @@ function ScrollAnimationWrapper() {
   // Initialize scroll-based animations
   const { checkAnimations } = useScrollAnimation({
     stagger: true,
-    staggerDelay: 100
+    staggerDelay: 75,
+    offset: 200 // Larger offset triggers animations sooner
   });
   
   // Initialize scroll-based theme changes
   const { scrollPercentage } = useScrollTheme({
-    threshold: 50,
+    threshold: 40, // Switch theme earlier while scrolling
     useSections: false
   });
   
   // Re-check animations when route changes
   const [location] = useLocation();
   useEffect(() => {
-    // Give time for the new page to render before checking animations
-    const timeout = setTimeout(() => {
-      checkAnimations();
-    }, 300);
+    // Force all animations to be visible immediately after route change
+    const applyAnimationsToAll = () => {
+      // Apply fade in effect to all scroll animation elements
+      const fadeElements = document.querySelectorAll('.scrolled-fade-in');
+      for (let i = 0; i < fadeElements.length; i++) {
+        fadeElements[i].classList.add('fade-in-visible');
+      }
+      
+      // Handle staggered children
+      const staggerContainers = document.querySelectorAll('.stagger-children');
+      for (let i = 0; i < staggerContainers.length; i++) {
+        const container = staggerContainers[i];
+        container.classList.add('fade-in-visible');
+        
+        const children = container.querySelectorAll('*');
+        for (let j = 0; j < children.length; j++) {
+          const child = children[j];
+          if (child instanceof HTMLElement) {
+            const delay = j * 50;
+            setTimeout(() => {
+              child.style.opacity = '1';
+              child.style.transform = 'translateY(0)';
+            }, delay);
+          }
+        }
+      }
+      
+      // Handle other animation types
+      const otherAnimElements = document.querySelectorAll(
+        '.fade-from-left, .fade-from-right, .fade-in, .scale-in'
+      );
+      for (let i = 0; i < otherAnimElements.length; i++) {
+        otherAnimElements[i].classList.add('fade-in-visible');
+      }
+    };
     
-    return () => clearTimeout(timeout);
+    // Apply animations after a short delay
+    const timeout1 = setTimeout(applyAnimationsToAll, 300);
+    const timeout2 = setTimeout(checkAnimations, 100); 
+    const timeout3 = setTimeout(checkAnimations, 500);
+    
+    return () => {
+      clearTimeout(timeout1);
+      clearTimeout(timeout2);
+      clearTimeout(timeout3);
+    };
   }, [location, checkAnimations]);
   
   return null;
