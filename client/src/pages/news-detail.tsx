@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useRoute, useLocation } from "wouter";
-import Navbar from "@/components/Navbar";
+
 import Footer from "@/components/ChessSections/Footer";
 import { getNewsById } from "../data/newsItems";
 import { format } from "date-fns";
@@ -49,7 +49,7 @@ export default function NewsDetail() {
   if (isLoading) {
     return (
       <>
-        <Navbar />
+        
         <div className="container mx-auto px-4 py-32">
           <div className="flex justify-center items-center h-64">
             <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
@@ -63,7 +63,7 @@ export default function NewsDetail() {
   if (notFound) {
     return (
       <>
-        <Navbar />
+        
         <div className="container mx-auto px-4 py-32">
           <div className="text-center py-16">
             <h1 className="text-4xl font-bold font-display mb-4">Article Not Found</h1>
@@ -103,7 +103,7 @@ export default function NewsDetail() {
   
   return (
     <>
-      <Navbar />
+      
       <main className="container mx-auto px-4 py-32">
         {newsItem && (
           <div className="max-w-4xl mx-auto">

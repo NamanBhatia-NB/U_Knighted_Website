@@ -1,4 +1,3 @@
-import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/ChessSections/HeroSection";
 import AboutSection from "@/components/ChessSections/AboutSection";
 import EventsSection from "@/components/ChessSections/EventsSection";
@@ -20,7 +19,6 @@ export default function Home() {
 
   return (
     <>
-      <Navbar />
       <main>
         <HeroSection />
         <AboutSection />

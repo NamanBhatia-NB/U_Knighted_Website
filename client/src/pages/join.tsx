@@ -1,4 +1,4 @@
-import Navbar from "@/components/Navbar";
+
 import JoinSection from "@/components/ChessSections/JoinSection";
 import Footer from "@/components/ChessSections/Footer";
 import { useEffect } from "react";
@@ -28,7 +28,7 @@ export default function Join() {
 
   return (
     <>
-      <Navbar />
+      
       <div className="pt-24">
         <JoinSection />
       </div>

@@ -1,4 +1,4 @@
-import Navbar from "@/components/Navbar";
+
 import AboutSection from "@/components/ChessSections/AboutSection";
 import Footer from "@/components/ChessSections/Footer";
 import { useEffect } from "react";
@@ -28,7 +28,7 @@ export default function About() {
 
   return (
     <>
-      <Navbar />
+      
       <div className="pt-24">
         <AboutSection />
       </div>

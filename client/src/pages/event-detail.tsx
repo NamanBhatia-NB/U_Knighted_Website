@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useRoute, Link } from "wouter";
 import { format } from "date-fns";
-import Navbar from "@/components/Navbar";
+
 import Footer from "@/components/ChessSections/Footer";
 import eventsData from "@/data/events.json";
 
@@ -47,7 +47,7 @@ export default function EventDetail() {
   if (isLoading) {
     return (
       <>
-        <Navbar />
+        
         <div className="container mx-auto px-4 py-32">
           <div className="flex justify-center items-center h-64">
             <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
@@ -61,7 +61,7 @@ export default function EventDetail() {
   if (notFound) {
     return (
       <>
-        <Navbar />
+        
         <div className="container mx-auto px-4 py-32">
           <div className="text-center py-16">
             <h1 className="text-4xl font-bold font-display mb-4">Event Not Found</h1>
@@ -99,7 +99,7 @@ export default function EventDetail() {
 
   return (
     <>
-      <Navbar />
+      
       <main className="container mx-auto px-4 py-32">
         {event && (
           <div className="max-w-4xl mx-auto">

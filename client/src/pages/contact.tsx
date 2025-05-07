@@ -1,4 +1,4 @@
-import Navbar from "@/components/Navbar";
+
 import ContactSection from "@/components/ChessSections/ContactSection";
 import Footer from "@/components/ChessSections/Footer";
 import { useEffect } from "react";
@@ -28,7 +28,7 @@ export default function Contact() {
 
   return (
     <>
-      <Navbar />
+      
       <div className="pt-24">
         <ContactSection />
       </div>
