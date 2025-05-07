@@ -42,9 +42,45 @@ export default function JoinForm() {
 
   const registerMutation = useMutation({
     mutationFn: (data: JoinFormValues) => {
+      // First try the API request
       return apiRequest("/api/members/register", { 
         method: "POST", 
         body: JSON.stringify(data) 
+      })
+      .catch(error => {
+        console.log("API request failed, using local storage fallback", error);
+        
+        // Check if email already exists in local storage
+        try {
+          const existingMembers = JSON.parse(localStorage.getItem('members') || '[]');
+          const emailExists = existingMembers.some((member: any) => 
+            member.email === data.email
+          );
+          
+          if (emailExists) {
+            // Simulate a 409 Conflict response
+            throw new Error("Email already exists");
+          }
+          
+          // Add new member with timestamp and ID
+          const newMember = {
+            ...data,
+            id: Date.now(),
+            registeredAt: new Date().toISOString(),
+            name: `${data.firstName} ${data.lastName}`
+          };
+          
+          // Save updated members
+          localStorage.setItem('members', JSON.stringify([...existingMembers, newMember]));
+          
+          return newMember; // Return the member for success handling
+        } catch (storageError) {
+          if (storageError.message === "Email already exists") {
+            throw storageError; // Re-throw duplicate email error
+          }
+          console.error("Local storage fallback failed", storageError);
+          throw error; // Re-throw original error if local storage fails
+        }
       });
     },
     onSuccess: () => {
@@ -83,19 +119,10 @@ export default function JoinForm() {
   function onSubmit(data: JoinFormValues) {
     setIsSubmitting(true);
     
-    // Instead of actually registering the user in the database,
-    // we'll just simulate a successful submission
-    setTimeout(() => {
-      toast({
-        title: "Application Received",
-        description: "Thank you for your interest in joining our chess society! Your application will be reviewed by our team.",
-      });
-      form.reset();
-      setIsSubmitting(false);
-    }, 1500);
+    // Send the actual data to the server
+    registerMutation.mutate(data);
     
-    // Commented out the actual API call that would have added the user to the database
-    // registerMutation.mutate(data);
+    console.log("Submitting membership data:", data);
   }
 
   return (

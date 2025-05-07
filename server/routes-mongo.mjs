@@ -1,6 +1,7 @@
-const express = require('express');
+import express from 'express';
+import { Member, Event, News, Contact, Newsletter, SocietyStats } from '../models/index.mjs';
+
 const router = express.Router();
-const { Member, Event, News, Contact, Newsletter, SocietyStats } = require('../models');
 
 // Get society stats
 router.get('/society/stats', async (req, res) => {
@@ -239,6 +240,4 @@ router.post('/newsletter/subscribe', async (req, res) => {
   }
 });
 
-
-
-module.exports = router;
+export default router;

@@ -1,6 +1,8 @@
 {
-  "Start application": {
-    "language": "nodejs",
-    "command": "node server/run-server.js"
-  }
+  "workflows": [
+    {
+      "name": "Start application",
+      "command": "node server.js"
+    }
+  ]
 }

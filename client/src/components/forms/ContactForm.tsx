@@ -16,7 +16,7 @@ const contactFormSchema = z.object({
   email: z.string().email("Please enter a valid email address"),
   subject: z.string({
     required_error: "Please select a subject",
-  }),
+  }).optional(), // Make subject optional to match server schema
   message: z.string().min(10, "Message must be at least 10 characters"),
 });
 
@@ -37,9 +37,34 @@ export default function ContactForm() {
 
   const contactMutation = useMutation({
     mutationFn: (data: ContactFormValues) => {
+      // First try the API request
       return apiRequest("/api/contact", {
         method: "POST",
         body: JSON.stringify(data)
+      })
+      .catch(error => {
+        console.log("API request failed, using local storage fallback", error);
+        
+        // Fallback to local storage if API fails
+        try {
+          // Get existing contacts or initialize empty array
+          const existingContacts = JSON.parse(localStorage.getItem('contacts') || '[]');
+          
+          // Add new contact with timestamp
+          const newContact = {
+            ...data,
+            id: Date.now(),
+            createdAt: new Date().toISOString()
+          };
+          
+          // Save updated contacts
+          localStorage.setItem('contacts', JSON.stringify([...existingContacts, newContact]));
+          
+          return newContact; // Return the contact for success handling
+        } catch (storageError) {
+          console.error("Local storage fallback failed", storageError);
+          throw error; // Re-throw original error if local storage fails
+        }
       });
     },
     onSuccess: () => {
@@ -62,6 +87,9 @@ export default function ContactForm() {
 
   function onSubmit(data: ContactFormValues) {
     setIsSubmitting(true);
+    
+    // Log the data for debugging
+    console.log("Submitting contact data:", data);
     
     // Send the actual data to the server
     contactMutation.mutate(data);

@@ -1,19 +1,12 @@
-// Allowing both CommonJS and ES modules compatibility
-const express = require('express');
-const fs = require('fs');
-const path = require('path');
+import express from 'express';
+import fs from 'fs';
+import path from 'path';
+import { createServer as createViteServer } from 'vite';
+import { fileURLToPath } from 'url';
 
-// Use dynamic import for Vite if possible
-async function getViteServer() {
-  try {
-    const viteModule = await import('vite');
-    return viteModule.createServer;
-  } catch (error) {
-    console.warn('Failed to dynamically import Vite, using require instead');
-    const { createServer: createViteServer } = require('vite');
-    return createViteServer;
-  }
-}
+// Get __dirname equivalent in ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Function to generate a random ID (replacing nanoid)
 function generateId(length = 8) {
@@ -43,9 +36,6 @@ async function setupVite(app, server) {
     allowedHosts: true,
   };
 
-  // Get the Vite createServer function dynamically
-  const createViteServer = await getViteServer();
-  
   const vite = await createViteServer({
     configFile: false,
     server: serverOptions,
@@ -64,26 +54,12 @@ async function setupVite(app, server) {
         "index.html",
       );
 
-      console.log('Template path:', clientTemplate);
-
       // always reload the index.html file from disk incase it changes
       let template = await fs.promises.readFile(clientTemplate, "utf-8");
-      
-      // Ensure correct path for main.tsx by checking if it already has a query param
-      if (template.includes('src="/src/main.tsx"')) {
-        template = template.replace(
-          'src="/src/main.tsx"',
-          `src="/src/main.tsx?v=${generateId()}"`,
-        );
-      } else if (template.includes("src='/src/main.tsx'")) {
-        template = template.replace(
-          "src='/src/main.tsx'",
-          `src='/src/main.tsx?v=${generateId()}'`,
-        );
-      } else {
-        console.log('Could not find main.tsx script tag in template, template may be custom');
-      }
-      
+      template = template.replace(
+        `src="/src/main.tsx"`,
+        `src="/src/main.tsx?v=${generateId()}"`,
+      );
       const page = await vite.transformIndexHtml(url, template);
       res.status(200).set({ "Content-Type": "text/html" }).end(page);
     } catch (e) {
@@ -110,4 +86,4 @@ function serveStatic(app) {
   });
 }
 
-module.exports = { log, setupVite, serveStatic };
+export { log, setupVite, serveStatic };
