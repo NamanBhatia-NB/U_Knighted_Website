@@ -52,7 +52,6 @@ export default function Navbar() {
               <Link href="/members" className="text-primary dark:text-primary-foreground hover:text-accent transition-colors">Members</Link>
               <Link href="/news" className="text-primary dark:text-primary-foreground hover:text-accent transition-colors">News</Link>
               <Link href="/contact" className="text-primary dark:text-primary-foreground hover:text-accent transition-colors">Contact</Link>
-              <Link href="/theme-demo" className="text-primary dark:text-primary-foreground hover:text-accent transition-colors border-l pl-4 ml-2 border-primary/20 dark:border-primary-foreground/20">Theme Demo</Link>
               <ThemeToggle />
               <Link 
                 href="/join" 
@@ -90,7 +89,6 @@ export default function Navbar() {
               <Link href="/members" className="text-primary dark:text-primary-foreground hover:text-accent transition-colors">Members</Link>
               <Link href="/news" className="text-primary dark:text-primary-foreground hover:text-accent transition-colors">News</Link>
               <Link href="/contact" className="text-primary dark:text-primary-foreground hover:text-accent transition-colors">Contact</Link>
-              <Link href="/theme-demo" className="text-primary dark:text-primary-foreground hover:text-accent transition-colors border-t border-b py-2 my-1 border-primary/20 dark:border-primary-foreground/20">Theme Demo</Link>
               <Link 
                 href="/join" 
                 className="bg-accent hover:bg-accent/80 text-accent-foreground px-4 py-2 rounded-md transition-colors shadow-sm text-center"

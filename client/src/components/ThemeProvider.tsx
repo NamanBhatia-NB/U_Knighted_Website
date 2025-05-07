@@ -18,7 +18,7 @@ type ThemeProviderState = {
 const initialState: ThemeProviderState = {
   theme: "system",
   setTheme: () => null,
-  scrollThemeTransition: false,
+  scrollThemeTransition: true,
   setScrollThemeTransition: () => null
 };
 
@@ -35,7 +35,7 @@ export function ThemeProvider({
   );
   
   const [scrollThemeTransition, setScrollThemeTransition] = useState<boolean>(
-    localStorage.getItem("scroll-theme-transition") === "true"
+    localStorage.getItem("scroll-theme-transition") !== "false" // Default to true
   );
 
   useEffect(() => {

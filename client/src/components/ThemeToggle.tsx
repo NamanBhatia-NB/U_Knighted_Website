@@ -1,12 +1,10 @@
-import { Moon, Sun, SunMoon, ScrollText } from "lucide-react";
+import { Moon, Sun, SunMoon } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, DropdownMenuSeparator } from "@/components/ui/dropdown-menu";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { useTheme } from "@/components/ThemeProvider";
-import { Switch } from "@/components/ui/switch";
-import { Label } from "@/components/ui/label";
 
 export function ThemeToggle() {
-  const { theme, setTheme, scrollThemeTransition, setScrollThemeTransition } = useTheme();
+  const { theme, setTheme } = useTheme();
 
   return (
     <div className="flex items-center space-x-2">
@@ -22,46 +20,28 @@ export function ThemeToggle() {
             <span className="sr-only">Toggle theme</span>
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="end" className="w-[200px] theme-aware-glass">
+        <DropdownMenuContent align="end" className="w-[180px] theme-aware-glass">
           <DropdownMenuItem 
             onClick={() => setTheme("light")}
-            className={`${theme === 'light' && !scrollThemeTransition ? 'bg-accent/50' : ''} cursor-pointer`}
+            className={`${theme === 'light' ? 'bg-accent/50' : ''} cursor-pointer`}
           >
             <Sun className="mr-2 h-4 w-4" />
             <span>Light</span>
           </DropdownMenuItem>
           <DropdownMenuItem 
             onClick={() => setTheme("dark")}
-            className={`${theme === 'dark' && !scrollThemeTransition ? 'bg-accent/50' : ''} cursor-pointer`}
+            className={`${theme === 'dark' ? 'bg-accent/50' : ''} cursor-pointer`}
           >
             <Moon className="mr-2 h-4 w-4" />
             <span>Dark</span>
           </DropdownMenuItem>
           <DropdownMenuItem 
             onClick={() => setTheme("system")}
-            className={`${theme === 'system' && !scrollThemeTransition ? 'bg-accent/50' : ''} cursor-pointer`}
+            className={`${theme === 'system' ? 'bg-accent/50' : ''} cursor-pointer`}
           >
             <SunMoon className="mr-2 h-4 w-4" />
             <span>System</span>
           </DropdownMenuItem>
-          <DropdownMenuSeparator />
-          <div className="px-2 py-2 flex items-center justify-between">
-            <div className="flex items-center space-x-2">
-              <ScrollText className="h-4 w-4" />
-              <Label htmlFor="scroll-theme" className="text-sm cursor-pointer">Theme follows scroll</Label>
-            </div>
-            <Switch 
-              id="scroll-theme"
-              checked={scrollThemeTransition}
-              onCheckedChange={setScrollThemeTransition}
-              className={scrollThemeTransition ? "bg-accent" : ""}
-            />
-          </div>
-          {scrollThemeTransition && (
-            <div className="px-2 py-2 text-xs text-muted-foreground">
-              Theme changes as you scroll down the page
-            </div>
-          )}
         </DropdownMenuContent>
       </DropdownMenu>
     </div>
