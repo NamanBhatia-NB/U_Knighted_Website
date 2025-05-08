@@ -66,7 +66,7 @@ export default function NewsDetail() {
           <div className="text-center py-16">
             <h1 className="text-4xl font-bold font-display mb-4">Article Not Found</h1>
             <p className="mb-8 text-gray-600 dark:text-gray-300">Sorry, the article you're looking for doesn't exist or has been removed.</p>
-            <Link href="/news" className="bg-primary dark:bg-accent text-white dark:text-primary px-6 py-3 rounded-lg hover:bg-primary/90 dark:hover:bg-accent/90 transition-colors shadow-sm hover:shadow-md">
+            <Link href="/news" className="bg-primary dark:bg-accent text-white dark:text-primary px-6 py-3 rounded-lg hover:bg-primary/90 hover:text-white dark:hover:bg-accent/90 dark:hover:text-primary transition-all duration-200 shadow-sm hover:shadow-md">
               Back to News
             </Link>
           </div>
@@ -105,7 +105,7 @@ export default function NewsDetail() {
         {newsItem && (
           <div className="max-w-4xl mx-auto">
             <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6">
-              <Link href="/news" className="text-primary dark:text-accent hover:text-accent dark:hover:text-accent/80 transition-colors mb-4 md:mb-0 inline-flex items-center">
+              <Link href="/news" className="text-primary dark:text-accent hover:text-accent hover:underline dark:hover:text-accent/80 dark:hover:underline transition-all duration-200 mb-4 md:mb-0 inline-flex items-center">
                 <i className="ri-arrow-left-line mr-2"></i>
                 Back to All News
               </Link>
@@ -142,14 +142,14 @@ export default function NewsDetail() {
               <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
                 <Link 
                   href="/news" 
-                  className="text-primary dark:text-accent hover:text-accent dark:hover:text-accent/80 transition-colors inline-flex items-center"
+                  className="text-primary dark:text-accent hover:text-accent hover:underline dark:hover:text-accent/80 dark:hover:underline transition-all duration-200 inline-flex items-center"
                 >
                   <i className="ri-newspaper-line mr-2"></i>
                   Browse More Articles
                 </Link>
                 <Link 
                   href="/contact" 
-                  className="text-primary dark:text-accent hover:text-accent dark:hover:text-accent/80 transition-colors inline-flex items-center"
+                  className="text-primary dark:text-accent hover:text-accent hover:underline dark:hover:text-accent/80 dark:hover:underline transition-all duration-200 inline-flex items-center"
                 >
                   <i className="ri-mail-line mr-2"></i>
                   Subscribe to Newsletter

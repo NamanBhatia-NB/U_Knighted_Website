@@ -85,9 +85,9 @@ export default function Events() {
               <button
                 key={type}
                 onClick={() => setFilter(type)}
-                className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${filter === type
-                    ? 'bg-primary text-white dark:bg-accent dark:text-primary'
-                    : 'bg-primary/10 dark:bg-primary/5 text-primary dark:text-primary/90 hover:bg-primary/20 dark:hover:bg-primary/10'
+                className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${filter === type
+                    ? 'bg-primary text-white dark:bg-accent dark:text-primary hover:bg-primary/90 hover:text-white dark:hover:bg-accent/90 dark:hover:text-primary'
+                    : 'bg-primary/10 dark:bg-primary/5 text-primary dark:text-primary/90 hover:bg-primary/20 hover:text-primary dark:hover:bg-primary/10 dark:hover:text-primary'
                   }`}
               >
                 {type === "all" ? "All Events" : type}
@@ -163,7 +163,7 @@ export default function Events() {
                 <p className="text-xl text-gray-800 dark:text-gray-200">No events found for this filter.</p>
                 <button
                   onClick={() => setFilter("all")}
-                  className="mt-4 px-4 py-2 bg-primary dark:bg-accent text-white dark:text-primary rounded-md hover:bg-primary/90 dark:hover:bg-accent/90 transition-colors"
+                  className="mt-4 px-4 py-2 bg-primary dark:bg-accent text-white dark:text-primary rounded-md hover:bg-primary/90 hover:text-white dark:hover:bg-accent/90 dark:hover:text-primary transition-all duration-200 shadow-sm hover:shadow-md"
                 >
                   View All Events
                 </button>
@@ -177,7 +177,7 @@ export default function Events() {
             <p className="max-w-2xl mx-auto mb-8">
               Subscribe to our newsletter or follow our social media channels to stay updated about all our upcoming events.
             </p>
-            <Link href="/contact" className="inline-flex items-center space-x-2 px-6 py-3 bg-primary dark:bg-accent text-white dark:text-primary hover:bg-primary/90 dark:hover:bg-accent/90 transition-colors rounded-lg font-medium shadow-sm hover:shadow-md">
+            <Link href="/contact" className="inline-flex items-center space-x-2 px-6 py-3 bg-primary dark:bg-accent text-white dark:text-primary hover:bg-primary/90 hover:text-white dark:hover:bg-accent/90 dark:hover:text-primary transition-all duration-200 rounded-lg font-medium shadow-sm hover:shadow-md">
               <span>Join Our Newsletter</span>
               <i className="ri-mail-line ml-2"></i>
             </Link>

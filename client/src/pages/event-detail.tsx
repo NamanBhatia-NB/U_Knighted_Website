@@ -101,7 +101,7 @@ export default function EventDetail() {
         {event && (
           <div className="max-w-4xl mx-auto">
             <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6">
-              <Link href="/events" className="text-primary dark:text-accent hover:text-accent/80 dark:hover:text-accent/80 transition-colors mb-4 md:mb-0 inline-flex items-center">
+              <Link href="/events" className="text-primary dark:text-accent hover:text-accent hover:underline dark:hover:text-accent/80 dark:hover:underline transition-all duration-200 mb-4 md:mb-0 inline-flex items-center">
                 <i className="ri-arrow-left-line mr-2"></i>
                 Back to All Events
               </Link>
@@ -138,14 +138,14 @@ export default function EventDetail() {
                 href={`https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(event.title)}&dates=${event.date.replace(/-/g, '')}T${event.timeStart.replace(':', '')}00/${event.date.replace(/-/g, '')}T${event.timeEnd.replace(':', '')}00&details=${encodeURIComponent(event.description)}&location=${encodeURIComponent(event.location)}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-accent hover:bg-accent/90 active:bg-accent/80 text-white px-6 py-3 rounded-lg font-medium inline-flex items-center justify-center shadow-md hover:shadow-lg transition-all"
+                className="bg-accent hover:bg-accent/90 active:bg-accent/80 text-white hover:text-white px-6 py-3 rounded-lg font-medium inline-flex items-center justify-center shadow-md hover:shadow-lg transition-all duration-200"
               >
                 <i className="ri-calendar-check-line mr-2"></i>
                 Add to Calendar
               </a>
               <Link
                 href="/join"
-                className="border border-primary dark:border-primary/50 text-primary dark:text-primary/90 hover:bg-primary/10 dark:hover:bg-primary/20 px-6 py-3 rounded-lg font-medium transition-colors inline-flex items-center justify-center"
+                className="border border-primary dark:border-primary/50 text-primary dark:text-primary/90 hover:bg-primary/10 hover:text-primary dark:hover:bg-primary/20 dark:hover:text-primary px-6 py-3 rounded-lg font-medium transition-all duration-200 inline-flex items-center justify-center"
               >
                 <i className="ri-user-add-line mr-2"></i>
                 Join the Society
@@ -160,14 +160,14 @@ export default function EventDetail() {
               <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
                 <Link
                   href="/events"
-                  className="text-primary dark:text-accent hover:text-accent dark:hover:text-accent/80 transition-colors inline-flex items-center"
+                  className="text-primary dark:text-accent hover:text-accent hover:underline dark:hover:text-accent/80 dark:hover:underline transition-all duration-200 inline-flex items-center"
                 >
                   <i className="ri-calendar-line mr-2"></i>
                   View All Events
                 </Link>
                 <Link
                   href="/contact"
-                  className="text-primary dark:text-accent hover:text-accent dark:hover:text-accent/80 transition-colors inline-flex items-center"
+                  className="text-primary dark:text-accent hover:text-accent hover:underline dark:hover:text-accent/80 dark:hover:underline transition-all duration-200 inline-flex items-center"
                 >
                   <i className="ri-mail-line mr-2"></i>
                   Contact Us
