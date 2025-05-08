@@ -17,7 +17,7 @@ A modern, responsive website for the U-Knighted Chess Society — designed to sh
 | Frontend  | Backend | Styling     | Utilities    |
 |-----------|---------|-------------|--------------|
 | Vite      | API Routes | Tailwind CSS | TypeScript   |
-| React     | MongoDB | ShadCN UI    |  | JavaScript   |
+| React     | MongoDB | ShadCN UI    |  JavaScript   |
 
 
 ```bash
