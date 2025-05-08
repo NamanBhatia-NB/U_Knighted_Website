@@ -101,46 +101,88 @@ function ScrollAnimationWrapper() {
     if (baseTheme === 'dark') {
       document.documentElement.classList.add('dark');
       document.body.classList.add('dark');
+      document.documentElement.style.setProperty('--initial-background', 'hsl(224 71% 4%)');
     } else {
       document.documentElement.classList.add('light');
       document.body.classList.add('light');
+      document.documentElement.style.setProperty('--initial-background', 'hsl(0 0% 100%)');
     }
+    
+    // Cache these values outside the scroll handler for performance
+    const docElement = document.documentElement;
+    const body = document.body;
+    const maxScrollIntensity = 25; // Maximum intensity value for scroll effect
     
     const handleScroll = () => {
       const scrollY = window.scrollY;
-      const docHeight = document.body.scrollHeight - window.innerHeight;
-      const scrollPercentage = docHeight > 0 ? (scrollY / docHeight) * 100 : 0;
+      const viewportHeight = window.innerHeight;
+      const docHeight = body.scrollHeight - viewportHeight;
+      
+      // Ensure we don't divide by zero if page is not scrollable
+      if (docHeight <= 0) return;
+      
+      // Calculate scroll percentage (0-100)
+      const scrollPercentage = Math.min(100, Math.max(0, (scrollY / docHeight) * 100));
       
       // Set CSS variable for scroll position - this affects CSS transitions
-      document.documentElement.style.setProperty('--scroll-position', `${scrollPercentage}%`);
+      docElement.style.setProperty('--scroll-position', `${scrollPercentage}%`);
       
       // Don't actually change the theme class on scroll - just set the intensity
-      document.documentElement.style.setProperty('--theme-intensity', `${scrollPercentage}%`);
+      docElement.style.setProperty('--theme-intensity', `${scrollPercentage}%`);
       
-      // Update CSS variables for background and foreground colors
+      // Calculate eased intensity for a smoother feel
+      // Using easeOutQuad function for smoother transitions: t*(2-t)
+      const easing = scrollPercentage / 100;
+      const easedIntensity = easing * (2 - easing);
+      const intensity = Math.min(maxScrollIntensity, easedIntensity * maxScrollIntensity);
+      
+      // Update CSS variables for background and foreground colors with easing
       if (baseTheme === 'light') {
-        // Transition from pure white to light gray when scrolling in light mode
-        const lightBgIntensity = Math.min(15, scrollPercentage / 3);
-        document.documentElement.style.setProperty(
+        // Transition from pure white to light gray/blue when scrolling in light mode
+        const hue = 210 + (intensity * 0.4); // Subtle hue shift as you scroll
+        const saturation = 10 + (intensity * 0.5); 
+        const lightness = Math.max(85, 100 - (intensity * 0.6));
+        
+        docElement.style.setProperty(
           '--background-transition', 
-          `hsl(220 20% ${100 - lightBgIntensity}%)`
+          `hsl(${hue} ${saturation}% ${lightness}%)`
         );
       } else {
-        // Transition from navy to deeper blue-black in dark mode
-        const darkBgIntensity = Math.min(15, scrollPercentage / 3);
-        document.documentElement.style.setProperty(
+        // Transition from navy to deeper blue-black in dark mode with subtle color shift
+        const hue = 224 + (intensity * 0.2); // Subtle hue shift
+        const saturation = Math.max(50, 71 - (intensity * 0.8));
+        const lightness = Math.min(12, 4 + (intensity * 0.3));
+        
+        docElement.style.setProperty(
           '--background-transition', 
-          `hsl(224 71% ${4 + darkBgIntensity}%)`
+          `hsl(${hue} ${saturation}% ${lightness}%)`
         );
       }
     };
     
-    // Run once to initialize
-    setTimeout(handleScroll, 50);
+    // Run once to initialize with a small delay to ensure the DOM is ready
+    const initTimer = setTimeout(handleScroll, 50);
     
-    // Set up scroll listener
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    // Implement throttling for better performance
+    let ticking = false;
+    const scrollListener = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          handleScroll();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+    
+    // Set up scroll listener with throttling
+    window.addEventListener('scroll', scrollListener, { passive: true });
+    
+    // Clean up
+    return () => {
+      window.removeEventListener('scroll', scrollListener);
+      clearTimeout(initTimer);
+    };
   }, []);
   
   return null;

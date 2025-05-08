@@ -334,43 +334,46 @@
   
   /* Smooth theme transition */
   .dark, html, body, * {
-    transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out, border-color 0.5s ease-in-out, 
-                box-shadow 0.5s ease-in-out, opacity 0.3s ease-in-out;
+    transition: background-color 0.7s ease, color 0.7s ease, border-color 0.5s ease, 
+                box-shadow 0.5s ease, opacity 0.3s ease, transform 0.3s ease;
   }
   
   /* Variables for scroll-based theme transition */
   :root {
     --scroll-position: 0%;
     --theme-intensity: 0%;
-    --background-transition: hsl(0 0% 100%);
+    --initial-background: hsl(0 0% 100%);
+    --background-transition: var(--initial-background);
     --theme-transition-duration: 0.8s;
+    --transition-timing: cubic-bezier(0.4, 0, 0.2, 1);
   }
   
   .dark:root {
-    --background-transition: hsl(224 71% 4%);
+    --initial-background: hsl(224 71% 4%);
+    --background-transition: var(--initial-background);
   }
   
   /* Apply background transition to entire document */
   html, body {
     background-color: var(--background-transition);
-    transition: background-color var(--theme-transition-duration) ease;
+    transition: background-color var(--theme-transition-duration) var(--transition-timing);
   }
   
   /* For main content areas and sections */
-  main, section, div.bg-background {
+  main, section, div.bg-background, header, footer {
     background-color: var(--background-transition);
-    transition: background-color var(--theme-transition-duration) ease;
+    transition: background-color var(--theme-transition-duration) var(--transition-timing);
   }
   
   /* Theme transition elements with smooth transitions */
   .theme-transition-bg {
     background-color: var(--background-transition);
-    transition: background-color var(--theme-transition-duration) ease;
+    transition: background-color var(--theme-transition-duration) var(--transition-timing);
   }
   
   /* Smooth text transitions */
   .theme-transition-text {
-    transition: color var(--theme-transition-duration) ease;
+    transition: color var(--theme-transition-duration) var(--transition-timing);
   }
   
   /* Theme transition containers with gradient backgrounds */
@@ -379,7 +382,7 @@
     z-index: 1;
     overflow: hidden;
     background-color: var(--background-transition);
-    transition: background-color var(--theme-transition-duration) ease;
+    transition: background-color var(--theme-transition-duration) var(--transition-timing);
   }
   
   /* Enhanced theme transition card with 3D effect */
@@ -413,21 +416,53 @@
               0 4px 8px -2px rgba(0, 0, 0, 0.5);
   }
 
+  /* Glass morphic effect for both light and dark modes */
   .theme-aware-glass {
-    background-color: rgba(255, 255, 255, 0.15);
+    background-color: rgba(255, 255, 255, 0.7);
     backdrop-filter: blur(12px);
-    border: 1px solid;
-    border-color: rgba(255, 255, 255, 0.2);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 
+      0 4px 6px -1px rgba(0, 0, 0, 0.05),
+      0 2px 4px -1px rgba(0, 0, 0, 0.03),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+    transition: 
+      background-color 0.5s ease,
+      backdrop-filter 0.5s ease,
+      border-color 0.5s ease,
+      box-shadow 0.5s ease;
   }
   
+  /* Dark mode glass effect with deeper colors */
   .dark .theme-aware-glass {
-    background-color: rgba(5, 10, 30, 0.85);
-    backdrop-filter: blur(20px);
-    border-color: rgba(100, 130, 255, 0.15);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4), 
-                0 0 15px 5px rgba(20, 30, 100, 0.1);
+    background-color: rgba(10, 15, 30, 0.75);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-color: rgba(80, 100, 180, 0.15);
+    box-shadow: 
+      0 8px 20px rgba(0, 0, 0, 0.3), 
+      0 6px 10px rgba(0, 0, 0, 0.2),
+      inset 0 0 0 1px rgba(100, 130, 255, 0.07);
     color: rgba(255, 255, 255, 0.95);
+  }
+  
+  /* Hover states for glass effect */
+  .theme-aware-glass:hover {
+    background-color: rgba(255, 255, 255, 0.8);
+    border-color: rgba(255, 255, 255, 0.4);
+    box-shadow: 
+      0 6px 10px -1px rgba(0, 0, 0, 0.08),
+      0 3px 6px -1px rgba(0, 0, 0, 0.05),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.15);
+  }
+  
+  .dark .theme-aware-glass:hover {
+    background-color: rgba(15, 20, 40, 0.8);
+    border-color: rgba(90, 120, 200, 0.2);
+    box-shadow: 
+      0 10px 25px rgba(0, 0, 0, 0.35), 
+      0 8px 15px rgba(0, 0, 0, 0.25),
+      inset 0 0 0 1px rgba(110, 140, 255, 0.1);
   }
 
   .parallax {
