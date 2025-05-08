@@ -60,10 +60,12 @@ export default function EventsSection() {
                   <div className="flex justify-between items-start mb-4">
                     <div>
                       <span className={`inline-block px-3 py-1 ${
-                        event.type === 'Tournament' ? 'bg-accent text-primary' : 
-                        event.type === 'Workshop' ? 'bg-primary text-white' : 
-                        'bg-secondary text-white'
-                      } text-sm font-medium rounded-full`}>
+                        event.type === 'Tournament' ? 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-100' : 
+                        event.type === 'Workshop' ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100' : 
+                        event.type === 'Regular' ? 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-100' :
+                        event.type === 'Social' ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-100' :
+                        'bg-indigo-100 text-indigo-800 dark:bg-indigo-900 dark:text-indigo-100'
+                      } text-sm font-medium rounded-full border border-transparent dark:border-opacity-10`}>
                         {event.type}
                       </span>
                       <h3 className="mt-3 text-xl font-bold">{event.title}</h3>
