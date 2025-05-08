@@ -86,8 +86,8 @@ export default function Events() {
                 key={type}
                 onClick={() => setFilter(type)}
                 className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${filter === type
-                    ? 'bg-primary text-white'
-                    : 'bg-primary/10 text-primary hover:bg-primary/20'
+                    ? 'bg-primary text-white dark:bg-accent dark:text-primary'
+                    : 'bg-primary/10 dark:bg-primary/5 text-primary dark:text-primary/90 hover:bg-primary/20 dark:hover:bg-primary/10'
                   }`}
               >
                 {type === "all" ? "All Events" : type}
