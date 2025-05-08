@@ -130,12 +130,12 @@
     color: white !important;
   }
   
-  /* Button styling fixes for dark mode */
+  /* Enhanced button styling for dark mode */
   .dark button,
   .dark .btn,
   .dark [role="button"],
   .dark .button {
-    color: hsl(var(--foreground));
+    color: white;
   }
   
   .dark button:hover,
@@ -143,20 +143,162 @@
   .dark [role="button"]:hover,
   .dark .button:hover {
     color: white;
+    background-color: hsl(var(--accent));
   }
   
+  /* Accent buttons and backgrounds */
   .dark button.bg-accent,
   .dark .btn.bg-accent,
   .dark [role="button"].bg-accent,
   .dark .button.bg-accent,
   .dark .bg-accent {
+    background-color: hsl(var(--accent)) !important;
     color: white !important;
+  }
+  
+  /* Hover state for accent buttons */
+  .dark button.bg-accent:hover,
+  .dark .btn.bg-accent:hover,
+  .dark [role="button"].bg-accent:hover,
+  .dark .button.bg-accent:hover,
+  .dark .bg-accent:hover {
+    background-color: hsl(var(--accent)/0.8) !important;
+  }
+  
+  /* Badge/tag styling for both modes */
+  .badge, .tag {
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-weight: 500;
+    font-size: 0.875rem;
+    display: inline-block;
+  }
+  
+  /* Color variants - light mode */
+  .bg-primary, .bg-blue-100 {
+    background-color: hsl(210 100% 90%);
+    color: hsl(210 100% 30%);
+  }
+  
+  .bg-green-100 {
+    background-color: hsl(140 70% 90%);
+    color: hsl(140 70% 30%);
+  }
+  
+  .bg-yellow-100 {
+    background-color: hsl(40 100% 90%);
+    color: hsl(40 100% 30%);
+  }
+  
+  .bg-red-100 {
+    background-color: hsl(0 100% 90%);
+    color: hsl(0 100% 30%);
+  }
+  
+  .bg-purple-100 {
+    background-color: hsl(270 70% 90%);
+    color: hsl(270 70% 30%);
+  }
+  
+  .bg-indigo-100 {
+    background-color: hsl(240 80% 90%);
+    color: hsl(240 80% 30%);
+  }
+  
+  .bg-pink-100 {
+    background-color: hsl(330 100% 90%);
+    color: hsl(330 100% 30%);
+  }
+  
+  /* Dark mode variants */
+  .dark .badge,
+  .dark .tag,
+  .dark .bg-primary,
+  .dark .bg-blue-100,
+  .dark .bg-green-100,
+  .dark .bg-yellow-100,
+  .dark .bg-red-100,
+  .dark .bg-purple-100,
+  .dark .bg-indigo-100,
+  .dark .bg-pink-100 {
+    color: white !important;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  .dark .bg-primary, .dark .bg-blue-100 {
+    background-color: hsl(210 100% 20%) !important;
+  }
+  
+  .dark .bg-green-100 {
+    background-color: hsl(140 70% 20%) !important;
+  }
+  
+  .dark .bg-yellow-100 {
+    background-color: hsl(40 100% 20%) !important;
+  }
+  
+  .dark .bg-red-100 {
+    background-color: hsl(0 100% 20%) !important;
+  }
+  
+  .dark .bg-purple-100 {
+    background-color: hsl(270 70% 20%) !important;
+  }
+  
+  .dark .bg-indigo-100 {
+    background-color: hsl(240 80% 20%) !important;
+  }
+  
+  .dark .bg-pink-100 {
+    background-color: hsl(330 100% 20%) !important;
+  }
+  
+  /* "Since 2025" box styling for both modes */
+  .since-box,
+  .year-box,
+  .established-box,
+  .subtitle-box,
+  .badge-box {
+    background-color: hsl(var(--primary)/0.1);
+    color: hsl(var(--primary));
+    border: 1px solid hsl(var(--primary)/0.2);
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    display: inline-block;
+  }
+  
+  /* Dark mode version */
+  .dark .since-box,
+  .dark .year-box,
+  .dark .established-box,
+  .dark .subtitle-box,
+  .dark .badge-box {
+    background-color: hsl(var(--accent)/0.2) !important;
+    color: white !important;
+    border: 1px solid hsl(var(--accent)/0.3);
   }
   
   /* Fix for shadcn UI components */
   .dark [data-theme="dark"] button,
-  .dark [data-radix-popper-content-wrapper] button {
+  .dark [data-theme="dark"] [role="button"],
+  .dark [data-radix-popper-content-wrapper] button,
+  .dark [data-radix-popper-content-wrapper] [role="button"],
+  .dark .bg-white button,
+  .dark .bg-card button,
+  .dark .dropdown-content button {
     color: white !important;
+  }
+  
+  /* Fix for shadcn component hovers */
+  .dark [data-theme="dark"] button:hover,
+  .dark [data-theme="dark"] [role="button"]:hover,
+  .dark [data-radix-popper-content-wrapper] button:hover,
+  .dark [data-radix-popper-content-wrapper] [role="button"]:hover,
+  .dark .bg-white button:hover,
+  .dark .bg-card button:hover,
+  .dark .dropdown-content button:hover {
+    background-color: hsl(var(--accent)/0.2);
   }
   
   /* Fix for navigation menu */
