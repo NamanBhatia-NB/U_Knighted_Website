@@ -95,14 +95,13 @@ export default function News() {
           
           {/* Featured news (first item) */}
           {!isLoading && filteredNews.length > 0 && (
-            <div className="mb-12 scrolled-fade-in">
-              <div className="rounded-xl overflow-hidden relative md:h-96 shadow-xl">
+            <div className="mb-12 scrolled-fade-in px-5">
+              <div className="rounded-xl overflow-hidden relative h-96 md:h-[600px] shadow-xl hover:scale-105">
                 <img 
                   src={filteredNews[0].imageUrl || "https://via.placeholder.com/1200x600"} 
                   alt={filteredNews[0].title} 
-                  className="w-full h-full object-cover md:aspect-[2/1]" 
+                  className="w-full h-full object-cover md:aspect-[2/1] " 
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent"></div>
                 <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8">
                   <div className="mb-3">
                     <span className="inline-block px-3 py-1 bg-accent text-primary text-sm font-medium rounded-full">
@@ -202,9 +201,9 @@ export default function News() {
             <p className="max-w-2xl mx-auto mb-8">
               Subscribe to our newsletter to receive the latest news, tournament announcements, and event invitations.
             </p>
-            <Link href="/contact" className="inline-flex items-center space-x-2 px-6 py-3 bg-primary text-white hover:bg-primary/90 transition-colors rounded-lg font-medium">
-              <span>Subscribe Now</span>
-              <i className="ri-mail-line"></i>
+            <Link href="/contact" className="inline-flex items-center space-x-2 px-6 py-3 bg-primary  text-white hover:bg-accent transition-colors rounded-lg font-medium">
+              Subscribe Now
+              <i className="ri-mail-line ml-2"></i>
             </Link>
           </div>
         </div>

@@ -148,7 +148,7 @@ export default function ContactForm() {
                 defaultValue={field.value}
               >
                 <FormControl>
-                  <SelectTrigger className="bg-white/5 border-white/20 text-white">
+                  <SelectTrigger className="bg-white/5 border-white/20  text-white">
                     <SelectValue placeholder="Select a subject" />
                   </SelectTrigger>
                 </FormControl>

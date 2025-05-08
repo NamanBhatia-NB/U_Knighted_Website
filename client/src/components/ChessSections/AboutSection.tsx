@@ -59,8 +59,8 @@ export default function AboutSection() {
                 alt="Students playing chess in a modern club setting" 
                 className="rounded-lg shadow-xl w-full" 
               />
-              <div className="absolute -bottom-6 -right-6 w-24 h-24 rounded-lg flex items-center justify-center shadow-lg since-box">
-                <span className="font-display font-bold text-xl">Since<br/>2025</span>
+              <div className="absolute -bottom-6 -right-6 w-24 h-24 rounded-lg flex items-center justify-center shadow-lg since-box font-display font-bold text-xl bg-accent">
+                Since<br/>2025
               </div>
             </div>
           </div>

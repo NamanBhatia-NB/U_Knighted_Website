@@ -115,8 +115,8 @@ export default function MembersSection() {
         
         <div className="text-center mt-12">
           <Link href="/members" className="inline-flex items-center space-x-2 px-6 py-3 border border-primary text-primary hover:bg-primary hover:text-white transition-colors rounded-lg font-medium">
-            <span>View All Members</span>
-            <i className="ri-group-line"></i>
+            View All Members
+            <i className="ri-group-line ml-2"></i>
           </Link>
         </div>
       </div>

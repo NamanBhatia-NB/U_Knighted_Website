@@ -8,12 +8,6 @@ const connectDB = async () => {
     // Use only the environment variable MONGO_URI without fallback
     const mongoURI = process.env.MONGO_URI;
     
-    if (!mongoURI) {
-      console.error('ERROR: MONGO_URI environment variable is required');
-      console.error('Please set a valid MongoDB connection string in .env file');
-      return false;
-    }
-    
     console.log('Connecting to MongoDB...');
     
     // MongoDB connection options with timeout and retry settings

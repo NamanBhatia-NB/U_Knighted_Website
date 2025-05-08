@@ -178,7 +178,7 @@ export default function Events() {
               Subscribe to our newsletter or follow our social media channels to stay updated about all our upcoming events.
             </p>
             <Link href="/contact" className="inline-flex items-center space-x-2 px-6 py-3 bg-primary dark:bg-accent text-white dark:text-primary hover:bg-primary/90 hover:text-white dark:hover:bg-accent/90 dark:hover:text-primary transition-all duration-200 rounded-lg font-medium shadow-sm hover:shadow-md">
-              <span>Join Our Newsletter</span>
+              Join Our Newsletter
               <i className="ri-mail-line ml-2"></i>
             </Link>
           </div>

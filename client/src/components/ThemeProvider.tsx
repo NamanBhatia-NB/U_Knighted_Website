@@ -35,36 +35,36 @@ export function ThemeProvider({
     const root = window.document.documentElement;
     const htmlEl = window.document.querySelector('html');
     const bodyEl = window.document.body;
-    
+
     // Remove classes from all important elements
     root.classList.remove("light", "dark");
     htmlEl?.classList.remove("light", "dark");
     bodyEl?.classList.remove("light", "dark");
-    
+
     let appliedTheme: Theme = theme;
-    
+
     if (theme === "system") {
       appliedTheme = window.matchMedia("(prefers-color-scheme: dark)")
         .matches
         ? "dark"
         : "light";
     }
-    
+
     // Apply the theme to all important elements
     root.classList.add(appliedTheme);
     htmlEl?.classList.add(appliedTheme);
     bodyEl?.classList.add(appliedTheme);
-    
+
     // Set theme color in localStorage for scroll transitions
     localStorage.setItem("theme", theme);
-    
+
     // Set base background transition color based on theme
     if (appliedTheme === "dark") {
       root.style.setProperty('--background-transition', 'hsl(224 71% 4%)');
     } else {
       root.style.setProperty('--background-transition', 'hsl(0 0% 100%)');
     }
-    
+
     // Apply immediate background colors to prevent flashing
     // These will be transitioned by CSS
     if (appliedTheme === "dark") {
@@ -83,6 +83,7 @@ export function ThemeProvider({
     setTheme: (theme: Theme) => {
       localStorage.setItem(storageKey, theme);
       setTheme(theme);
+      window.location.reload();
     }
   };
 

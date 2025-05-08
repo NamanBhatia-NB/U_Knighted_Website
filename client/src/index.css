@@ -127,7 +127,7 @@
   
   /* Force white text on dark backgrounds */
   .dark .text-white {
-    color: white !important;
+    color: white ;
   }
   
   /* Enhanced button styling for dark mode */
@@ -152,8 +152,8 @@
   .dark [role="button"].bg-accent,
   .dark .button.bg-accent,
   .dark .bg-accent {
-    background-color: hsl(var(--accent)) !important;
-    color: white !important;
+    background-color: hsl(var(--accent)) ;
+    color: white ;
   }
   
   /* Hover state for accent buttons */
@@ -162,7 +162,7 @@
   .dark [role="button"].bg-accent:hover,
   .dark .button.bg-accent:hover,
   .dark .bg-accent:hover {
-    background-color: hsl(var(--accent)/0.8) !important;
+    background-color: hsl(var(--accent)/0.8) ;
   }
   
   /* Badge/tag styling for both modes */
@@ -221,36 +221,36 @@
   .dark .bg-purple-100,
   .dark .bg-indigo-100,
   .dark .bg-pink-100 {
-    color: white !important;
+    color: white ;
     border: 1px solid rgba(255, 255, 255, 0.1);
   }
   
   .dark .bg-primary, .dark .bg-blue-100 {
-    background-color: hsl(210 100% 20%) !important;
+    background-color: hsl(210 100% 20%) ;
   }
   
   .dark .bg-green-100 {
-    background-color: hsl(140 70% 20%) !important;
+    background-color: hsl(140 70% 20%) ;
   }
   
   .dark .bg-yellow-100 {
-    background-color: hsl(40 100% 20%) !important;
+    background-color: hsl(40 100% 20%) ;
   }
   
   .dark .bg-red-100 {
-    background-color: hsl(0 100% 20%) !important;
+    background-color: hsl(0 100% 20%) ;
   }
   
   .dark .bg-purple-100 {
-    background-color: hsl(270 70% 20%) !important;
+    background-color: hsl(270 70% 20%) ;
   }
   
   .dark .bg-indigo-100 {
-    background-color: hsl(240 80% 20%) !important;
+    background-color: hsl(240 80% 20%) ;
   }
   
   .dark .bg-pink-100 {
-    background-color: hsl(330 100% 20%) !important;
+    background-color: hsl(330 100% 20%) ;
   }
   
   /* "Since 2025" box styling for both modes */
@@ -274,8 +274,8 @@
   .dark .established-box,
   .dark .subtitle-box,
   .dark .badge-box {
-    background-color: hsl(var(--accent)/0.2) !important;
-    color: white !important;
+    background-color: hsl(var(--accent)/0.2) ;
+    color: white ;
     border: 1px solid hsl(var(--accent)/0.3);
   }
   
@@ -287,7 +287,7 @@
   .dark .bg-white button,
   .dark .bg-card button,
   .dark .dropdown-content button {
-    color: white !important;
+    color: white ;
   }
   
   /* Fix for shadcn component hovers */
@@ -305,14 +305,14 @@
   .dark nav a,
   .dark nav a span,
   .dark .navigation-link {
-    color: white !important;
+    color: white ;
   }
   
   /* Hover states for navigation */
   .dark nav a:hover,
   .dark nav a:hover span,
   .dark .navigation-link:hover {
-    color: hsl(var(--accent)) !important;
+    color: hsl(var(--accent)) ;
   }
   
   /* Custom background classes to ensure consistent dark mode */
@@ -407,13 +407,6 @@
     border-color: hsl(225 30% 25%);
     box-shadow: 0 4px 10px -1px rgba(0, 0, 0, 0.5),
               0 2px 6px -1px rgba(0, 0, 0, 0.4);
-  }
-  
-  .dark .theme-card:hover {
-    background-color: hsl(225 50% 10%);
-    border-color: hsl(225 30% 30%);
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.6),
-              0 4px 8px -2px rgba(0, 0, 0, 0.5);
   }
 
   /* Glass morphic effect for both light and dark modes */

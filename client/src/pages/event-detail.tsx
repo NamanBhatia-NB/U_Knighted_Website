@@ -127,10 +127,11 @@ export default function EventDetail() {
               </div>
             </div>
 
-            <div className="theme-card p-8 rounded-xl mb-8">
-              <h2 className="text-xl font-bold mb-4">About This Event</h2>
-              <p className="text-lg whitespace-pre-line">{event.description}</p>
+            <div className="theme-card p-8 rounded-xl mb-8 bg-white dark:bg-[hsl(225_50%_8%)] shadow-sm border border-gray-200 dark:border-gray-700 text-gray-800 dark:text-gray-100">
+              <h2 className="text-xl dark:bg-[hsl(225_50%_8%)]  font-bold mb-4">About This Event</h2>
+              <p className="text-lg dark:bg-[hsl(225_50%_8%)]  whitespace-pre-line">{event.description}</p>
             </div>
+
 
             {/* Action buttons */}
             <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 mb-12">

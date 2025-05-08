@@ -91,8 +91,8 @@ export default function EventsSection() {
         
         <div className="text-center mt-12">
           <Link href="/events" className="inline-flex items-center space-x-2 px-6 py-3 border border-primary text-primary hover:bg-primary hover:text-white transition-colors rounded-lg font-medium">
-            <span>View All Events</span>
-            <i className="ri-calendar-line"></i>
+            View All Events
+            <i className="ri-calendar-line ml-2"></i>
           </Link>
         </div>
       </div>

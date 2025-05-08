@@ -40,8 +40,8 @@ export default function Navbar() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-4">
           <Link href="/" className="flex items-center space-x-3 group">
-            <div className="w-10 h-10 rounded-full flex items-center justify-center bg-primary/10 dark:bg-primary/20 group-hover:bg-primary/20 dark:group-hover:bg-primary/30 transition-all">
-              <img src="/generated-icon.png" alt="Chess society logo" className="w-8 h-8" />
+            <div className=" flex items-center justify-center transition-all">
+              <img src="/generated-icon.png" alt="Chess society logo" className="w-10 h-10 rounded-full" />
             </div>
             <span className="text-xl font-bold font-display text-gray-900 dark:text-white group-hover:text-primary dark:group-hover:text-primary/90 transition-colors">U-Knighted Chess Society</span>
           </Link>

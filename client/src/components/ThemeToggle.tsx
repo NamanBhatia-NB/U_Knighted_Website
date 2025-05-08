@@ -10,9 +10,9 @@ export function ThemeToggle() {
     <div className="flex items-center">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button 
-            variant="outline" 
-            size="icon" 
+          <Button
+            variant="outline"
+            size="icon"
             className="h-10 w-10 rounded-full bg-background/10 backdrop-blur-sm 
               border border-gray-200/30 dark:border-gray-700/30 
               hover:bg-accent/10 hover:border-accent/30 
@@ -25,40 +25,37 @@ export function ThemeToggle() {
             <span className="sr-only">Toggle theme</span>
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent 
-          align="end" 
+        <DropdownMenuContent
+          align="end"
           className="w-[180px] rounded-lg border border-gray-200/30 dark:border-gray-700/30 
             bg-white/90 dark:bg-gray-900/95 backdrop-blur-lg shadow-lg"
         >
-          <DropdownMenuItem 
+          <DropdownMenuItem
             onClick={() => setTheme("light")}
-            className={`${theme === 'light' ? 'bg-accent/10 text-accent dark:bg-accent/20 dark:text-accent' : ''} 
+            className={`${theme === 'light' ? 'bg-accent text-accent dark:bg-accent dark:text-accent' : ''} 
               cursor-pointer font-medium text-gray-800 dark:text-white 
-              hover:bg-accent/10 hover:text-accent dark:hover:bg-accent/20 dark:hover:text-accent
               transition-colors px-4 py-2 rounded-md my-1 mx-1`}
           >
             <Sun className="mr-3 h-4 w-4" />
-            <span>Light</span>
+            Light
           </DropdownMenuItem>
-          <DropdownMenuItem 
+          <DropdownMenuItem
             onClick={() => setTheme("dark")}
-            className={`${theme === 'dark' ? 'bg-accent/10 text-accent dark:bg-accent/20 dark:text-accent' : ''} 
+            className={`${theme === 'dark' ? 'bg-accent text-accent dark:bg-accent dark:text-accent' : ''} 
               cursor-pointer font-medium text-gray-800 dark:text-white 
-              hover:bg-accent/10 hover:text-accent dark:hover:bg-accent/20 dark:hover:text-accent
               transition-colors px-4 py-2 rounded-md my-1 mx-1`}
           >
             <Moon className="mr-3 h-4 w-4" />
-            <span>Dark</span>
+            Dark
           </DropdownMenuItem>
-          <DropdownMenuItem 
+          <DropdownMenuItem
             onClick={() => setTheme("system")}
-            className={`${theme === 'system' ? 'bg-accent/10 text-accent dark:bg-accent/20 dark:text-accent' : ''} 
-              cursor-pointer font-medium text-gray-800 dark:text-white 
-              hover:bg-accent/10 hover:text-accent dark:hover:bg-accent/20 dark:hover:text-accent
+            className={`${theme === 'system' ? 'bg-accent text-accent dark:bg-accent dark:text-accent' : ''} 
+              cursor-pointer font-medium text-gray-800 dark:text-white
               transition-colors px-4 py-2 rounded-md my-1 mx-1`}
           >
             <SunMoon className="mr-3 h-4 w-4" />
-            <span>System</span>
+            System
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

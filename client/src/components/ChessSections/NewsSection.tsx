@@ -128,8 +128,8 @@ export default function NewsSection() {
         
         <div className="text-center mt-12">
           <Link href="/news" className="inline-flex items-center space-x-2 px-6 py-3 border border-primary text-primary hover:bg-primary hover:text-white transition-colors rounded-lg font-medium">
-            <span>View All News</span>
-            <i className="ri-newspaper-line"></i>
+            View All News
+            <i className="ri-newspaper-line ml-2"></i>
           </Link>
         </div>
       </div>

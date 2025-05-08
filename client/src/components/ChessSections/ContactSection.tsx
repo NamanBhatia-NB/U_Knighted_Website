@@ -2,8 +2,8 @@ import ContactForm from "@/components/forms/ContactForm";
 
 export default function ContactSection() {
   return (
-    <section id="contact" className="py-20 md:py-32 bg-primary text-white relative">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="contact" className="bg-primary text-white !border-none ">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-32">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           <div className="scrolled-fade-in">
             <h2 className="text-3xl md:text-4xl font-bold font-display mb-6">Get In Touch</h2>
