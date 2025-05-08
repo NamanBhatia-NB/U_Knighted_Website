@@ -88,25 +88,50 @@ function ScrollAnimationWrapper() {
   
   // Handle theme changes based on scroll position
   useEffect(() => {
+    // Store the original theme from localStorage
+    const savedTheme = localStorage.getItem('theme') || 'system';
+    let baseTheme = savedTheme;
+    
+    // If system, resolve to actual light/dark
+    if (baseTheme === 'system') {
+      baseTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+    
+    // Set initial classes based on the theme
+    if (baseTheme === 'dark') {
+      document.documentElement.classList.add('dark');
+      document.body.classList.add('dark');
+    } else {
+      document.documentElement.classList.add('light');
+      document.body.classList.add('light');
+    }
+    
     const handleScroll = () => {
       const scrollY = window.scrollY;
       const docHeight = document.body.scrollHeight - window.innerHeight;
       const scrollPercentage = docHeight > 0 ? (scrollY / docHeight) * 100 : 0;
       
-      // Set CSS variable for scroll position
+      // Set CSS variable for scroll position - this affects CSS transitions
       document.documentElement.style.setProperty('--scroll-position', `${scrollPercentage}%`);
       
-      // Apply theme based on scroll percentage
-      if (scrollPercentage > 40) {
-        document.documentElement.classList.remove('light');
-        document.documentElement.classList.add('dark');
-        document.body.classList.remove('light');
-        document.body.classList.add('dark');
+      // Don't actually change the theme class on scroll - just set the intensity
+      document.documentElement.style.setProperty('--theme-intensity', `${scrollPercentage}%`);
+      
+      // Update CSS variables for background and foreground colors
+      if (baseTheme === 'light') {
+        // Transition from pure white to light gray when scrolling in light mode
+        const lightBgIntensity = Math.min(15, scrollPercentage / 3);
+        document.documentElement.style.setProperty(
+          '--background-transition', 
+          `hsl(220 20% ${100 - lightBgIntensity}%)`
+        );
       } else {
-        document.documentElement.classList.remove('dark');
-        document.documentElement.classList.add('light');
-        document.body.classList.remove('dark');
-        document.body.classList.add('light');
+        // Transition from navy to deeper blue-black in dark mode
+        const darkBgIntensity = Math.min(15, scrollPercentage / 3);
+        document.documentElement.style.setProperty(
+          '--background-transition', 
+          `hsl(224 71% ${4 + darkBgIntensity}%)`
+        );
       }
     };
     

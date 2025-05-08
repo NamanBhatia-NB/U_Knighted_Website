@@ -199,49 +199,45 @@
   /* Variables for scroll-based theme transition */
   :root {
     --scroll-position: 0%;
-    --theme-transition-factor: 100%;
+    --theme-intensity: 0%;
+    --background-transition: hsl(0 0% 100%);
+    --theme-transition-duration: 0.8s;
   }
   
-  /* Theme transition elements */
+  .dark:root {
+    --background-transition: hsl(224 71% 4%);
+  }
+  
+  /* Apply background transition to entire document */
+  html, body {
+    background-color: var(--background-transition);
+    transition: background-color var(--theme-transition-duration) ease;
+  }
+  
+  /* For main content areas and sections */
+  main, section, div.bg-background {
+    background-color: var(--background-transition);
+    transition: background-color var(--theme-transition-duration) ease;
+  }
+  
+  /* Theme transition elements with smooth transitions */
   .theme-transition-bg {
-    background-image: linear-gradient(to bottom, 
-      hsl(var(--background)) calc(100% - var(--scroll-position)),
-      hsl(0 0% 10%) var(--scroll-position)
-    );
-    transition: background-position 0.3s ease;
+    background-color: var(--background-transition);
+    transition: background-color var(--theme-transition-duration) ease;
   }
   
+  /* Smooth text transitions */
   .theme-transition-text {
-    color: hsl(var(--foreground));
-    opacity: calc(1 - (var(--scroll-position) / 100));
-    transition: opacity 0.3s ease;
+    transition: color var(--theme-transition-duration) ease;
   }
   
-  /* Theme transition containers */
+  /* Theme transition containers with gradient backgrounds */
   .theme-transition-container {
     position: relative;
     z-index: 1;
     overflow: hidden;
-  }
-  
-  .theme-transition-container::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-image: linear-gradient(
-      to bottom,
-      hsl(var(--background)) 0%,
-      hsl(var(--background)) calc(50% - var(--scroll-position) / 2),
-      hsl(224 71% 4%) calc(50% + var(--scroll-position) / 2),
-      hsl(224 71% 4%) 100%
-    );
-    z-index: -1;
-    pointer-events: none;
-    opacity: var(--theme-transition-opacity, 0.95);
-    transition: opacity 0.5s ease, background-image 0.8s ease-in-out;
+    background-color: var(--background-transition);
+    transition: background-color var(--theme-transition-duration) ease;
   }
   
   /* Enhanced theme transition card with 3D effect */
