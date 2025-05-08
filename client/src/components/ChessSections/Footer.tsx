@@ -8,9 +8,9 @@ export default function Footer() {
           <div className="md:col-span-1">
             <div className="flex items-center space-x-2 mb-4">
               <div className="w-10 h-10 bg-accent rounded-full flex items-center justify-center">
-                <i className="ri-chess-fill text-primary text-2xl"></i>
+                <img src="/generated-icon.png" alt="" />
               </div>
-              <span className="text-xl font-bold font-display">Chess Society</span>
+              <span className="text-xl font-bold font-display"> U-Knighted Chess Society</span>
             </div>
             <p className="text-white/70 mb-4">Promoting chess excellence and community on campus since 2005.</p>
             <div className="flex space-x-4">

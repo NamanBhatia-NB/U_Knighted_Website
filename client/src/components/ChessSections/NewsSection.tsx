@@ -83,7 +83,7 @@ export default function NewsSection() {
                       alt={featuredNews.title} 
                       className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" 
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent"></div>
+                    {/* <div className="absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent"></div> */}
                     <div className="absolute bottom-0 left-0 right-0 p-6">
                       <div className="mb-3">
                         <span className="inline-block px-3 py-1 bg-accent text-primary text-sm font-medium rounded-full">{featuredNews.tag}</span>

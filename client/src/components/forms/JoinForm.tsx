@@ -158,7 +158,7 @@ export default function JoinForm() {
                 onValueChange={field.onChange} 
                 defaultValue={field.value}
               >
-                <FormControl>
+                <FormControl >
                   <SelectTrigger>
                     <SelectValue placeholder="Select your level" />
                   </SelectTrigger>
