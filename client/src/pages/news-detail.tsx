@@ -49,10 +49,9 @@ export default function NewsDetail() {
   if (isLoading) {
     return (
       <>
-        
         <div className="container mx-auto px-4 py-32">
           <div className="flex justify-center items-center h-64">
-            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
+            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary dark:border-accent"></div>
           </div>
         </div>
         <Footer />
@@ -63,12 +62,11 @@ export default function NewsDetail() {
   if (notFound) {
     return (
       <>
-        
         <div className="container mx-auto px-4 py-32">
           <div className="text-center py-16">
             <h1 className="text-4xl font-bold font-display mb-4">Article Not Found</h1>
-            <p className="mb-8">Sorry, the article you're looking for doesn't exist or has been removed.</p>
-            <Link href="/news" className="bg-primary text-white px-6 py-3 rounded-lg hover:bg-accent hover:text-primary transition-colors">
+            <p className="mb-8 text-gray-600 dark:text-gray-300">Sorry, the article you're looking for doesn't exist or has been removed.</p>
+            <Link href="/news" className="bg-primary dark:bg-accent text-white dark:text-primary px-6 py-3 rounded-lg hover:bg-primary/90 dark:hover:bg-accent/90 transition-colors shadow-sm hover:shadow-md">
               Back to News
             </Link>
           </div>
@@ -81,34 +79,33 @@ export default function NewsDetail() {
   // Format the date for display
   const formattedDate = newsItem ? format(new Date(newsItem.date), "MMMM d, yyyy") : "";
   
-  // Determine news tag color
+  // Determine news tag color with dark mode support
   const getNewsTagColor = (tag: string) => {
     switch (tag) {
       case "Tournament Result":
-        return "bg-primary text-white";
+        return "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-100 border border-transparent dark:border-blue-800/20";
       case "Society News":
-        return "bg-accent text-primary";
+        return "bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-100 border border-transparent dark:border-purple-800/20";
       case "Community Outreach":
-        return "bg-blue-500 text-white";
+        return "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100 border border-transparent dark:border-green-800/20";
       case "Tournament News":
-        return "bg-purple-500 text-white";
+        return "bg-indigo-100 text-indigo-800 dark:bg-indigo-900 dark:text-indigo-100 border border-transparent dark:border-indigo-800/20";
       case "Educational":
-        return "bg-green-500 text-white";
+        return "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-100 border border-transparent dark:border-yellow-800/20";
       case "Charity Event":
-        return "bg-red-500 text-white";
+        return "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-100 border border-transparent dark:border-red-800/20";
       default:
-        return "bg-secondary text-white";
+        return "bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-100 border border-transparent dark:border-gray-700/20";
     }
   };
   
   return (
     <>
-      
       <main className="container mx-auto px-4 py-32">
         {newsItem && (
           <div className="max-w-4xl mx-auto">
             <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6">
-              <Link href="/news" className="text-primary hover:text-accent transition-colors mb-4 md:mb-0 inline-flex items-center">
+              <Link href="/news" className="text-primary dark:text-accent hover:text-accent dark:hover:text-accent/80 transition-colors mb-4 md:mb-0 inline-flex items-center">
                 <i className="ri-arrow-left-line mr-2"></i>
                 Back to All News
               </Link>
@@ -119,7 +116,7 @@ export default function NewsDetail() {
             
             <h1 className="text-3xl md:text-4xl font-bold font-display mb-4">{newsItem.title}</h1>
             
-            <div className="text-primary/70 mb-8">
+            <div className="text-gray-600 dark:text-gray-300 mb-8">
               <span>{formattedDate}</span>
             </div>
             
@@ -137,22 +134,22 @@ export default function NewsDetail() {
               <p className="text-lg whitespace-pre-line">{newsItem.content}</p>
             </div>
             
-            <div className="border-t border-gray-200 pt-8">
+            <div className="border-t border-gray-200 dark:border-gray-700/30 pt-8">
               <h2 className="text-xl font-bold mb-4">Stay Updated</h2>
-              <p className="mb-4">
+              <p className="mb-4 text-gray-600 dark:text-gray-300">
                 Join our newsletter to receive the latest news, tournament results, and chess tips.
               </p>
               <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
                 <Link 
                   href="/news" 
-                  className="text-primary hover:text-accent transition-colors inline-flex items-center"
+                  className="text-primary dark:text-accent hover:text-accent dark:hover:text-accent/80 transition-colors inline-flex items-center"
                 >
                   <i className="ri-newspaper-line mr-2"></i>
                   Browse More Articles
                 </Link>
                 <Link 
                   href="/contact" 
-                  className="text-primary hover:text-accent transition-colors inline-flex items-center"
+                  className="text-primary dark:text-accent hover:text-accent dark:hover:text-accent/80 transition-colors inline-flex items-center"
                 >
                   <i className="ri-mail-line mr-2"></i>
                   Subscribe to Newsletter

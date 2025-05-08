@@ -123,19 +123,20 @@ export default function Events() {
                   <div className="p-6 flex flex-col h-full">
                     <div className="flex justify-between items-start mb-4">
                       <div>
-                        <span className={`inline-block px-3 py-1 ${event.type === 'Tournament' ? 'bg-accent text-primary' :
-                            event.type === 'Workshop' ? 'bg-primary text-white' :
-                              event.type === 'Regular' ? 'bg-blue-500 text-white' :
-                                event.type === 'Social' ? 'bg-green-500 text-white' :
-                                  event.type === 'Special' ? 'bg-purple-500 text-white' :
-                                    'bg-secondary text-white'
-                          } text-sm font-medium rounded-full`}>
+                        <span className={`inline-block px-3 py-1 ${
+                          event.type === 'Tournament' ? 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-100' : 
+                          event.type === 'Workshop' ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100' : 
+                          event.type === 'Regular' ? 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-100' :
+                          event.type === 'Social' ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-100' :
+                          event.type === 'Special' ? 'bg-indigo-100 text-indigo-800 dark:bg-indigo-900 dark:text-indigo-100' :
+                          'bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-100'
+                        } text-sm font-medium rounded-full border border-transparent dark:border-opacity-10`}>
                           {event.type}
                         </span>
                         <h3 className="mt-3 text-xl font-bold">{event.title}</h3>
                       </div>
                       <div className="text-right">
-                        <div className="text-sm text-primary/70">{formatEventDate(event.date)}</div>
+                        <div className="text-sm text-gray-600 dark:text-gray-300">{formatEventDate(event.date)}</div>
                         <div className="text-sm font-medium">{event.timeStart} - {event.timeEnd}</div>
                       </div>
                     </div>
@@ -149,7 +150,7 @@ export default function Events() {
                       </div>
                       <Link
                         href={`/event/${event.id}`}
-                        className="text-accent hover:text-secondary transition-colors font-medium"
+                        className="text-accent dark:text-accent hover:text-secondary dark:hover:text-secondary/80 transition-colors font-medium"
                       >
                         Details →
                       </Link>
@@ -159,10 +160,10 @@ export default function Events() {
               ))
             ) : (
               <div className="col-span-full text-center py-12">
-                <p className="text-xl">No events found for this filter.</p>
+                <p className="text-xl text-gray-800 dark:text-gray-200">No events found for this filter.</p>
                 <button
                   onClick={() => setFilter("all")}
-                  className="mt-4 px-4 py-2 bg-primary text-white rounded-md hover:bg-primary/90 transition-colors"
+                  className="mt-4 px-4 py-2 bg-primary dark:bg-accent text-white dark:text-primary rounded-md hover:bg-primary/90 dark:hover:bg-accent/90 transition-colors"
                 >
                   View All Events
                 </button>
@@ -176,9 +177,9 @@ export default function Events() {
             <p className="max-w-2xl mx-auto mb-8">
               Subscribe to our newsletter or follow our social media channels to stay updated about all our upcoming events.
             </p>
-            <Link href="/contact" className="inline-flex items-center space-x-2 px-6 py-3 bg-primary text-white hover:bg-primary/90 transition-colors rounded-lg font-medium">
+            <Link href="/contact" className="inline-flex items-center space-x-2 px-6 py-3 bg-primary dark:bg-accent text-white dark:text-primary hover:bg-primary/90 dark:hover:bg-accent/90 transition-colors rounded-lg font-medium shadow-sm hover:shadow-md">
               <span>Join Our Newsletter</span>
-              <i className="ri-mail-line"></i>
+              <i className="ri-mail-line ml-2"></i>
             </Link>
           </div>
         </div>
